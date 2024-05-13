@@ -12,7 +12,7 @@ const Home = class {
   render() {
     return `
     ${viewNav()}
-  ${viewHome()}
+    ${viewHome()}
     `;
   }
 

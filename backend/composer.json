@@ -1,0 +1,25 @@
+{
+  "name": "chatbot_io/api",
+  "description": "API for Chatbot-IO",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "App\\": [
+        "src/"
+      ],
+      "App\\Controllers\\": "src/controllers/",
+      "App\\Models\\": "src/models/"
+    }
+  },
+  "authors": [
+    {
+      "name": "BenoitPrmt",
+      "email": "benoitparmentier45@gmail.com"
+    },
+    {
+      "name": "Raxuis",
+      "email": "raclot.raphael@gmail.com"
+    }
+  ],
+  "require": {}
+}

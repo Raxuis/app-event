@@ -2,12 +2,12 @@ import favicon from '../assets/favicon.png';
 
 export default () => (`
 <nav class="bg-gray-50">
-<div class="max-w-6xl mx-auto px-4 w-full">
+<div class="max-w-6xl mx-auto px-4">
   <div class="flex justify-between">
 
     <div class="flex space-x-4">
       <div>
-        <a href="#" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
+        <a href="/" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
         <img class="h-6 w-6 mr-1" src=${favicon}>
           <span class="font-bold">App-Event</span>
         </a>
@@ -20,8 +20,8 @@ export default () => (`
     </div>
 
     <div class="hidden md:flex items-center space-x-1">
-      <a href="" class="py-5 px-3">Login</a>
-      <a href="" class="py-2 px-3 bg-primary hover:opacity-80 text-white rounded transition duration-300">Signup</a>
+      <a href="/login" class="py-5 px-3">Login</a>
+      <a href="/register" class="py-2 px-3 bg-primary hover:opacity-80 text-white rounded transition duration-300">Register</a>
     </div>
 
     <div class="md:hidden flex items-center">

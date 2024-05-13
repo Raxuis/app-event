@@ -1,7 +1,7 @@
 import viewNav from '../views/nav';
-import viewHome from '../views/home';
+import viewRegister from '../views/register';
 
-const Home = class {
+const Register = class {
   constructor(params) {
     this.el = document.querySelector('#root');
     this.params = params;
@@ -11,8 +11,8 @@ const Home = class {
 
   render() {
     return `
-    ${viewNav()}
-  ${viewHome()}
+        ${viewNav()}
+        ${viewRegister()}
     `;
   }
 
@@ -21,4 +21,4 @@ const Home = class {
   }
 };
 
-export default Home;
+export default Register;

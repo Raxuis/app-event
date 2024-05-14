@@ -2,11 +2,11 @@
 
 require 'vendor/autoload.php';
 
+use App\Controllers\Event;
+use App\Controllers\Events;
 use App\Router;
 use App\Controllers\User;
 use App\Controllers\Users;
-use App\Controllers\Message;
-use App\Controllers\Messages;
 use App\Controllers\Model;
 use App\Controllers\Models;
 
@@ -17,7 +17,7 @@ new Router([
   'users' => Users::class,
   'model/:id' => Model::class,
   'models' => Models::class,
-  'message/:id' => Message::class,
-  'message' => Message::class,
-  'messages' => Messages::class
+  'event/:id' => Event::class,
+  'event' => Event::class,
+  'events' => Events::class
 ]);

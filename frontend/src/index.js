@@ -3,7 +3,7 @@ import Home from './controllers/Home';
 import Login from './controllers/Login';
 import Register from './controllers/Register';
 import './index.css';
-import Dashboard from './controllers/Dashboard';
+import Models from './controllers/AllModels';
 
 const routes = [
   {
@@ -19,8 +19,8 @@ const routes = [
     controller: Register
   },
   {
-    url: '/dashboard',
-    controller: Dashboard
+    url: '/models',
+    controller: Models
   }
 ];
 new Router(routes);

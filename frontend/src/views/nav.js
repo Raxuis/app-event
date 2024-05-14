@@ -14,7 +14,7 @@ export default () => (`
       </div>
 
       <div class="hidden md:flex items-center space-x-1">
-        <a href="/dashboard" class="py-5 px-3 text-gray-700 hover:text-gray-900">Dashboard</a>
+        <a href="/models" class="py-5 px-3 text-gray-700 hover:text-gray-900">Models</a>
       </div>
     </div>
 

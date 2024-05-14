@@ -39,7 +39,7 @@ class ModelModel extends SqlConnect
   }
   public function getAll()
   {
-    $req = $this->db->prepare("SELECT * FROM users");
+    $req = $this->db->prepare("SELECT * FROM models");
     $req->execute();
 
     return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();

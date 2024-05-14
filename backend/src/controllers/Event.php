@@ -2,35 +2,35 @@
 
 namespace App\Controllers;
 
-use App\Models\MessageModel;
+use App\Models\EventModel;
 
-class Message extends Controller
+class Event extends Controller
 {
-  protected object $message;
+  protected object $event;
 
   public function __construct($params)
   {
-    $this->message = new MessageModel();
+    $this->event = new EventModel();
 
     parent::__construct($params);
   }
-  public function postMessage()
+  public function postEvent()
   {
     $body = (array) json_decode(file_get_contents('php://input'));
 
-    $this->message->add($body);
+    $this->event->add($body);
 
-    return $this->message->getLast();
+    return $this->event->getLast();
   }
 
-  public function deleteMessage()
+  public function deleteEvent()
   {
-    return $this->message->delete(intval($this->params['id']));
+    return $this->event->delete(intval($this->params['id']));
   }
 
-  public function getMessage()
+  public function getEvent()
   {
-    return $this->message->get(intval($this->params['id']));
+    return $this->event->get(intval($this->params['id']));
   }
 
   protected
@@ -55,7 +55,7 @@ class Message extends Controller
 
   protected function ifMethodExist(): void
   {
-    $method = $this->reqMethod . 'Message';
+    $method = $this->reqMethod . 'event';
 
     if (method_exists($this, $method)) {
       header("HTTP/1.0 200 OK");
@@ -67,15 +67,15 @@ class Message extends Controller
 
     echo json_encode([
       'code' => '404',
-      'message' => 'Not Found'
+      'event' => 'Not Found'
     ]);
   }
 
-  // protected function getMessage(): array
+  // protected function getevent(): array
   // {
   //   return [
   //     'id' => '1',
-  //     'message' => 'Bonjour ! Je viens de la base de données',
+  //     'event' => 'Bonjour ! Je viens de la base de données',
   //     'author' => 'Mr. Robot',
   //     'bot' => true,
   //     'avatar' => 'https://i.pinimg.com/736x/a3/b3/1a/a3b31a3d62d7643ebd97c49dc8c43ffa.jpg',

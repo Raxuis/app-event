@@ -23,9 +23,9 @@ export default () => (`
                 </div>
               </div>
               <div>
-                <label class="text-sm mb-2 block">Email</label>
+                <label class="text-sm mb-2 block">Email<span class="text-red-500 pl-3 email-span"></span></label>
                 <div class="relative flex items-center">
-                  <input name="email" type="text" required class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter email" />
+                  <input name="email" type="text" required class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333] email-input" placeholder="Enter email" />
                   <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" class="w-[18px] h-[18px] absolute right-4" viewBox="0 0 24 24">
                     <circle cx="10" cy="7" r="6" data-original="#000000"></circle>
                     <path d="M14 15H6a5 5 0 0 0-5 5 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 5 5 0 0 0-5-5zm8-4h-2.59l.3-.29a1 1 0 0 0-1.42-1.42l-2 2a1 1 0 0 0 0 1.42l2 2a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42l-.3-.29H22a1 1 0 0 0 0-2z" data-original="#000000"></path>
@@ -33,7 +33,7 @@ export default () => (`
                 </div>
               </div>
               <div>
-                <label class="text-sm mb-2 block">Password</label>
+                <label class="text-sm mb-2 block">Password<span class="text-red-500 pl-3 password-span"></span></label>
                 <div class="relative flex items-center">
                   <input name="password" type="password" required class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter password" id="password" />
                   <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" class="w-[18px] h-[18px] absolute right-4 cursor-pointer password-toggler" viewBox="0 0 128 128">
@@ -42,7 +42,7 @@ export default () => (`
                 </div>
               </div>
               <div>
-              <label class="text-sm mb-2 block">Confirmation Password</label>
+              <label class="text-sm mb-2 block">Confirmation Password<span class="text-red-500 pl-3 confirmation-span"></span></label>
               <div class="relative flex items-center">
                 <input name="password-confirmation" type="password" required class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter confirmation password" id="confirmation-password"/>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" class="w-[18px] h-[18px] absolute right-4 cursor-pointer confirmation-password-toggler" viewBox="0 0 128 128">

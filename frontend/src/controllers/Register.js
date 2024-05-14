@@ -6,16 +6,49 @@ const Register = class {
   constructor(params) {
     this.el = document.querySelector('#root');
     this.params = params;
-
+    this.emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     this.run();
+  }
+
+  passwordVerif(password, passwordConfirmation) {
+    const passwordSpan = document.querySelector('.password-span');
+    const confirmationSpan = document.querySelector('.confirmation-span');
+    password.addEventListener('input', (e) => {
+      if (e.target.value.length < 8) {
+        passwordSpan.innerHTML = 'Password must be at least 8 characters';
+      } else {
+        passwordSpan.innerHTML = '';
+      }
+    });
+    passwordConfirmation.addEventListener('input', (e) => {
+      if (e.target.value.length < 8) {
+        confirmationSpan.innerHTML = 'Password must be at least 8 characters';
+      } else if (password.value !== passwordConfirmation.value) {
+        passwordSpan.innerHTML = "Password don't match";
+        confirmationSpan.innerHTML = "Password don't match";
+      } else {
+        passwordSpan.innerHTML = '';
+        confirmationSpan.innerHTML = '';
+      }
+    });
+  }
+
+  emailVerify(email) {
+    const emailSpan = document.querySelector('.email-span');
+    email.addEventListener('input', (e) => {
+      if (!e.target.value.match(this.emailRegex)) {
+        emailSpan.innerHTML = 'Email is not valid';
+      } else {
+        emailSpan.innerHTML = '';
+      }
+    });
   }
 
   formSubmit(elForm) {
     elForm.addEventListener('submit', (e) => {
-      // TODO : avoid duplication of email backend or frontend
       e.preventDefault();
       const formData = new FormData(elForm);
-      if (formData.get('password') === formData.get('password-confirmation')) {
+      if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length > 8 && formData.get('password-confirmation').length > 8) {
         axios.post(`http://localhost:${process.env.BACKEND_PORT}/user/register`, {
           firstname: formData.get('firstname'),
           lastname: formData.get('lastname'),
@@ -43,6 +76,7 @@ const Register = class {
       const elConfirmationPassword = document.querySelector('#confirmation-password');
       const elPasswordToggler = document.querySelector('.password-toggler');
       const elConfirmationPasswordToggler = document.querySelector('.confirmation-password-toggler');
+      const emailInput = document.querySelector('.email-input');
 
       elPasswordToggler.addEventListener('click', () => {
         if (elPassword.type === 'password') {
@@ -58,6 +92,8 @@ const Register = class {
           elConfirmationPassword.type = 'password';
         }
       });
+      this.emailVerify(emailInput);
+      this.passwordVerif(elPassword, elConfirmationPassword);
       this.formSubmit(elForm);
     });
   }

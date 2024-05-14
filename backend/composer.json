@@ -1,6 +1,6 @@
 {
-  "name": "chatbot_io/api",
-  "description": "API for Chatbot-IO",
+  "name": "app-event/api",
+  "description": "API for App-Event",
   "license": "MIT",
   "autoload": {
     "psr-4": {
@@ -12,10 +12,6 @@
     }
   },
   "authors": [
-    {
-      "name": "BenoitPrmt",
-      "email": "benoitparmentier45@gmail.com"
-    },
     {
       "name": "Raxuis",
       "email": "raclot.raphael@gmail.com"

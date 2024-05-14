@@ -1,19 +1,18 @@
 import viewNav from '../views/nav';
+import viewDashboard from '../views/dashboard';
 
-const PageNotFound = class {
-  constructor() {
+const Home = class {
+  constructor(params) {
     this.el = document.querySelector('#root');
+    this.params = params;
 
     this.run();
   }
 
   render() {
     return `
-        ${viewNav()}
-        <div class="py-18">
-          <h1>404</h1>
-          <h2>Page not found</h2>
-        </div>
+    ${viewNav()}
+    ${viewDashboard()}
     `;
   }
 
@@ -22,4 +21,4 @@ const PageNotFound = class {
   }
 };
 
-export default PageNotFound;
+export default Home;

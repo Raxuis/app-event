@@ -10,3 +10,5 @@ id
 .env.local
 .vscode
 vendor
+.env
+.env.*

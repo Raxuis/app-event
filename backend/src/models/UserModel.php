@@ -9,10 +9,25 @@ class UserModel extends SqlConnect
 {
   public function add(array $data): void
   {
-    $query = "INSERT INTO users (name, avatar) VALUES (:name, :avatar)";
+    $verif_query = "SELECT * FROM users WHERE email = :email";
+    $verif_req = $this->db->prepare($verif_query);
+    $verif_req->execute(["email" => $data['email']]);
+
+    if ($verif_req->rowCount() > 0) {
+      header('HTTP/1.0 409 Conflict');
+      echo json_encode(['error' => 'Email already exists']);
+      exit();
+    }
+
+    $query = "INSERT INTO users (firstname, lastname, email, password) VALUES (:firstname, :lastname, :email, :password)";
 
     $req = $this->db->prepare($query);
-    $req->execute($data);
+    $req->execute([
+      "firstname" => $data['firstname'],
+      "lastname" => $data['lastname'],
+      "email" => $data['email'],
+      "password" => password_hash($data['password'], PASSWORD_BCRYPT)
+    ]);
   }
   public function delete(int $id): void
   {
@@ -37,6 +52,26 @@ class UserModel extends SqlConnect
       "avatar" => $data['avatar']
     ]);
   }
+  public function authenticate(array $data)
+  {
+    $query = "SELECT * FROM users WHERE email = :email";
+    $req = $this->db->prepare($query);
+    $req->execute(["email" => $data['email']]);
+
+    $user = $req->fetch(PDO::FETCH_ASSOC);
+
+    // if ($user && password_verify($data['password'], $user['password'])) {
+    //     return $user;
+    // } else {
+    //     return false;
+    // }
+    if ($user && $data['password'] == $user['password']) {
+      return $user;
+    } else {
+      return;
+    }
+  }
+
   public function getAll()
   {
     $req = $this->db->prepare("SELECT * FROM users");

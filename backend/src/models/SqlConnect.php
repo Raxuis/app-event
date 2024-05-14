@@ -17,7 +17,7 @@ class SqlConnect
   {
     $this->host = '127.0.0.1';
     $this->port = '8889';
-    $this->dbname = 'chatbot_io';
+    $this->dbname = 'app_event';
     $this->user = 'root';
     $this->password = 'root';
 

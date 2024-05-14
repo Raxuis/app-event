@@ -2,17 +2,20 @@
 
 namespace App;
 
-class Router {
+class Router
+{
   protected array $routes;
   protected string $url;
 
-  public function __construct(array $routes) {
+  public function __construct(array $routes)
+  {
     $this->routes = $routes;
     $this->url = $_SERVER['REQUEST_URI'];
     $this->run();
   }
 
-  protected function extractParams($url, $rule) {
+  protected function extractParams($url, $rule)
+  {
     (array) $params = [];
     (array) $urlParts = explode('/', trim($url, '/'));
     (array) $ruleParts = explode('/', trim($rule, '/'));
@@ -27,7 +30,8 @@ class Router {
     return $params;
   }
 
-  protected function matchRule($url, $rule) {
+  protected function matchRule($url, $rule)
+  {
     (array) $urlParts = explode('/', trim($url, '/'));
     (array) $ruleParts = explode('/', trim($rule, '/'));
 
@@ -44,7 +48,8 @@ class Router {
     return true;
   }
 
-  protected function run() {
+  protected function run()
+  {
     (bool) $is404 = true;
     (string) $url = parse_url($this->url, PHP_URL_PATH);
 

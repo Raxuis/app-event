@@ -9,7 +9,7 @@ class MessageModel extends SqlConnect
 {
   public function add(array $data): void
   {
-    $query = "INSERT INTO messages (user_id, bot_id, message, image, date) VALUES (:user_id, :bot_id, :message, :image, UNIX_TIMESTAMP())";
+    $query = "INSERT INTO messages (user_id, bot_id, message, image) VALUES (:user_id, :bot_id, :message, :image)";
 
     $req = $this->db->prepare($query);
     $req->execute($data);
@@ -67,8 +67,9 @@ class MessageModel extends SqlConnect
 
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }
-  public function getLastUserMessage(int $id) {
-    $req= $this->db->prepare("SELECT * FROM messages WHERE user_id = :user_id ORDER BY date DESC LIMIT 1");
+  public function getLastUserMessage(int $id)
+  {
+    $req = $this->db->prepare("SELECT * FROM messages WHERE user_id = :user_id ORDER BY date DESC LIMIT 1");
     $req->execute(["user_id" => $id]);
 
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();

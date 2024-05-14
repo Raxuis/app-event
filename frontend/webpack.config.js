@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.js', //if you unuse typescript entry
@@ -24,7 +25,7 @@ module.exports = {
       },
       { test: /\.css$/, use: ["style-loader", "css-loader", "postcss-loader"] },
       {
-        test: /\.(png|jpe?g|gif|ico|svg)$/i,
+        test: /\.(png|jpe?g|gif|ico|svg|webp|mp3)$/i,
         use: [
           {
             loader: 'file-loader',
@@ -38,6 +39,12 @@ module.exports = {
     extensions: ['.ts', '.js'],
   },
   devServer: {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization",
+      "Access-Control-Allow-Credentials": true
+    },
     historyApiFallback: true,
     host: '127.0.0.1',
     port: 9090,
@@ -61,6 +68,7 @@ module.exports = {
       extensions: ['js', 'ts'],
       exclude: 'node_modules',
       files: './src/'
-    })
+    }),
+    new Dotenv()
   ]
 };

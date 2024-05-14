@@ -1,6 +1,7 @@
 import axios from 'axios';
 import viewNav from '../views/nav';
-import viewDashboard from '../views/allModels';
+import viewModels from '../views/allModels';
+import viewBuiltModel from '../views/builtModel';
 
 const allModels = class {
   constructor(params) {
@@ -23,7 +24,10 @@ const allModels = class {
     if (elements !== null && elements.length > 0) {
       return `
         ${viewNav()}
-        ${viewDashboard(elements)}
+        <div class="max-w-6xl mx-auto px-4">
+          ${viewModels(elements)}
+          ${viewBuiltModel()}
+        </div>
       `;
     }
     return `
@@ -35,7 +39,7 @@ const allModels = class {
   }
 
   async run() {
-    this.el.innerHTML = await this.render(); // Await the rendering process
+    this.el.innerHTML = await this.render();
   }
 };
 

@@ -1,5 +1,4 @@
 export default (model) => (`
-<div class="max-w-6xl mx-auto grid grid-cols-3 px-4">
 <div class="items-center mt-20">
     <div class="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
       <div class="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-fuchsia-500 via-transparent to-purple-400">
@@ -20,5 +19,4 @@ export default (model) => (`
       </div>
     </div>
   </div>
-</div
 `);

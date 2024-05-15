@@ -65,26 +65,26 @@ export default () => (`
   <section class="bg-white border-b py-8">
     <div class="container mx-auto flex flex-wrap pt-4 pb-12">
       <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800">
-        Title
+        What we offer.
       </h2>
       <div class="w-full mb-4">
         <div class="h-1 mx-auto  bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-fuchsia-500 via-transparent to-purple-400 w-64 opacity-25 my-0 py-0 rounded-t"></div>
       </div>
       <div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
-        <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
-          <a href="#" class="flex flex-wrap no-underline hover:no-underline">
+        <div class="flex-1 bg-white rounded-t-lg rounded-b-none overflow-hidden shadow p-4">
+          <div class="flex flex-wrap no-underline hover:no-underline">
             <p class="w-full text-gray-600 text-xs md:text-sm px-6">
-              xGETTING STARTED
+              xSAFETY
             </p>
             <div class="w-full font-bold text-xl text-gray-800 px-6">
-              Lorem ipsum dolor sit amet.
+              Safe Events
             </div>
             <p class="text-gray-800 text-base px-6 mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
+            Experience peace of mind with our meticulously crafted secured API Routes, designed to safeguard your data and streamline your processes effortlessly. 
             </p>
-          </a>
+          </div>
         </div>
-        <div class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
+        <div class="flex-none mt-auto bg-white rounded-b-lg rounded-t-none overflow-hidden shadow py-4">
           <div class="flex items-center justify-center">
             <button class="mx-auto lg:mx-0  bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-fuchsia-500 via-transparent to-purple-400 text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
               Action
@@ -93,20 +93,20 @@ export default () => (`
         </div>
       </div>
       <div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
-        <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
-          <a href="#" class="flex flex-wrap no-underline hover:no-underline">
+        <div class="flex-1 bg-white rounded-t-lg rounded-b-none overflow-hidden shadow p-4">
+          <div class="flex flex-wrap no-underline hover:no-underline">
             <p class="w-full text-gray-600 text-xs md:text-sm px-6">
-              xGETTING STARTED
+              xMODELS
             </p>
             <div class="w-full font-bold text-xl text-gray-800 px-6">
-              Lorem ipsum dolor sit amet.
+              Events Models
             </div>
             <p class="text-gray-800 text-base px-6 mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
+            From corporate seminars to weddings and everything in between, we provide a diverse range of pre-designed frameworks to kickstart your planning process.
             </p>
-          </a>
+          </div>
         </div>
-        <div class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
+        <div class="flex-none mt-auto bg-white rounded-b-lg rounded-t-none overflow-hidden shadow py-4">
           <div class="flex items-center justify-center">
             <button class="mx-auto lg:mx-0  bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-fuchsia-500 via-transparent to-purple-400 text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
               Action
@@ -115,20 +115,20 @@ export default () => (`
         </div>
       </div>
       <div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
-        <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
-          <a href="#" class="flex flex-wrap no-underline hover:no-underline">
+        <div class="flex-1 bg-white rounded-t-lg  rounded-b-none overflow-hidden shadow p-4">
+          <div class="flex flex-wrap no-underline hover:no-underline">
             <p class="w-full text-gray-600 text-xs md:text-sm px-6">
-              xGETTING STARTED
+              xINVITES
             </p>
             <div class="w-full font-bold text-xl text-gray-800 px-6">
-              Lorem ipsum dolor sit amet.
+              Invite people
             </div>
             <p class="text-gray-800 text-base px-6 mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
+            Gone are the days of manual outreach. Our intuitive interface allows event organizers to seamlessly send invitations to desired guests, all within a few clicks.
             </p>
-          </a>
+          </div>
         </div>
-        <div class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
+        <div class="flex-none mt-auto bg-white rounded-b-lg rounded-t-none overflow-hidden shadow py-4">
           <div class="flex items-center justify-center">
             <button class="mx-auto lg:mx-0  bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-fuchsia-500 via-transparent to-purple-400 text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
               Action
@@ -138,7 +138,7 @@ export default () => (`
       </div>
     </div>
   </section>
-  <section class="container mx-auto text-center py-6 mb-12">
+  <section class="container mx-auto text-center pt-8 pb-6 mb-12">
     <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-700 opacity-90">
       Come Check Out!
     </h2>
@@ -146,14 +146,14 @@ export default () => (`
       <div class="h-1 mx-auto bg-white w-1/6 opacity-25 my-0 py-0 rounded-t"></div>
     </div>
     <h3 class="my-4 text-3xl text-gray-700 opacity-80 leading-tight">
-      Main Hero Message to sell yourself!
+      Register and you're good to go!
     </h3>
-    <button class="mx-auto lg:mx-0 bg-white text-gray-700 opacity-75 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-      Action!
+    <button onclick="window.location.href='/register'" class="mx-auto lg:mx-0 bg-white text-gray-700 opacity-75 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+      Register
     </button>
   </section>
-  <footer class="bg-white">
-    <div class="container mx-auto">
+  <footer>
+    <div class="container mx-auto max-sm:px-8">
       <div class="w-full flex flex-col md:flex-row py-6">
         <div class="flex-1 mb-6 text-black">
           <a href="/">

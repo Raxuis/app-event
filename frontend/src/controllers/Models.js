@@ -45,8 +45,33 @@ class AllModelsController {
     `;
     this.el.innerHTML = html;
     this.attachEventListeners(elements);
-    this.attachAddButtonEventListener();
+    this.showDialog();
     this.navFunction();
+    this.incrementDecrementInput();
+  }
+
+  incrementDecrementInput() {
+    const numberInput = document.getElementById('quantity-input');
+    const incrementButton = document.getElementById('increment-button');
+    const decrementButton = document.getElementById('decrement-button');
+    numberInput.addEventListener('input', () => {
+      let { value } = numberInput;
+      value = value.replace(/\D/g, '');
+      numberInput.value = value;
+    });
+    incrementButton.addEventListener('click', () => {
+      const { value } = numberInput;
+      let parsedValue = Number.isInteger(parseInt(value, 10)) ? parseInt(value, 10) : 0;
+      parsedValue += 1;
+      numberInput.value = parsedValue;
+    });
+
+    decrementButton.addEventListener('click', () => {
+      const { value } = numberInput;
+      let parsedValue = Number.isInteger(parseInt(value, 10)) ? parseInt(value, 10) : 0;
+      parsedValue -= 1;
+      numberInput.value = parsedValue >= 0 ? parsedValue : 0;
+    });
   }
 
   renderNoModels() {
@@ -68,10 +93,40 @@ class AllModelsController {
     });
   }
 
-  attachAddButtonEventListener() {
-    const addEventButton = document.querySelector('#add-event');
-    addEventButton.addEventListener('click', () => {
-      window.location.href = '/create-custom-event';
+  showDialog() {
+    const dialog = document.getElementById('dialog');
+    const activationBtn = document.getElementById('add-event');
+    const cancelBtn = document.getElementById('cancel-dialog');
+    const submitBtn = document.getElementById('submit-dialog');
+    activationBtn.addEventListener('click', async () => {
+      try {
+        const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/events`);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+
+      dialog.classList.remove('hidden');
+      dialog.classList.add('flex');
+      setTimeout(() => {
+        dialog.classList.add('opacity-100');
+      }, 20);
+    });
+    cancelBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      dialog.classList.remove('opacity-100');
+      setTimeout(() => {
+        dialog.classList.remove('flex');
+        dialog.classList.add('hidden');
+      }, 500);
+    });
+    submitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      dialog.classList.remove('opacity-100');
+      setTimeout(() => {
+        dialog.classList.remove('flex');
+        dialog.classList.add('hidden');
+      }, 500);
     });
   }
 

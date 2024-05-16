@@ -28,7 +28,7 @@ export default () => (`
                 </div>
               </div>
               <div class="!mt-10">
-                <button type="button" class="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-[#333] hover:bg-black focus:outline-none">
+                <button type="button" class="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white duration-300 bg-[#333] hover:bg-black focus:outline-none">
                   Log in
                 </button>
               <div class="error-message w-full text-red-500 pt-2"></div>

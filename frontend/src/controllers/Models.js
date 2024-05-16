@@ -71,7 +71,7 @@ class AllModelsController {
   attachAddButtonEventListener() {
     const addEventButton = document.querySelector('#add-event');
     addEventButton.addEventListener('click', () => {
-      window.location.href = '/';
+      window.location.href = '/create-custom-event';
     });
   }
 

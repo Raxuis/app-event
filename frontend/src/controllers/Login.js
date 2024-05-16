@@ -8,6 +8,14 @@ const Login = class {
     this.run();
   }
 
+  navFunction() {
+    const btn = document.querySelector('.mobile-menu-button');
+    const menu = document.querySelector('.mobile-menu');
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  }
+
   eventListeners() {
     document.addEventListener('DOMContentLoaded', () => {
       const password = document.querySelector('#password');
@@ -67,6 +75,7 @@ const Login = class {
 
     this.el.innerHTML = this.render();
     this.eventListeners();
+    this.navFunction();
   }
 };
 

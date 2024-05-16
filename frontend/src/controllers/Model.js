@@ -1,7 +1,6 @@
 import viewNav from '../views/nav';
-import viewHome from '../views/home';
 
-const Home = class {
+const Model = class {
   constructor(params) {
     this.el = document.querySelector('#root');
     this.params = params;
@@ -20,7 +19,6 @@ const Home = class {
   render() {
     return `
     ${viewNav()}
-    ${viewHome()}
     `;
   }
 
@@ -30,4 +28,4 @@ const Home = class {
   }
 };
 
-export default Home;
+export default Model;

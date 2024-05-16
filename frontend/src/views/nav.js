@@ -15,6 +15,7 @@ export default () => (`
 
       <div class="hidden md:flex items-center space-x-1">
         <a href="/models" class="py-5 px-3 text-gray-700 hover:text-gray-900">Models</a>
+        <a href="/my-events" class="py-5 px-3 text-gray-700 hover:text-gray-900">My Events</a>
       </div>
     </div>
 
@@ -34,7 +35,10 @@ export default () => (`
   </div>
 </div>
 <div class="mobile-menu hidden md:hidden">
-  <a href="/dashboard" class="block py-2 px-4 text-sm hover:bg-gray-200">Dashboard</a>
+  <a href="/models" class="block py-2 px-4 text-sm hover:bg-gray-200">Models</a>
+  <a href="/login" class="block py-2 px-4 text-sm hover:bg-gray-200">Login</a>
+  <a href="/register" class="block py-2 px-4 text-sm hover:bg-gray-200">Register</a>
+  <a href="/my-events" class="block py-2 px-4 text-sm hover:bg-gray-200">My Events</a>
 </div>
 </nav>
 `);

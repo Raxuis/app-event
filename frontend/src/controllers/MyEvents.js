@@ -3,7 +3,7 @@ import viewNav from '../views/nav';
 import viewAllModels from '../views/allModels';
 import viewBuiltModel from '../views/builtModel';
 
-class AllModelsController {
+class MyEvents {
   constructor() {
     this.el = document.querySelector('#root');
     this.initialize();
@@ -12,9 +12,9 @@ class AllModelsController {
   async initialize() {
     const elements = await this.getElements();
     if (elements !== null && elements.length > 0) {
-      this.renderAllModels(elements);
+      this.renderAllEvents(elements);
     } else {
-      this.renderNoModels();
+      this.renderNoEvents();
     }
   }
 
@@ -28,14 +28,14 @@ class AllModelsController {
 
   async getElements() {
     try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/models`);
+      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/events`);
       return response.data;
     } catch (error) {
       return null;
     }
   }
 
-  renderAllModels(elements) {
+  renderAllEvents(elements) {
     const html = `
       ${viewNav()}
       <div class="max-w-6xl mx-auto px-4">
@@ -44,40 +44,18 @@ class AllModelsController {
       </div>
     `;
     this.el.innerHTML = html;
-    this.attachEventListeners(elements);
-    this.attachAddButtonEventListener();
     this.navFunction();
   }
 
-  renderNoModels() {
+  renderNoEvents() {
     const html = `
       ${viewNav()}
       <div class="max-w-6xl mx-auto px-4">
-        <p class="text-3xl py-6">No models</p>
+        <p class="text-3xl py-6">You don't have events.</p>
       </div>
     `;
     this.el.innerHTML = html;
   }
-
-  attachEventListeners(models) {
-    models.forEach((model) => {
-      const readMoreButton = document.querySelector(`#read-more-${model.id}`);
-      if (readMoreButton) {
-        readMoreButton.addEventListener('click', () => this.navigateToModelDetail(model.id));
-      }
-    });
-  }
-
-  attachAddButtonEventListener() {
-    const addEventButton = document.querySelector('#add-event');
-    addEventButton.addEventListener('click', () => {
-      window.location.href = '/';
-    });
-  }
-
-  navigateToModelDetail(modelId) {
-    window.location.href = `/model/${modelId}`;
-  }
 }
 
-export default AllModelsController;
+export default MyEvents;

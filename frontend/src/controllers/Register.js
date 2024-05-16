@@ -10,6 +10,14 @@ const Register = class {
     this.run();
   }
 
+  navFunction() {
+    const btn = document.querySelector('.mobile-menu-button');
+    const menu = document.querySelector('.mobile-menu');
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  }
+
   passwordVerif(password, passwordConfirmation) {
     const passwordSpan = document.querySelector('.password-span');
     const confirmationSpan = document.querySelector('.confirmation-span');
@@ -112,6 +120,7 @@ const Register = class {
   run() {
     this.el.innerHTML = this.render();
     this.eventListeners();
+    this.navFunction();
   }
 };
 

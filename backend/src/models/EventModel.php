@@ -9,7 +9,7 @@ class EventModel extends SqlConnect
 {
   public function add(array $data): void
   {
-    $query = "INSERT INTO events (user_id, bot_id, message, image) VALUES (:user_id, :bot_id, :message, :image)";
+    $query = "INSERT INTO events (size, type) VALUES (:size, :type)";
 
     $req = $this->db->prepare($query);
     $req->execute($data);
@@ -40,19 +40,7 @@ class EventModel extends SqlConnect
   public function getAll(): bool|array|stdClass
   {
     $req = $this->db->prepare(
-      "SELECT messages.*,
-            CASE
-                WHEN u.id IS NULL THEN b.name
-                ELSE u.name
-            END AS name,
-            CASE
-                WHEN u.id IS NULL THEN b.avatar
-                ELSE u.avatar
-            END AS avatar
-        FROM messages
-        LEFT JOIN users AS u ON messages.user_id = u.id
-        LEFT JOIN bots AS b ON messages.bot_id = b.id
-        ORDER BY id ASC"
+      "SELECT * FROM events"
     );
     $req->execute();
 

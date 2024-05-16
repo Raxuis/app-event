@@ -17,9 +17,7 @@ class Users extends Controller
 
   public function postUsers()
   {
-    $body = (array) json_decode(file_get_contents('php://input'));
-
-    $this->users->add($body);
+    $this->users->add($this->body);
 
     return $this->users->getLast();
   }

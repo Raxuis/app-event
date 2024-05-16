@@ -16,9 +16,8 @@ class Event extends Controller
   }
   public function postEvent()
   {
-    $body = (array) json_decode(file_get_contents('php://input'));
 
-    $this->event->add($body);
+    $this->event->add($this->body);
 
     return $this->event->getLast();
   }

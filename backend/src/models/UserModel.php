@@ -52,25 +52,6 @@ class UserModel extends SqlConnect
       "avatar" => $data['avatar']
     ]);
   }
-  public function authenticate(array $data)
-  {
-    $query = "SELECT * FROM users WHERE email = :email";
-    $req = $this->db->prepare($query);
-    $req->execute(["email" => $data['email']]);
-
-    $user = $req->fetch(PDO::FETCH_ASSOC);
-
-    // if ($user && password_verify($data['password'], $user['password'])) {
-    //     return $user;
-    // } else {
-    //     return false;
-    // }
-    if ($user && $data['password'] == $user['password']) {
-      return $user;
-    } else {
-      return;
-    }
-  }
 
   public function getAll()
   {

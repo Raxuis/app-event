@@ -17,9 +17,8 @@ class Models extends Controller
 
   public function postModels()
   {
-    $body = (array) json_decode(file_get_contents('php://input'));
 
-    $this->models->add($body);
+    $this->models->add($this->body);
 
     return $this->models->getLast();
   }

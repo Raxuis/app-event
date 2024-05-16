@@ -17,9 +17,8 @@ class Model extends Controller
 
   public function postModel()
   {
-    $body = (array) json_decode(file_get_contents('php://input'));
 
-    $this->model->add($body);
+    $this->model->add($this->body);
 
     return $this->model->getLast();
   }
@@ -35,9 +34,8 @@ class Model extends Controller
   }
   public function putModel()
   {
-    $body = (array) json_decode(file_get_contents('php://input'));
 
-    $this->model->update($body);
+    $this->model->update($this->body);
 
     return $this->model->getLast();
   }

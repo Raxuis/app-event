@@ -15,7 +15,7 @@ class Events extends Controller
     parent::__construct($params);
   }
 
-  protected function getMessages()
+  protected function getEvents()
   {
     return $this->events->getAll();
   }

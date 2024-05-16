@@ -46,8 +46,15 @@ class AllModelsController {
     this.el.innerHTML = html;
     this.attachEventListeners(elements);
     this.showDialog();
-    this.navFunction();
     this.incrementDecrementInput();
+    this.datePickerFunction();
+    this.navFunction();
+  }
+
+  datePickerFunction() {
+    // eslint-disable-next-line no-undef
+    flatpickr('#datepicker', {
+    });
   }
 
   incrementDecrementInput() {
@@ -98,14 +105,8 @@ class AllModelsController {
     const activationBtn = document.getElementById('add-event');
     const cancelBtn = document.getElementById('cancel-dialog');
     const submitBtn = document.getElementById('submit-dialog');
-    activationBtn.addEventListener('click', async () => {
-      try {
-        const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/events`);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-
+    const form = document.getElementById('form-dialog');
+    activationBtn.addEventListener('click', () => {
       dialog.classList.remove('hidden');
       dialog.classList.add('flex');
       setTimeout(() => {
@@ -120,14 +121,54 @@ class AllModelsController {
         dialog.classList.add('hidden');
       }, 500);
     });
-    submitBtn.addEventListener('click', (e) => {
+    submitBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      dialog.classList.remove('opacity-100');
-      setTimeout(() => {
-        dialog.classList.remove('flex');
-        dialog.classList.add('hidden');
-      }, 500);
+      const response = await this.formSubmit(form);
+      if (response === true) {
+        dialog.classList.remove('opacity-100');
+        setTimeout(() => {
+          dialog.classList.remove('flex');
+          dialog.classList.add('hidden');
+        }, 500);
+      }
     });
+  }
+
+  async formSubmit(elForm) {
+    const errorText = document.getElementById('error-text');
+    const formData = new FormData(elForm);
+    console.log(formData.get('time'));
+
+    const requiredFields = ['name', 'description', 'place', 'image-url', 'quantity', 'time'];
+    if (requiredFields.every((field) => formData.get(field))) {
+      try {
+        const inputDate = new Date(formData.get('time'));
+        const formattedDate = `${inputDate.getFullYear()}-${String(inputDate.getMonth() + 1).padStart(2, '0')}-${String(inputDate.getDate()).padStart(2, '0')} ${String(inputDate.getHours()).padStart(2, '0')}:${String(inputDate.getMinutes()).padStart(2, '0')}:${String(inputDate.getSeconds()).padStart(2, '0')}`;
+        console.log(formattedDate);
+        await axios.post(`http://localhost:${process.env.BACKEND_PORT}/event`, {
+          name: formData.get('name'),
+          description: formData.get('description'),
+          place: formData.get('place'),
+          image: formData.get('image-url'),
+          size: formData.get('quantity'),
+          time: formattedDate,
+          // ! 👇 Edit this with session datas
+          user_id: 11
+        }, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        return true;
+      } catch (error) {
+        console.log(error);
+        errorText.innerHTML = 'An error occurred';
+        return false;
+      }
+    } else {
+      errorText.innerHTML = 'Please fill in all the fields';
+      return false;
+    }
   }
 
   navigateToModelDetail(modelId) {

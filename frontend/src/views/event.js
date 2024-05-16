@@ -23,9 +23,9 @@ export default (event) => {
                   </div>
               </div>
               <div class="p-4">
-                  <div class="flex items-center">
+                  <div class="flex items-center justify-between">
                       <h2 tabindex="0" class="focus:outline-none text-lg font-semibold">${event.name}</h2>
-                      <p tabindex="0" class="focus:outline-none text-xs text-gray-600 pl-5">${daysElapsed === 0 ? 'Today' : `${daysElapsed} days ago`}</p>
+                      <p tabindex="0" class="focus:outline-none text-xs text-gray-600 pr-10">${daysElapsed === 0 ? 'Today' : `${daysElapsed} days ago`}</p>
                   </div>
                   <p tabindex="0" class="focus:outline-none text-xs text-gray-600 mt-2">${event.description}</p>
                   <div class="flex mt-4">

@@ -8,7 +8,7 @@ export default () => (`
                 <h3 class="text-3xl font-extrabold">Sign Up</h3>
                 <p class="text-sm mt-4">Sign Up into our website and enjoy every features we offer.</p>
               </div>
-              <div class="flex justify-between">
+              <div class="flex max-sm:flex-col max-sm:space-y-6 justify-between">
               <div class="flex flex-col">
                 <label class="text-sm mb-2 block">Firstname</label>
                 <div class="relative flex items-center">

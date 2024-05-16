@@ -10,6 +10,7 @@ use App\Controllers\User;
 use App\Controllers\Users;
 use App\Controllers\Model;
 use App\Controllers\Models;
+use App\Controllers\UserEvents;
 
 new Router([
   'user/:id' => User::class,
@@ -20,5 +21,6 @@ new Router([
   'models' => Models::class,
   'event/:id' => Event::class,
   'event' => Event::class,
-  'events' => Events::class
+  'events' => Events::class,
+  'events/:user_email' => UserEvents::class
 ]);

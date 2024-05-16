@@ -28,6 +28,7 @@ class MyEvents {
 
   async getElements() {
     try {
+      // TODO : Add /user_id after /events
       const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/events`);
       return response.data;
     } catch (error) {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import viewNav from '../views/nav';
-import viewAllModels from '../views/allModels';
+import viewModels from '../views/models';
 import viewBuiltModel from '../views/builtModel';
 
 class AllModelsController {
@@ -39,7 +39,7 @@ class AllModelsController {
     const html = `
       ${viewNav()}
       <div class="max-w-6xl mx-auto px-4">
-        ${viewAllModels(elements)}
+        ${viewModels(elements)}
         ${viewBuiltModel()}
       </div>
     `;

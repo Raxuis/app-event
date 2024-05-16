@@ -28,8 +28,10 @@ class EventModel extends SqlConnect
       return $this->getLastUserMessage(1);
     }
     $req = $this->db->prepare(
-      "SELECT * FROM events
-      WHERE id = :id"
+      "SELECT e.*, u.firstname, u.lastname FROM e
+          INNER JOIN users AS u
+          ON e.user_id = u.id
+          WHERE e.id = :id"
     );
     $req->execute(["id" => $id]);
 
@@ -39,7 +41,9 @@ class EventModel extends SqlConnect
   public function getAll(): bool|array|stdClass
   {
     $req = $this->db->prepare(
-      "SELECT * FROM events"
+      "SELECT e.*, u.* FROM events as e
+      INNER JOIN users AS u
+      ON e.user_id = u.id"
     );
     $req->execute();
 

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import viewNav from '../views/nav';
-import viewAllModels from '../views/allModels';
-import viewBuiltModel from '../views/builtModel';
+import viewEvents from '../views/events';
 
 class MyEvents {
   constructor() {
@@ -40,8 +39,7 @@ class MyEvents {
     const html = `
       ${viewNav()}
       <div class="max-w-6xl mx-auto px-4">
-        ${viewAllModels(elements)}
-        ${viewBuiltModel()}
+        ${viewEvents(elements)}
       </div>
     `;
     this.el.innerHTML = html;

@@ -4,7 +4,7 @@ import Login from './controllers/Login';
 import Register from './controllers/Register';
 import MyEvents from './controllers/MyEvents';
 import './index.css';
-import Models from './controllers/AllModels';
+import Models from './controllers/Models';
 // import Model from './controllers/Model';
 
 const routes = [

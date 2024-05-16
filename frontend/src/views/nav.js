@@ -1,7 +1,7 @@
 import favicon from '../assets/favicon.png';
 
 export default () => (`
-<nav class="bg-gray-50">
+<nav class="bg-gray-50 py-1">
 <div class="max-w-6xl mx-auto px-4">
   <div class="flex justify-between">
 

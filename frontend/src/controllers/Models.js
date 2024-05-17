@@ -38,7 +38,7 @@ class AllModelsController {
   renderAllModels(elements) {
     const html = `
       ${viewNav()}
-      <div class="max-w-6xl mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-4 mb-16">
         ${viewModels(elements)}
         ${viewBuiltModel()}
       </div>
@@ -137,14 +137,12 @@ class AllModelsController {
   async formSubmit(elForm) {
     const errorText = document.getElementById('error-text');
     const formData = new FormData(elForm);
-    console.log(formData.get('time'));
 
     const requiredFields = ['name', 'description', 'place', 'image-url', 'quantity', 'time'];
     if (requiredFields.every((field) => formData.get(field))) {
       try {
         const inputDate = new Date(formData.get('time'));
         const formattedDate = `${inputDate.getFullYear()}-${String(inputDate.getMonth() + 1).padStart(2, '0')}-${String(inputDate.getDate()).padStart(2, '0')} ${String(inputDate.getHours()).padStart(2, '0')}:${String(inputDate.getMinutes()).padStart(2, '0')}:${String(inputDate.getSeconds()).padStart(2, '0')}`;
-        console.log(formattedDate);
         await axios.post(`http://localhost:${process.env.BACKEND_PORT}/event`, {
           name: formData.get('name'),
           description: formData.get('description'),
@@ -161,7 +159,6 @@ class AllModelsController {
         });
         return true;
       } catch (error) {
-        console.log(error);
         errorText.innerHTML = 'An error occurred';
         return false;
       }

@@ -1,16 +1,20 @@
 export default (event) => {
   const currentDate = new Date();
-
   const eventTime = new Date(event.created_at);
 
   const timeDifference = currentDate - eventTime;
 
+  const hoursElapsed = Math.floor(timeDifference / (1000 * 60 * 60));
+
   const daysElapsed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+  // eslint-disable-next-line no-nested-ternary
+  const timeString = daysElapsed === 0 ? (hoursElapsed === 0 ? 'Just now' : `${hoursElapsed}h ago`) : `${daysElapsed} days ago`;
 
   return `
       <div tabindex="0" class="focus:outline-none mx-2 w-72 xl:mb-0 mb-8 items-center mt-16 shadow-md">
           <div>
-              <img alt="person capturing an image" src=${event.image} tabindex="0" class="focus:outline-none w-full h-44" />
+              <img alt="${event.name}" src="${event.image}" tabindex="0" class="focus:outline-none w-full h-44" />
           </div>
           <div class="bg-white">
               <div class="flex items-center justify-between px-4 pt-4">
@@ -25,7 +29,7 @@ export default (event) => {
               <div class="p-4">
                   <div class="flex items-center justify-between">
                       <h2 tabindex="0" class="focus:outline-none text-lg font-semibold">${event.name}</h2>
-                      <p tabindex="0" class="focus:outline-none text-xs text-gray-600 pr-10">${daysElapsed === 0 ? 'Today' : `${daysElapsed} days ago`}</p>
+                      <p tabindex="0" class="focus:outline-none text-xs text-gray-600 pr-10">${timeString}</p>
                   </div>
                   <p tabindex="0" class="focus:outline-none text-xs text-gray-600 mt-2">${event.description}</p>
                   <div class="flex mt-4">

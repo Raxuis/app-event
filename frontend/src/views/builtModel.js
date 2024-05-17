@@ -28,13 +28,13 @@ export default () => (`
         <label for="quantity-input" class="text-gray-600">Places number</label>
         <div class="relative flex items-center w-full">
             <button type="button" id="decrement-button" data-input-counter-decrement="quantity" class="bg-primary border border-gray-300 rounded-s-lg p-3 h-11">
-                <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                <svg class="w-3 h-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
                 </svg>
             </button>
             <input type="text" id="quantity-input" name="quantity" data-input-counter aria-describedby="helper-text-explanation" class="border border-gray-300 h-11 text-center block w-full px-4 py-3" placeholder="999" required />
             <button type="button" id="increment-button" data-input-counter-increment="quantity" class="bg-primary border border-gray-300 rounded-e-lg p-3 h-11">
-                <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                <svg class="w-3 h-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
                 </svg>
             </button>
@@ -63,7 +63,7 @@ export default () => (`
                 class="h-11 w-10 input-button cursor-pointer rounded-r-md bg-transparent border-gray-300 border-t border-b border-r"
                 title="clear" data-clear
             >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mt-2 ml-1" viewBox="0 0 20 20" fill="#bf10ff">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mt-2 ml-1" viewBox="0 0 20 20" fill="#ef4444">
                     <path fill-rule="evenodd"
                           d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                           clip-rule="evenodd"/>
@@ -76,7 +76,7 @@ export default () => (`
       </div>
         <div class="flex flex-col space-y-2">
           <div class="w-full flex justify-center gap-20 pt-4">
-            <button class="py-2.5 px-6 rounded-lg text-sm font-medium bg-teal-200 text-teal-800" id="cancel-dialog">Cancel</button>
+            <button class="py-2.5 px-6 rounded-lg text-sm font-medium bg-red-500 text-white" id="cancel-dialog">Cancel</button>
             <button class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-primary" id="submit-dialog">Create</button>
           </div>
         </div>

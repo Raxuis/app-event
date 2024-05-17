@@ -1,6 +1,10 @@
 import logo from '../assets/logo.png';
 import eventSvg from '../assets/events.svg';
 import worldSvg from '../assets/world.svg';
+import eventsEdits from '../assets/homepage-bento/events-edits.webp';
+import eventsModels from '../assets/homepage-bento/events-models.webp';
+import peopleInvitations from '../assets/homepage-bento/people-invitations.webp';
+import safety from '../assets/homepage-bento/safety.webp';
 
 export default () => (`
 <div class="container my-24 mx-auto md:px-6">
@@ -63,79 +67,55 @@ export default () => (`
     </div>
   </section>
   <section class="bg-white border-b py-8">
-    <div class="container mx-auto flex flex-wrap pt-4 pb-12">
+    <div class="container mx-auto flex flex-wrap pt-4">
       <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800">
         What we offer.
       </h2>
       <div class="w-full mb-4">
         <div class="h-1 mx-auto  bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-fuchsia-500 via-transparent to-purple-400 w-64 opacity-25 my-0 py-0 rounded-t"></div>
       </div>
-      <div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
-        <div class="flex-1 bg-white rounded-t-lg rounded-b-none overflow-hidden shadow p-4">
-          <div class="flex flex-wrap no-underline hover:no-underline">
-            <p class="w-full text-gray-600 text-xs md:text-sm px-6">
-              xSAFETY
-            </p>
-            <div class="w-full font-bold text-xl text-gray-800 px-6">
-              Safe Events
-            </div>
-            <p class="text-gray-800 text-base px-6 mb-5">
-            Experience peace of mind with our meticulously crafted secured API Routes, designed to safeguard your data and streamline your processes effortlessly. 
-            </p>
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8 w-full p-6">
+      <div
+          class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
+          <img src=${safety} loading="lazy" alt="Safe Events" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+
+          <div
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
           </div>
-        </div>
-        <div class="flex-none mt-auto bg-white rounded-b-lg rounded-t-none overflow-hidden shadow py-4">
-          <div class="flex items-center justify-center">
-            <button class="mx-auto lg:mx-0  bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-fuchsia-500 via-transparent to-purple-400 text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-              Action
-            </button>
-          </div>
-        </div>
+
+          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Safe Events</span>
       </div>
-      <div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
-        <div class="flex-1 bg-white rounded-t-lg rounded-b-none overflow-hidden shadow p-4">
-          <div class="flex flex-wrap no-underline hover:no-underline">
-            <p class="w-full text-gray-600 text-xs md:text-sm px-6">
-              xMODELS
-            </p>
-            <div class="w-full font-bold text-xl text-gray-800 px-6">
-              Events Models
-            </div>
-            <p class="text-gray-800 text-base px-6 mb-5">
-            From corporate seminars to weddings and everything in between, we provide a diverse range of pre-designed frameworks to kickstart your planning process.
-            </p>
+      <div
+          class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
+          <img src=${eventsModels} loading="lazy" alt="Event Models" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+
+          <div
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
           </div>
-        </div>
-        <div class="flex-none mt-auto bg-white rounded-b-lg rounded-t-none overflow-hidden shadow py-4">
-          <div class="flex items-center justify-center">
-            <button class="mx-auto lg:mx-0  bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-fuchsia-500 via-transparent to-purple-400 text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-              Action
-            </button>
-          </div>
-        </div>
+
+          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Events Models</span>
       </div>
-      <div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink">
-        <div class="flex-1 bg-white rounded-t-lg  rounded-b-none overflow-hidden shadow p-4">
-          <div class="flex flex-wrap no-underline hover:no-underline">
-            <p class="w-full text-gray-600 text-xs md:text-sm px-6">
-              xINVITES
-            </p>
-            <div class="w-full font-bold text-xl text-gray-800 px-6">
-              Invite people
-            </div>
-            <p class="text-gray-800 text-base px-6 mb-5">
-            Gone are the days of manual outreach. Our intuitive interface allows event organizers to seamlessly send invitations to desired guests, all within a few clicks.
-            </p>
+      <div
+          class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
+          <img src=${peopleInvitations} loading="lazy" alt="People Invitations" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+
+          <div
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
           </div>
-        </div>
-        <div class="flex-none mt-auto bg-white rounded-b-lg rounded-t-none overflow-hidden shadow py-4">
-          <div class="flex items-center justify-center">
-            <button class="mx-auto lg:mx-0  bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-fuchsia-500 via-transparent to-purple-400 text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-              Action
-            </button>
-          </div>
-        </div>
+
+          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">People Invitations</span>
       </div>
+      <div
+          class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
+          <img src=${eventsEdits} loading="lazy" alt="Events Edits" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+
+          <div
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
+          </div>
+
+          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Events Edits</span>
+      </div>
+  </div>
     </div>
   </section>
   <section class="container mx-auto text-center pt-8 pb-6 mb-12">

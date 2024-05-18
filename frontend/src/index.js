@@ -5,9 +5,8 @@ import Register from './controllers/Register';
 import MyEvents from './controllers/MyEvents';
 import './index.css';
 import Models from './controllers/Models';
-import CreateCustomEvent from './controllers/CreateCustomEvent';
-// import Model from './controllers/Model';
-
+import Account from './controllers/Account';
+// // import Model from './controllers/Model';
 const routes = [
   {
     url: '/',
@@ -30,13 +29,13 @@ const routes = [
     controller: MyEvents
   },
   {
-    url: '/create-custom-event',
-    controller: CreateCustomEvent
+    url: '/account',
+    controller: Account
   }
   /* ,
-  {
-    url: '/model/:id',
-    controller: Model
-  } */
+//   {
+//     url: '/model/:id',
+//     controller: Model
+//   } */
 ];
 new Router(routes);

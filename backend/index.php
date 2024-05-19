@@ -11,6 +11,7 @@ use App\Controllers\Users;
 use App\Controllers\Model;
 use App\Controllers\Models;
 use App\Controllers\UserEvents;
+use App\Controllers\Form;
 
 new Router([
   'user/:id' => User::class,
@@ -22,5 +23,6 @@ new Router([
   'event/:id' => Event::class,
   'event' => Event::class,
   'events' => Events::class,
-  'events/:user_email' => UserEvents::class
+  'events/:user_id' => UserEvents::class,
+  'form-infos' => Form::class
 ]);

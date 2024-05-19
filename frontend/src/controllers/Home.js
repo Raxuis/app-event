@@ -5,6 +5,7 @@ const Home = class {
   constructor(params) {
     this.el = document.querySelector('#root');
     this.params = params;
+    this.isLogged = localStorage.getItem('isLogged');
 
     this.run();
   }
@@ -19,7 +20,7 @@ const Home = class {
 
   render() {
     return `
-    ${viewNav()}
+    ${viewNav(this.isLogged)}
     ${viewHome()}
     `;
   }

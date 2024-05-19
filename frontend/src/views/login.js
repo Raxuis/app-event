@@ -3,7 +3,7 @@ export default () => (`
       <div class="min-h-screen flex flex-col items-center justify-center py-6 px-4">
         <div class="grid md:grid-cols-2 items-center gap-4 max-w-7xl w-full">
           <div class="border border-gray-300 rounded-md p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] max-md:mx-auto">
-            <form class="space-y-6">
+            <form class="space-y-6" id="login-form">
               <div class="mb-10">
                 <h3 class="text-3xl font-extrabold">Sign in</h3>
                 <p class="text-sm mt-4">Sign in to your account and explore a world of possibilities. Your journey begins here.</p>
@@ -28,7 +28,7 @@ export default () => (`
                 </div>
               </div>
               <div class="!mt-10">
-                <button type="button" class="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white duration-300 bg-[#333] hover:bg-black focus:outline-none">
+                <button type="button" class="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white duration-300 bg-[#333] hover:bg-black focus:outline-none" id="login-button">
                   Log in
                 </button>
               <div class="error-message w-full text-red-500 pt-2"></div>

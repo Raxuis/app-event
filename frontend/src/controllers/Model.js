@@ -4,6 +4,7 @@ const Model = class {
   constructor(params) {
     this.el = document.querySelector('#root');
     this.params = params;
+    this.isLogged = localStorage.getItem('isLogged');
 
     this.run();
   }
@@ -18,7 +19,10 @@ const Model = class {
 
   render() {
     return `
-    ${viewNav()}
+    ${viewNav(this.isLogged)}
+    <div class="container mx-auto flex flex-col items-center justify-center h-screen">
+      <h1 class="text-5xl font-bold text-center">Model n°${this.params}</h1>
+    </div>
     `;
   }
 

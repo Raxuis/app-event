@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+// import axios from 'axios';
 import viewNav from '../views/nav';
 import viewLogin from '../views/login';
 
@@ -5,6 +7,7 @@ const Login = class {
   constructor(params) {
     this.el = document.querySelector('#root');
     this.params = params;
+    this.isLogged = localStorage.getItem('isLogged');
     this.run();
   }
 
@@ -28,51 +31,51 @@ const Login = class {
         }
       });
     });
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('login-form');
+      const loginButton = document.querySelector('#login-button');
+      // const errorMessage = document.querySelector('.error-message');
+
+      loginButton.addEventListener('click', () => {
+        const formData = new FormData(form);
+        localStorage.setItem('email', formData.get('email'));
+        localStorage.setItem('isLogged', true);
+        window.location.href = '/';
+        // if (formData.get('password') && formData.get('email')) {
+        //   axios.post(`http://localhost:${process.env.BACKEND_PORT}/auth`, {
+        //     email: formData.get('email'),
+        //     password: formData.get('password')
+        //   }, {
+        //     headers: {
+        //       'Content-Type': 'application/json'
+        //     }
+        //   })
+        //     .then((data) => {
+        //       console.log(data);
+        //     })
+        //     .catch((error) => {
+        //       if (error.response && error.response.status === 401) {
+        //         errorMessage.innerHTML = 'Unauthorized access. Please login again.';
+        //       } else {
+        // eslint-disable-next-line max-len
+        //         errorMessage.innerHTML = error.response ? error.response.data.message : 'An error occurred';
+        //       }
+        //     });
+        // } else {
+        //   errorMessage.innerHTML = 'Email and password are required';
+        // }
+      });
+    });
   }
 
   render() {
     return `
-        ${viewNav()}
+        ${viewNav(this.isLogged)}
         ${viewLogin()}
     `;
   }
 
   run() {
-    // document.addEventListener('DOMContentLoaded', () => {
-    // const loginButton = document.querySelector('#login-button');
-    // const emailInput = document.querySelector('input[name="email"]');
-    // const passwordInput = document.querySelector('input[name="password"]');
-
-    // loginButton.addEventListener('click', () => {
-    //   const email = emailInput.value.trim();
-    //   const password = passwordInput.value.trim();
-
-    //   if (email && password) {
-    //     const loginData = { email, password };
-
-    //     axios.post(`http://localhost:${process.env.LOCALHOST_PORT}/user/login`, {
-    //       headers: {
-    //         'Content-Type': 'application/json'
-    //       },
-    //       body: JSON.stringify(loginData)
-    //     })
-    //       .then((response) => {
-    //         if (response.ok) {
-    //           return response.json();
-    //         }
-    //         throw new Error(response.statusText);
-    //       })
-    //       .then((data) => {
-    //         console.log(data);
-    //       })
-    //       .catch((error) => {
-    //         console.error(error.message);
-    //       });
-    //   } else {
-    //     console.error('Email and password are required');
-    //   }
-    // });
-
     this.el.innerHTML = this.render();
     this.eventListeners();
     this.navFunction();

@@ -5,6 +5,8 @@ import viewEvents from '../views/events';
 class MyEvents {
   constructor() {
     this.el = document.querySelector('#root');
+    this.isLogged = localStorage.getItem('isLogged');
+    this.userId = localStorage.getItem('id');
     this.initialize();
   }
 
@@ -28,7 +30,7 @@ class MyEvents {
   async getElements() {
     try {
       // TODO : Add /user_id after /events
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/events`);
+      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/events/${this.userId}`);
       return response.data;
     } catch (error) {
       return null;
@@ -36,10 +38,12 @@ class MyEvents {
   }
 
   renderAllEvents(elements) {
+    // eslint-disable-next-line no-console
+    console.log(elements);
     const html = `
-      ${viewNav()}
+      ${viewNav(this.isLogged)}
       <div class="max-w-6xl mx-auto px-4">
-        ${viewEvents(elements)}
+        ${viewEvents(elements, this.userId)}
       </div>
     `;
     this.el.innerHTML = html;
@@ -48,7 +52,7 @@ class MyEvents {
 
   renderNoEvents() {
     const html = `
-      ${viewNav()}
+      ${viewNav(this.isLogged)}
       <div class="max-w-6xl mx-auto px-4">
         <p class="text-3xl py-6">You don't have events.</p>
       </div>

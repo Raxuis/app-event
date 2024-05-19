@@ -2,11 +2,13 @@ import axios from 'axios';
 import viewNav from '../views/nav';
 import viewModels from '../views/models';
 import viewBuiltModel from '../views/builtModel';
+import Model from './Model';
 
 class AllModelsController {
   constructor() {
     this.el = document.querySelector('#root');
     this.initialize();
+    this.isLogged = localStorage.getItem('isLogged');
   }
 
   async initialize() {
@@ -37,7 +39,7 @@ class AllModelsController {
 
   renderAllModels(elements) {
     const html = `
-      ${viewNav()}
+      ${viewNav(this.isLogged)}
       <div class="max-w-6xl mx-auto px-4 mb-16">
         ${viewModels(elements)}
         ${viewBuiltModel()}
@@ -169,7 +171,7 @@ class AllModelsController {
   }
 
   navigateToModelDetail(modelId) {
-    window.location.href = `/model/${modelId}`;
+    new Model(modelId);
   }
 }
 

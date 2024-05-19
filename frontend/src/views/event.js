@@ -1,4 +1,4 @@
-export default (event) => {
+export default (event, userId) => {
   const currentDate = new Date();
   const eventTime = new Date(event.created_at);
 
@@ -14,7 +14,7 @@ export default (event) => {
   return `
       <div tabindex="0" class="focus:outline-none mx-2 w-72 xl:mb-0 mb-8 items-center mt-16 shadow-md">
           <div>
-              <img alt="${event.name}" src="${event.image}" tabindex="0" class="focus:outline-none w-full h-44" />
+              <img alt="${event.event_name}" src="${event.image}" tabindex="0" class="focus:outline-none w-full h-44" />
           </div>
           <div class="bg-white">
               <div class="flex items-center justify-between px-4 pt-4">
@@ -28,7 +28,7 @@ export default (event) => {
               </div>
               <div class="p-4">
                   <div class="flex items-center justify-between">
-                      <h2 tabindex="0" class="focus:outline-none text-lg font-semibold">${event.name}</h2>
+                      <h2 tabindex="0" class="focus:outline-none text-lg font-semibold">${event.event_name}</h2>
                       <p tabindex="0" class="focus:outline-none text-xs text-gray-600 pr-10">${timeString}</p>
                   </div>
                   <p tabindex="0" class="focus:outline-none text-xs text-gray-600 mt-2">${event.description}</p>
@@ -44,6 +44,12 @@ export default (event) => {
                       <h2 tabindex="0" class="focus:outline-none text-indigo-700 text-xs font-semibold">${event.place}</h2>
                       <h3 tabindex="0" class="focus:outline-none text-indigo-700 text-sm font-semibold">${event.time}</h3>
                   </div>
+                  ${parseInt(userId, 10) === event.user_id ? `
+                  <div class="flex justify-between items-center">
+                  <button data-ripple-light="true" type="button" class="duration-500 select-none rounded-lg bg-primary py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Edit</button>
+                  <button data-ripple-light="true" type="button" class="duration-500 select-none rounded-lg bg-primary py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Read More</button>
+                  </div>
+                  ` : ''}
               </div>
           </div>
       </div>

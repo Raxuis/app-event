@@ -14,12 +14,12 @@ class UserEvents extends Controller
 
     parent::__construct($params);
   }
-  public function getEvent()
+  public function getUserEvents()
   {
-    return $this->event->getUserEvents(intval($this->params['user_email']));
+    return $this->event->getUserEvents(intval($this->params['user_id']));
   }
 
-  public function postEvent()
+  public function postUserEvents()
   {
     $body = (array) json_decode(file_get_contents('php://input'));
 
@@ -28,11 +28,11 @@ class UserEvents extends Controller
     return $this->event->getLast();
   }
 
-  public function deleteEvent()
+  public function deleteUserEvents()
   {
     return $this->event->delete(intval($this->params['id']));
   }
-  public function putEvent()
+  public function putUserEvents()
   {
 
     $this->event->update($this->body);

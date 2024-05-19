@@ -1,14 +1,26 @@
 import axios from 'axios';
 import viewNav from '../views/nav';
-import viewRegister from '../views/register';
+import viewAccount from '../views/account';
 
-const Register = class {
+const Account = class {
   constructor(params) {
     this.el = document.querySelector('#root');
     this.params = params;
-    this.emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     this.isLogged = localStorage.getItem('isLogged');
+
     this.run();
+  }
+
+  async getUserInfos() {
+    const id = localStorage.getItem('id');
+    try {
+      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/user/${id}`);
+      // eslint-disable-next-line no-console
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return null;
+    }
   }
 
   navFunction() {
@@ -17,6 +29,14 @@ const Register = class {
     btn.addEventListener('click', () => {
       menu.classList.toggle('hidden');
     });
+  }
+
+  async render() {
+    const userInfos = await this.getUserInfos();
+    return `
+      ${viewNav(this.isLogged)}
+      ${viewAccount(userInfos)}
+    `;
   }
 
   passwordVerif(password, passwordConfirmation) {
@@ -42,50 +62,39 @@ const Register = class {
     });
   }
 
-  emailVerify(email) {
-    const emailSpan = document.querySelector('.email-span');
-    email.addEventListener('input', (e) => {
-      if (!e.target.value.match(this.emailRegex)) {
-        emailSpan.innerHTML = 'Email is not valid';
-      } else {
-        emailSpan.innerHTML = '';
-      }
-    });
-  }
-
-  formSubmit(elForm) {
-    elForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const formData = new FormData(elForm);
-      if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length >= 8 && formData.get('password-confirmation').length >= 8) {
-        axios.post(`http://localhost:${process.env.BACKEND_PORT}/user/register`, {
-          firstname: formData.get('firstname'),
-          lastname: formData.get('lastname'),
-          email: formData.get('email'),
-          password: formData.get('password')
-        }, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-          .then(() => {
-            window.location.href = '/';
-          })
-          .catch(() => {
-            this.errorInfos();
-          });
-      }
-    });
-  }
+  // formSubmit(elForm) {
+  //   elForm.addEventListener('submit', (e) => {
+  //     e.preventDefault();
+  //     const formData = new FormData(elForm);
+  // eslint-disable-next-line max-len
+  //     if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length >= 8 && formData.get('password-confirmation').length >= 8) {
+  //       axios.put(`http://localhost:${process.env.BACKEND_PORT}/user/register`, {
+  //         firstname: formData.get('firstname'),
+  //         lastname: formData.get('lastname'),
+  //         email: formData.get('email'),
+  //         password: formData.get('password')
+  //       }, {
+  //         headers: {
+  //           'Content-Type': 'application/json'
+  //         }
+  //       })
+  //         .then(() => {
+  //           window.location.href = '/';
+  //         })
+  //         .catch(() => {
+  //           this.errorInfos();
+  //         });
+  //     }
+  //   });
+  // }
 
   eventListeners() {
     document.addEventListener('DOMContentLoaded', () => {
       const elForm = document.querySelector('.register-form');
-      const elPassword = document.querySelector('#password');
-      const elConfirmationPassword = document.querySelector('#confirmation-password');
+      const elPassword = document.querySelector('#new-password');
+      const elConfirmationPassword = document.querySelector('#new-confirmation-password');
       const elPasswordToggler = document.querySelector('.password-toggler');
       const elConfirmationPasswordToggler = document.querySelector('.confirmation-password-toggler');
-      const emailInput = document.querySelector('.email-input');
 
       elPasswordToggler.addEventListener('click', () => {
         if (elPassword.type === 'password') {
@@ -101,7 +110,6 @@ const Register = class {
           elConfirmationPassword.type = 'password';
         }
       });
-      this.emailVerify(emailInput);
       this.passwordVerif(elPassword, elConfirmationPassword);
       this.formSubmit(elForm);
     });
@@ -111,18 +119,10 @@ const Register = class {
     document.querySelector('.error-message').innerHTML = 'An account already exists with this email. Try log in!';
   }
 
-  render() {
-    return `
-        ${viewNav(this.isLogged)}
-        ${viewRegister()}
-    `;
-  }
-
-  run() {
-    this.el.innerHTML = this.render();
-    this.eventListeners();
+  async run() {
+    this.el.innerHTML = await this.render();
     this.navFunction();
   }
 };
 
-export default Register;
+export default Account;

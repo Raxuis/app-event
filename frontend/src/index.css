@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ms-drop ul li[role="option"]:last-child {
+  @apply mb-2;
+}

@@ -25,6 +25,10 @@ export default () => (`
         <input type="text" name="image-url" id="image-url" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter image url" />
       </div>
       <div class="flex flex-col space-y-2">
+      <label for="guests" class="text-gray-600">Guests</label>
+      <select id="select1" name="guests" class="w-full border border-gray-300 p-1 rounded-md outline-[#333] flex justify-center"  data-test="select1"></select>
+      </div>
+      <div class="flex flex-col space-y-2">
         <label for="quantity-input" class="text-gray-600">Places number</label>
         <div class="relative flex items-center w-full">
             <button type="button" id="decrement-button" data-input-counter-decrement="quantity" class="bg-primary border border-gray-300 rounded-s-lg p-3 h-11">

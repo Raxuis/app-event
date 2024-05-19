@@ -74,7 +74,13 @@ class UserModel extends SqlConnect
         $req = $this->db->prepare("SELECT * FROM users");
         $req->execute();
 
-        return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
+        $users = $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : [];
+
+        foreach ($users as &$user) {
+            unset($user['password']);
+        }
+
+        return $users;
     }
 
     public function getLast()

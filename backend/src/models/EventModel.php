@@ -101,11 +101,8 @@ class EventModel extends SqlConnect
   public function get(int $id)
   {
     //TODO : Add case model_id or group_id isn't null
-    if ($id < 0) {
-      return $this->getLastUserMessage(1);
-    }
     $req = $this->db->prepare(
-      "SELECT e.*, u.firstname, u.lastname FROM e
+      "SELECT e.*, u.firstname, u.lastname FROM events as e
           INNER JOIN users AS u
           ON e.user_id = u.id
           WHERE e.id = :id"
@@ -148,13 +145,6 @@ class EventModel extends SqlConnect
   {
     $req = $this->db->prepare("SELECT * FROM events ORDER BY id DESC LIMIT 1");
     $req->execute();
-
-    return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
-  }
-  public function getLastUserMessage(int $id)
-  {
-    $req = $this->db->prepare("SELECT * FROM events WHERE user_id = :user_id ORDER BY date DESC LIMIT 1");
-    $req->execute(["user_id" => $id]);
 
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }

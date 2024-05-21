@@ -15,8 +15,6 @@ const Account = class {
     const id = localStorage.getItem('id');
     try {
       const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/user/${id}`);
-      // eslint-disable-next-line no-console
-      console.log(response.data);
       return response.data;
     } catch (error) {
       return null;

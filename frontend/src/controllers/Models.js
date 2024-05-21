@@ -138,8 +138,6 @@ class AllModelsController {
         dialog.classList.add('opacity-100');
       }, 20);
       const users = await this.getUsers();
-      // eslint-disable-next-line no-console
-      console.log(users);
       if (users) {
         this.populateUserSelect(users);
       }
@@ -185,7 +183,7 @@ class AllModelsController {
     const errorText = document.getElementById('error-text');
     const formData = new FormData(elForm);
 
-    const requiredFields = ['name', 'description', 'place', 'image-url', 'quantity', 'time', 'group-name'];
+    const requiredFields = ['name', 'description', 'place', 'quantity', 'time', 'group-name'];
     if (requiredFields.every((field) => formData.get(field)) && this.ms1.getSelects().length > 0) {
       try {
         const inputDate = new Date(formData.get('time'));
@@ -194,19 +192,23 @@ class AllModelsController {
         const selectedUserIds = this.ms1.getSelects();
         // Push the id of the user who has made the event
         selectedUserIds.push(11);
-
-        await axios.post(`http://localhost:${process.env.BACKEND_PORT}/event`, {
+        const imageUrl = formData.get('image-url');
+        const eventData = {
           name: formData.get('name'),
           description: formData.get('description'),
           place: formData.get('place'),
-          image: formData.get('image-url'),
           size: formData.get('quantity'),
           time: formattedDate,
           user_ids: selectedUserIds,
           user_id: 11,
           group_name: formData.get('group-name')
+        };
 
-        }, {
+        if (imageUrl) {
+          eventData.image = imageUrl;
+        }
+
+        await axios.post(`http://localhost:${process.env.BACKEND_PORT}/event`, eventData, {
           headers: {
             'Content-Type': 'application/json'
           }

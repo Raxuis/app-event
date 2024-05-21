@@ -14,13 +14,12 @@ const Model = class {
 
   async initialize() {
     const users = await this.getUsers();
-    // console.log(users);
     if (users) {
       this.populateUserSelect(users);
     }
   }
 
-  attacheEventListeners() {
+  attachEventListeners() {
     const submitBtn = document.getElementById('submit-model');
     const cancelBtn = document.getElementById('cancel-model');
     const form = document.getElementById('form-model');
@@ -150,7 +149,7 @@ const Model = class {
     this.el.innerHTML = await this.render();
     this.navFunction();
     this.initialize();
-    this.attacheEventListeners();
+    this.attachEventListeners();
   }
 };
 

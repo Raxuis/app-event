@@ -1,3 +1,5 @@
+import gradient from '../assets/gradient.jpeg';
+
 export default (event, userId) => {
   const currentDate = new Date();
   const eventTime = new Date(event.created_at);
@@ -12,10 +14,13 @@ export default (event, userId) => {
   const timeString = daysElapsed === 0 ? (hoursElapsed === 0 ? 'Just now' : `${hoursElapsed}h ago`) : (daysElapsed === 1 ? `${daysElapsed} day ago` : `${daysElapsed} days ago`);
 
   return `
-      <div tabindex="0" class="focus:outline-none mx-2 w-72 xl:mb-0 mb-8 items-center mt-16 shadow-md">
-          <div>
-              <img alt="${event.event_name}" src="${event.image}" tabindex="0" class="focus:outline-none w-full h-44" />
-          </div>
+      <div tabindex="0" class="focus:outline-none mx-2 w-72 xl:mb-0 mb-8 items-center mt-16 shadow-md relative" id="card-${event.event_id}">
+      ${parseInt(userId, 10) === event.user_id ? `
+      <a id="delete-${event.event_id}" class="cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 lucide lucide-x absolute right-1 top-1"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </a>
+      ` : ''}
+          <img alt="${event.event_name}" src="${event.image ? event.image : gradient}" tabindex="0" class="focus:outline-none w-full h-44" />
           <div class="bg-white">
               <div class="flex items-center justify-between px-4 pt-4">
                   <div class="flex gap-2">

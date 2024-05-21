@@ -4,10 +4,12 @@ import viewEvents from '../views/events';
 
 class MyEvents {
   constructor() {
-    this.el = document.querySelector('#root');
-    this.isLogged = localStorage.getItem('isLogged');
-    this.userId = localStorage.getItem('id');
-    this.initialize();
+    document.addEventListener('DOMContentLoaded', () => {
+      this.el = document.querySelector('#root');
+      this.isLogged = localStorage.getItem('isLogged');
+      this.userId = localStorage.getItem('id');
+      this.initialize();
+    });
   }
 
   async initialize() {
@@ -22,24 +24,51 @@ class MyEvents {
   navFunction() {
     const btn = document.querySelector('.mobile-menu-button');
     const menu = document.querySelector('.mobile-menu');
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
+    if (btn && menu) {
+      btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+    }
   }
 
   async getElements() {
     try {
-      // TODO : Add /user_id after /events
       const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/events/${this.userId}`);
       return response.data;
     } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error fetching elements:', error);
       return null;
     }
   }
 
+  attachEventListeners(events) {
+    events.forEach((event) => {
+      const deleteButton = document.getElementById(`delete-${event.event_id}`);
+      const cardEvent = document.getElementById(`card-${event.event_id}`);
+      if (deleteButton) {
+        deleteButton.addEventListener('click', () => this.deleteEvent(event.event_id, cardEvent));
+      }
+    });
+  }
+
+  async deleteEvent(eventId, cardEvent) {
+    try {
+      await axios.delete(`http://localhost:${process.env.BACKEND_PORT}/event/${eventId}`, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      cardEvent.remove();
+      return true;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error deleting event:', error);
+      return false;
+    }
+  }
+
   renderAllEvents(elements) {
-    // eslint-disable-next-line no-console
-    console.log(elements);
     const html = `
       ${viewNav(this.isLogged)}
       <div class="max-w-6xl mx-auto px-4">
@@ -48,6 +77,7 @@ class MyEvents {
     `;
     this.el.innerHTML = html;
     this.navFunction();
+    this.attachEventListeners(elements);
   }
 
   renderNoEvents() {

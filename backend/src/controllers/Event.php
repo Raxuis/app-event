@@ -24,7 +24,8 @@ class Event extends Controller
 
   public function deleteEvent()
   {
-    return $this->event->delete(intval($this->params['id']));
+    $this->event->delete(intval($this->params['id']));
+    return $this->event->get($this->params['id']);
   }
 
   public function getEvent()

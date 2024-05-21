@@ -172,13 +172,15 @@ class AllModelsController {
     const errorText = document.getElementById('error-text');
     const formData = new FormData(elForm);
 
-    const requiredFields = ['name', 'description', 'place', 'image-url', 'quantity', 'time'];
-    if (requiredFields.every((field) => formData.get(field))) {
+    const requiredFields = ['name', 'description', 'place', 'image-url', 'quantity', 'time', 'group-name'];
+    if (requiredFields.every((field) => formData.get(field)) && this.ms1.getSelects().length > 0) {
       try {
         const inputDate = new Date(formData.get('time'));
         const formattedDate = `${inputDate.getFullYear()}-${String(inputDate.getMonth() + 1).padStart(2, '0')}-${String(inputDate.getDate()).padStart(2, '0')} ${String(inputDate.getHours()).padStart(2, '0')}:${String(inputDate.getMinutes()).padStart(2, '0')}:${String(inputDate.getSeconds()).padStart(2, '0')}`;
 
         const selectedUserIds = this.ms1.getSelects();
+        // Push the id of the user who has made the event
+        selectedUserIds.push(11);
 
         await axios.post(`http://localhost:${process.env.BACKEND_PORT}/event`, {
           name: formData.get('name'),
@@ -187,7 +189,10 @@ class AllModelsController {
           image: formData.get('image-url'),
           size: formData.get('quantity'),
           time: formattedDate,
-          user_ids: selectedUserIds
+          user_ids: selectedUserIds,
+          user_id: 11,
+          group_name: formData.get('group-name')
+
         }, {
           headers: {
             'Content-Type': 'application/json'

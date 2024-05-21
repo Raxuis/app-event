@@ -8,7 +8,8 @@ use stdClass;
 
 class EventModel extends SqlConnect
 {
-  public function add(array $data): void
+  protected string $type;
+  public function add(array $data)
   {
     try {
       // Step 1: Create a new group if 'user_ids' is provided
@@ -38,7 +39,7 @@ class EventModel extends SqlConnect
       }
 
       if (isset($data['model_id'])) {
-        $query .= ", model_id";
+        $query .= ", model_id, type";
       }
 
       if (isset($data['group_id'])) {
@@ -52,7 +53,7 @@ class EventModel extends SqlConnect
       }
 
       if (isset($data['model_id'])) {
-        $query .= ", :model_id";
+        $query .= ", :model_id, :type";
       }
 
       if (isset($data['group_id'])) {
@@ -77,6 +78,8 @@ class EventModel extends SqlConnect
 
       if (isset($data['model_id'])) {
         $req->bindValue(':model_id', $data['model_id']);
+        $type = $this->getModelType($data['model_id'])['type'];
+        $req->bindValue(':type', $type);
       }
 
       if (isset($data['group_id'])) {
@@ -159,6 +162,19 @@ class EventModel extends SqlConnect
   {
     $req = $this->db->prepare("SELECT g.id FROM groups as g ORDER BY id DESC LIMIT 1");
     $req->execute();
+
+    return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
+  }
+  public function getModelType(int $id)
+  {
+    $req = $this->db->prepare("
+    SELECT m.type
+    FROM models AS m
+    WHERE m.id = :id
+    ");
+    $req->execute([
+      "id" => $id
+    ]);
 
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }

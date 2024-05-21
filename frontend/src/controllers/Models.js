@@ -10,14 +10,28 @@ class AllModelsController {
     this.el = document.querySelector('#root');
     this.initialize();
     this.isLogged = localStorage.getItem('isLogged');
+    window.addEventListener('popstate', (event) => {
+      if (event.state && event.state.modelId) {
+        this.navigateToModelDetail(event.state.modelId);
+      } else {
+        this.initialize();
+      }
+    });
   }
 
   async initialize() {
-    const elements = await this.getElements();
-    if (elements !== null && elements.length > 0) {
-      this.renderAllModels(elements);
+    const urlParams = new URLSearchParams(window.location.search);
+    const modelId = urlParams.get('modelId');
+
+    if (modelId) {
+      this.navigateToModelDetail(modelId);
     } else {
-      this.renderNoModels();
+      const elements = await this.getElements();
+      if (elements !== null && elements.length > 0) {
+        this.renderAllModels(elements);
+      } else {
+        this.renderNoModels();
+      }
     }
   }
 
@@ -65,8 +79,7 @@ class AllModelsController {
 
   datePickerFunction() {
     // eslint-disable-next-line no-undef
-    flatpickr('#datepicker', {
-    });
+    flatpickr('#datepicker', {});
   }
 
   incrementDecrementInput() {
@@ -210,6 +223,7 @@ class AllModelsController {
   }
 
   navigateToModelDetail(modelId) {
+    window.history.pushState({ modelId }, '', `?modelId=${modelId}`);
     new Model(modelId);
   }
 }

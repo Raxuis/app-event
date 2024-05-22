@@ -1,6 +1,7 @@
 import axios from 'axios';
 import viewNav from '../views/nav';
 import viewEvents from '../views/events';
+import Event from './Event';
 
 class MyEvents {
   constructor() {
@@ -9,15 +10,29 @@ class MyEvents {
       this.isLogged = localStorage.getItem('isLogged');
       this.userId = localStorage.getItem('id');
       this.initialize();
+      window.addEventListener('popstate', (event) => {
+        if (event.state && event.state.eventId) {
+          this.navigateToEventDetail(event.state.eventId);
+        } else {
+          this.initialize();
+        }
+      });
     });
   }
 
   async initialize() {
-    const elements = await this.getElements();
-    if (elements !== null && elements.length > 0) {
-      this.renderAllEvents(elements);
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = urlParams.get('eventId');
+
+    if (eventId) {
+      this.navigateToEventDetail(eventId);
     } else {
-      this.renderNoEvents();
+      const elements = await this.getElements();
+      if (elements !== null && elements.length > 0) {
+        this.renderAllEvents(elements);
+      } else {
+        this.renderNoEvents();
+      }
     }
   }
 
@@ -46,8 +61,12 @@ class MyEvents {
     events.forEach((event) => {
       const deleteButton = document.getElementById(`delete-${event.event_id}`);
       const cardEvent = document.getElementById(`card-${event.event_id}`);
+      const readMoreButton = document.getElementById(`read-more-${event.event_id}`);
       if (deleteButton) {
         deleteButton.addEventListener('click', () => this.deleteEvent(event.event_id, cardEvent));
+      }
+      if (readMoreButton) {
+        readMoreButton.addEventListener('click', () => this.navigateToEventDetail(event.event_id));
       }
     });
   }
@@ -88,6 +107,11 @@ class MyEvents {
       </div>
     `;
     this.el.innerHTML = html;
+  }
+
+  navigateToEventDetail(eventId) {
+    window.history.pushState({ eventId }, '', `?eventId=${eventId}`);
+    new Event(eventId);
   }
 }
 

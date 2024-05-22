@@ -117,7 +117,9 @@ class EventModel extends SqlConnect
       "SELECT e.id AS event_id, e.name AS event_name, e.image,e.type,e.created_at, e.time,place, e.description, e.size, e.user_id,e.group_id, 
                 u.id AS user_id, u.firstname, u.lastname, u.email
          FROM events AS e
-         INNER JOIN users AS u ON e.user_id = u.id"
+         INNER JOIN users AS u ON e.user_id = u.id
+         ORDER BY e.time DESC
+         "
     );
     $req->execute();
 
@@ -133,6 +135,7 @@ class EventModel extends SqlConnect
          FROM events AS e
          INNER JOIN users AS u ON e.user_id = u.id
          WHERE e.user_id = $user_id
+         ORDER BY e.time ASC
          "
     );
     $req->execute();

@@ -28,7 +28,7 @@ export default (event, userId) => {
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cursor-pointer size-6 lucide lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
                   </div>
                   <div class="bg-yellow-200 py-1.5 px-6 rounded-full">
-                      <p tabindex="0" class="focus:outline-none text-xs text-yellow-700">By ${event.lastname[0]}.${event.firstname}</p>
+                      <p tabindex="0" class="focus:outline-none text-xs text-yellow-700">By ${parseInt(userId, 10) === event.user_id ? 'Yourself' : `${event.lastname[0]}.${event.firstname}`}</p>
                   </div>
               </div>
               <div class="p-4">
@@ -39,10 +39,10 @@ export default (event, userId) => {
                   <p tabindex="0" class="focus:outline-none text-xs text-gray-600 mt-2">${event.description}</p>
                   <div class="flex mt-4">
                       <div>
-                          <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 py-1">${event.size} places</p>
+                          <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 hover:bg-indigo-700 hover:text-white duration-500 py-1">${event.size} places</p>
                       </div>
                       <div class="pl-2">
-                          <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 py-1">${event.type}</p>
+                          <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 hover:bg-indigo-700 hover:text-white duration-500 py-1">${event.type[0].toUpperCase() + event.type.slice(1)}</p>
                       </div>
                   </div>
                   <div class="flex flex-col justify-center py-4">
@@ -52,7 +52,7 @@ export default (event, userId) => {
                   ${parseInt(userId, 10) === event.user_id ? `
                   <div class="flex justify-between items-center">
                   <button data-ripple-light="true" type="button" class="duration-500 select-none rounded-lg bg-primary py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Edit</button>
-                  <button data-ripple-light="true" type="button" class="duration-500 select-none rounded-lg bg-primary py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Read More</button>
+                  <button data-ripple-light="true" type="button" class="duration-500 select-none rounded-lg bg-primary py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" id=${`read-more-${event.event_id}`}>Read More</button>
                   </div>
                   ` : ''}
               </div>

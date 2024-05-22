@@ -6,7 +6,7 @@ import MyEvents from './controllers/MyEvents';
 import './index.css';
 import Models from './controllers/Models';
 import Account from './controllers/Account';
-// // import Model from './controllers/Model';
+
 const routes = [
   {
     url: '/',
@@ -14,28 +14,28 @@ const routes = [
   },
   {
     url: '/login',
-    controller: Login
+    controller: Login,
+    logInRoute: true
   },
   {
     url: '/register',
-    controller: Register
+    controller: Register,
+    logInRoute: true
   },
   {
     url: '/models',
-    controller: Models
+    controller: Models,
+    private: true
   },
   {
     url: '/my-events',
-    controller: MyEvents
+    controller: MyEvents,
+    private: true
   },
   {
     url: '/account',
-    controller: Account
+    controller: Account,
+    private: true
   }
-  /* ,
-//   {
-//     url: '/model/:id',
-//     controller: Model
-//   } */
 ];
 new Router(routes);

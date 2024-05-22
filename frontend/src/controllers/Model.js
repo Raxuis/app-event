@@ -94,7 +94,7 @@ const Model = class {
     const errorText = document.getElementById('error-text');
     const formData = new FormData(elForm);
 
-    const requiredFields = ['name', 'description', 'place', 'image-url', 'time', 'group-name'];
+    const requiredFields = ['name', 'description', 'place', 'time', 'group-name'];
     if (requiredFields.every((field) => formData.get(field)) && this.ms1.getSelects().length > 0) {
       try {
         const inputDate = new Date(formData.get('time'));
@@ -104,20 +104,21 @@ const Model = class {
         const response = await this.getModelInfos(this.params);
         // Push the id of the user who has made the event
         selectedUserIds.push(11);
-
-        await axios.post(`http://localhost:${process.env.BACKEND_PORT}/event`, {
+        const imageUrl = formData.get('image-url');
+        const eventData = {
           name: formData.get('name'),
           description: formData.get('description'),
           place: formData.get('place'),
-          image: formData.get('image-url'),
           size: response.size,
           time: formattedDate,
           user_ids: selectedUserIds,
           user_id: 11,
-          group_name: formData.get('group-name'),
-          model_id: response.id
-
-        }, {
+          group_name: formData.get('group-name')
+        };
+        if (imageUrl) {
+          eventData.image = imageUrl;
+        }
+        await axios.post(`http://localhost:${process.env.BACKEND_PORT}/event`, eventData, {
           headers: {
             'Content-Type': 'application/json'
           }

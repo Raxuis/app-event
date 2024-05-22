@@ -21,6 +21,22 @@ const Router = class {
       const route = this.routes[i];
 
       if (route.url === this.path) {
+        if (route.logInRoute) {
+          const isLogged = localStorage.getItem('isLogged');
+
+          if (isLogged) {
+            window.location.href = '/';
+            break;
+          }
+        }
+        if (route.private) {
+          const username = localStorage.getItem('isLogged');
+
+          if (!username) {
+            window.location.href = '/';
+            break;
+          }
+        }
         const Controller = route.controller;
         new Controller(this.params);
         ifExist = true;

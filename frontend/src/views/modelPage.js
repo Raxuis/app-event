@@ -1,9 +1,9 @@
 export default () => (`
-<div class="w-full h-full justify-center items-center duration-500 max-sm:pt-6">
+<div class="w-full h-full justify-center items-center duration-500">
   <form class="flex flex-col space-y-4" id="form-model">
     <div>
-    <h1 class="text-2xl font-bold mb-4">Create your event</h1>
-    <p class="text-gray-600 mb-4">Fill in the form below to create your event</p>
+    <h1 class="text-xl sm:text-2xl font-bold mb-4 max-sm:hidden">Create your event</h1>
+    <p class="text-gray-600 mb-4 max-sm:hidden">Fill in the form below to create your event</p>
       <div class="flex flex-col space-y-2">
         <label for="name" class="text-gray-600">Name</label>
         <input type="text" name="name" id="name" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter name" />
@@ -27,7 +27,7 @@ export default () => (`
       <div class="flex flex-col space-y-2">
       <label for="guests" class="text-gray-600">Guests</label>
       <select id="select1" name="user-ids" class="w-full border border-gray-300 p-1 rounded-md outline-[#333] flex justify-center"  data-test="select1"></select>
-      </div>  
+      </div>
         <div
         x-data
         x-init="flatpickr($refs.datetimewidget, {wrap: true, enableTime: true, dateFormat: 'M j, Y h:i K', minDate:${Date.now()}});"
@@ -44,9 +44,9 @@ export default () => (`
                 data-input
                 placeholder="Select.."
                 class="border border-gray-300 h-11 text-center block w-full px-4 py-3 rounded-l-md"
-    
+
             >
-            
+
             <a
                 class="h-11 w-10 input-button cursor-pointer rounded-r-md bg-transparent border-gray-300 border-t border-b border-r"
                 title="clear" data-clear

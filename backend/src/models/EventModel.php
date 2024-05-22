@@ -181,21 +181,20 @@ class EventModel extends SqlConnect
 
     return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
   }
-
-
   public function getUserEvents($user_id): stdClass|bool|array
   {
     $req = $this->db->prepare(
       "SELECT e.id AS event_id, e.name AS event_name, e.image,
-                COALESCE(m.type, e.type) AS type, e.created_at, e.time,
-                e.place, e.description, e.size, e.group_id, 
-                u.id AS author_id, u.firstname AS author_firstname,
-                u.lastname AS author_lastname, u.email AS author_email
-         FROM events AS e
-         INNER JOIN users AS u ON e.user_id = u.id
-         LEFT JOIN models AS m ON e.model_id = m.id
-         WHERE e.user_id = :user_id
-         ORDER BY e.time ASC"
+                  COALESCE(m.type, e.type) AS type, e.created_at, e.time,
+                  e.place, e.description, e.size, e.group_id, 
+                  u.id AS author_id, u.firstname AS author_firstname,
+                  u.lastname AS author_lastname, u.email AS author_email
+           FROM events AS e
+           INNER JOIN users AS u ON e.user_id = u.id
+           LEFT JOIN models AS m ON e.model_id = m.id
+           WHERE e.user_id = :user_id
+           OR e.group_id IN (SELECT group_id FROM group_users WHERE user_id = :user_id)
+           ORDER BY e.time ASC"
     );
 
     $req->execute([
@@ -204,6 +203,7 @@ class EventModel extends SqlConnect
 
     return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
   }
+
   public function getLast()
   {
     $req = $this->db->prepare("SELECT * FROM events ORDER BY id DESC LIMIT 1");

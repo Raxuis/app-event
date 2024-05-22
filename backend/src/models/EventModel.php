@@ -91,6 +91,10 @@ class EventModel extends SqlConnect
       }
 
       $req->execute();
+      $eventId = $this->getLastEventId()['id'];
+      $groupQuery = "UPDATE groups SET event_id = :event_id WHERE id = :id";
+      $groupStmt = $this->db->prepare($groupQuery);
+      $groupStmt->execute(['event_id' => $eventId, 'id' => $this->getLastGroupId()['id']]);
     } catch (Exception $e) {
       throw $e;
     }
@@ -207,6 +211,13 @@ class EventModel extends SqlConnect
   public function getLast()
   {
     $req = $this->db->prepare("SELECT * FROM events ORDER BY id DESC LIMIT 1");
+    $req->execute();
+
+    return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
+  }
+  public function getLastEventId()
+  {
+    $req = $this->db->prepare("SELECT e.id FROM events as e ORDER BY id DESC LIMIT 1");
     $req->execute();
 
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();

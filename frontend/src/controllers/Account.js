@@ -31,15 +31,15 @@ const Account = class {
 
   async render() {
     const userInfos = await this.getUserInfos();
-    return `
+    this.el.innerHTML = `
       ${viewNav(this.isLogged)}
       ${viewAccount(userInfos)}
     `;
   }
 
   passwordVerif(password, passwordConfirmation) {
-    const passwordSpan = document.querySelector('.password-span');
-    const confirmationSpan = document.querySelector('.confirmation-span');
+    const passwordSpan = document.querySelector('.password-account-span');
+    const confirmationSpan = document.querySelector('.confirmation-account-span');
     password.addEventListener('input', (e) => {
       if (e.target.value.length < 8) {
         passwordSpan.innerHTML = 'Password must be at least 8 characters';
@@ -51,8 +51,8 @@ const Account = class {
       if (e.target.value.length < 8) {
         confirmationSpan.innerHTML = 'Password must be at least 8 characters';
       } else if (password.value !== passwordConfirmation.value) {
-        passwordSpan.innerHTML = "Password don't match";
-        confirmationSpan.innerHTML = "Password don't match";
+        passwordSpan.innerHTML = "Passwords don't match";
+        confirmationSpan.innerHTML = "Passwords don't match";
       } else {
         passwordSpan.innerHTML = '';
         confirmationSpan.innerHTML = '';
@@ -60,65 +60,30 @@ const Account = class {
     });
   }
 
-  // formSubmit(elForm) {
-  //   elForm.addEventListener('submit', (e) => {
-  //     e.preventDefault();
-  //     const formData = new FormData(elForm);
-  // eslint-disable-next-line max-len
-  //     if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length >= 8 && formData.get('password-confirmation').length >= 8) {
-  //       axios.put(`http://localhost:${process.env.BACKEND_PORT}/user/register`, {
-  //         firstname: formData.get('firstname'),
-  //         lastname: formData.get('lastname'),
-  //         email: formData.get('email'),
-  //         password: formData.get('password')
-  //       }, {
-  //         headers: {
-  //           'Content-Type': 'application/json'
-  //         }
-  //       })
-  //         .then(() => {
-  //           window.location.href = '/';
-  //         })
-  //         .catch(() => {
-  //           this.errorInfos();
-  //         });
-  //     }
-  //   });
-  // }
-
   eventListeners() {
-    document.addEventListener('DOMContentLoaded', () => {
-      const elForm = document.querySelector('.register-form');
-      const elPassword = document.querySelector('#new-password');
-      const elConfirmationPassword = document.querySelector('#new-confirmation-password');
-      const elPasswordToggler = document.querySelector('.password-toggler');
-      const elConfirmationPasswordToggler = document.querySelector('.confirmation-password-toggler');
+    const elPassword = document.querySelector('#new-account-password');
+    const elConfirmationPassword = document.querySelector('#new-password-account-confirmation');
+    const elPasswordToggler = document.querySelector('.password-account-toggler');
+    const elConfirmationPasswordToggler = document.querySelector('.confirmation-password-account-toggler');
 
+    if (elPasswordToggler) {
       elPasswordToggler.addEventListener('click', () => {
-        if (elPassword.type === 'password') {
-          elPassword.type = 'text';
-        } else {
-          elPassword.type = 'password';
-        }
+        elPassword.type = elPassword.type === 'password' ? 'text' : 'password';
       });
-      elConfirmationPasswordToggler.addEventListener('click', () => {
-        if (elConfirmationPassword.type === 'password') {
-          elConfirmationPassword.type = 'text';
-        } else {
-          elConfirmationPassword.type = 'password';
-        }
-      });
-      this.passwordVerif(elPassword, elConfirmationPassword);
-      this.formSubmit(elForm);
-    });
-  }
+    }
 
-  errorInfos() {
-    document.querySelector('.error-message').innerHTML = 'An account already exists with this email. Try log in!';
+    if (elConfirmationPasswordToggler) {
+      elConfirmationPasswordToggler.addEventListener('click', () => {
+        elConfirmationPassword.type = elConfirmationPassword.type === 'password' ? 'text' : 'password';
+      });
+    }
+
+    this.passwordVerif(elPassword, elConfirmationPassword);
   }
 
   async run() {
-    this.el.innerHTML = await this.render();
+    await this.render();
+    this.eventListeners();
     this.navFunction();
   }
 };

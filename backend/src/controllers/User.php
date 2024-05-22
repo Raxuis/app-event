@@ -38,6 +38,6 @@ class User extends Controller
 
     $this->user->update($this->body);
 
-    return $this->user->getLast();
+    return $this->user->get($this->body['id']);
   }
 }

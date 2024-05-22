@@ -57,7 +57,7 @@ const Register = class {
     elForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const formData = new FormData(elForm);
-      if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length >= 8 && formData.get('password-confirmation').length >= 8) {
+      if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length >= 8 && formData.get('password-confirmation').length >= 8 && formData.get('firstname') && formData.get('lastname')) {
         axios.post(`http://localhost:${process.env.BACKEND_PORT}/user/register`, {
           firstname: formData.get('firstname'),
           lastname: formData.get('lastname'),

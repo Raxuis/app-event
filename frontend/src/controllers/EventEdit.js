@@ -12,7 +12,7 @@ class Event {
 
   async init() {
     this.response = await this.getEventInfos(this.params);
-    if (parseInt(localStorage.getItem('id'), 10) !== this.response.user_id) {
+    if (parseInt(localStorage.getItem('id'), 10) !== this.response.author_id) {
       window.location.href = '/my-events';
     }
     this.run();
@@ -49,7 +49,7 @@ class Event {
           </button>
         </div>
         <div class="flex-grow text-center">
-        <p>Edit :${this.response.id}</p>
+        <p class="text-3xl">Editing  : Model n°${this.response.event_id}</p>
         </div>
     </div>
     <div class="mx-auto flex flex-col items-center justify-center h-screen p-6">

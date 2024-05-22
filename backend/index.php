@@ -21,7 +21,7 @@ new Router([
   'model/:id' => Model::class,
   'models' => Models::class,
   'event/:id' => Event::class,
-  'event' => Event::class,
+  'event/account' => Event::class,
   'events' => Events::class,
   'events/:user_id' => UserEvents::class,
   'form-infos' => Form::class

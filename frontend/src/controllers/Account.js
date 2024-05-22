@@ -6,6 +6,7 @@ const Account = class {
   constructor(params) {
     this.el = document.querySelector('#root');
     this.params = params;
+    this.emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     this.isLogged = localStorage.getItem('isLogged');
 
     this.run();
@@ -37,6 +38,17 @@ const Account = class {
     `;
   }
 
+  emailVerify(email) {
+    const emailSpan = document.querySelector('.email-account-span');
+    email.addEventListener('input', (e) => {
+      if (!e.target.value.match(this.emailRegex)) {
+        emailSpan.innerHTML = 'Email is not valid';
+      } else {
+        emailSpan.innerHTML = '';
+      }
+    });
+  }
+
   passwordVerif(password, passwordConfirmation) {
     const passwordSpan = document.querySelector('.password-account-span');
     const confirmationSpan = document.querySelector('.confirmation-account-span');
@@ -65,6 +77,8 @@ const Account = class {
     const elConfirmationPassword = document.querySelector('#new-password-account-confirmation');
     const elPasswordToggler = document.querySelector('.password-account-toggler');
     const elConfirmationPasswordToggler = document.querySelector('.confirmation-password-account-toggler');
+    const emailInput = document.querySelector('.email-account-input');
+    const elForm = document.querySelector('.account-form');
 
     if (elPasswordToggler) {
       elPasswordToggler.addEventListener('click', () => {
@@ -77,8 +91,40 @@ const Account = class {
         elConfirmationPassword.type = elConfirmationPassword.type === 'password' ? 'text' : 'password';
       });
     }
-
+    this.emailVerify(emailInput);
     this.passwordVerif(elPassword, elConfirmationPassword);
+    this.formSubmit(elForm);
+  }
+
+  formSubmit(elForm) {
+    elForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const errorText = document.querySelector('.error-account-message');
+      const formData = new FormData(elForm);
+      if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length >= 8 && formData.get('password-confirmation').length >= 8 && formData.get('firstname') && formData.get('lastname') && formData.get('email')) {
+        axios.put(`http://localhost:${process.env.BACKEND_PORT}/user/account`, {
+          id: parseInt(localStorage.getItem('id'), 10),
+          firstname: formData.get('firstname'),
+          lastname: formData.get('lastname'),
+          email: formData.get('email'),
+          password: formData.get('password')
+        }, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then((response) => {
+            localStorage.setItem('email', response.data.email);
+            localStorage.setItem('id', response.data.id);
+            window.location.href = '/';
+          })
+          .catch((error) => {
+            errorText.innerHTML = error.message;
+          });
+      } else {
+        errorText.innerHTML = 'Please fill in all the fields';
+      }
+    });
   }
 
   async run() {

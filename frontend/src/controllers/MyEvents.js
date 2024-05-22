@@ -1,7 +1,8 @@
 import axios from 'axios';
 import viewNav from '../views/nav';
 import viewEvents from '../views/events';
-import Event from './Event';
+import EventMore from './EventMore';
+import EventEdit from './EventEdit';
 
 class MyEvents {
   constructor() {
@@ -11,8 +12,11 @@ class MyEvents {
       this.userId = localStorage.getItem('id');
       this.initialize();
       window.addEventListener('popstate', (event) => {
-        if (event.state && event.state.eventId) {
-          this.navigateToEventDetail(event.state.eventId);
+        const action = new URLSearchParams(window.location.search).get('action');
+        if (action === 'more') {
+          this.navigateToEventDetail(event.state.eventId, false);
+        } else if (action === 'edit') {
+          this.navigateToEventEdit(event.state.eventId, false);
         } else {
           this.initialize();
         }
@@ -23,9 +27,14 @@ class MyEvents {
   async initialize() {
     const urlParams = new URLSearchParams(window.location.search);
     const eventId = urlParams.get('eventId');
+    const action = urlParams.get('action');
 
     if (eventId) {
-      this.navigateToEventDetail(eventId);
+      if (action === 'more') {
+        this.navigateToEventDetail(eventId);
+      } else if (action === 'edit') {
+        this.navigateToEventEdit(eventId);
+      }
     } else {
       const elements = await this.getElements();
       if (elements !== null && elements.length > 0) {
@@ -62,11 +71,15 @@ class MyEvents {
       const deleteButton = document.getElementById(`delete-${event.event_id}`);
       const cardEvent = document.getElementById(`card-${event.event_id}`);
       const readMoreButton = document.getElementById(`read-more-${event.event_id}`);
+      const editButton = document.getElementById(`edit-${event.event_id}`);
       if (deleteButton) {
         deleteButton.addEventListener('click', () => this.deleteEvent(event.event_id, cardEvent));
       }
       if (readMoreButton) {
         readMoreButton.addEventListener('click', () => this.navigateToEventDetail(event.event_id));
+      }
+      if (editButton) {
+        editButton.addEventListener('click', () => this.navigateToEventEdit(event.event_id));
       }
     });
   }
@@ -109,9 +122,18 @@ class MyEvents {
     this.el.innerHTML = html;
   }
 
-  navigateToEventDetail(eventId) {
-    window.history.pushState({ eventId }, '', `?eventId=${eventId}`);
-    new Event(eventId);
+  navigateToEventDetail(eventId, pushState = true) {
+    if (pushState) {
+      window.history.pushState({ eventId }, '', `?action=more&eventId=${eventId}`);
+    }
+    new EventMore(eventId);
+  }
+
+  navigateToEventEdit(eventId, pushState = true) {
+    if (pushState) {
+      window.history.pushState({ eventId }, '', `?action=edit&eventId=${eventId}`);
+    }
+    new EventEdit(eventId);
   }
 }
 

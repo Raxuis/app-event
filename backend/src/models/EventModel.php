@@ -100,26 +100,78 @@ class EventModel extends SqlConnect
 
   public function get(int $id)
   {
-    //TODO : Add case model_id or group_id isn't null
+    //TODO : Add case model_id
     $req = $this->db->prepare(
-      "SELECT e.*, u.firstname, u.lastname FROM events as e
-          INNER JOIN users AS u
-          ON e.user_id = u.id
-          WHERE e.id = :id"
+      "SELECT e.id AS event_id, 
+        e.name AS event_name, 
+        e.image, e.type, e.created_at, e.time, e.place, e.description, e.size, e.user_id AS author_id, e.group_id,
+        u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
+        gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at,
+        us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email
+        FROM events AS e
+        INNER JOIN users AS u ON e.user_id = u.id
+        INNER JOIN groups AS g ON e.group_id = g.id
+        INNER JOIN group_users AS gu ON gu.group_id = g.id
+        INNER JOIN users AS us ON gu.user_id = us.id
+        WHERE e.id = :id
+        ORDER BY e.time ASC"
     );
     $req->execute(["id" => $id]);
 
-    return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
+    $results = $req->fetchAll(PDO::FETCH_ASSOC);
+
+    if (count($results) > 0) {
+      $event = [
+        'event_id' => $results[0]['event_id'],
+        'event_name' => $results[0]['event_name'],
+        'image' => $results[0]['image'],
+        'type' => $results[0]['type'],
+        'created_at' => $results[0]['created_at'],
+        'time' => $results[0]['time'],
+        'place' => $results[0]['place'],
+        'description' => $results[0]['description'],
+        'size' => $results[0]['size'],
+        'author_id' => $results[0]['author_id'],
+        'author_firstname' => $results[0]['author_firstname'],
+        'author_lastname' => $results[0]['author_lastname'],
+        'author_email' => $results[0]['author_email'],
+        'group_id' => $results[0]['group_id'],
+        'guests' => []
+      ];
+
+      foreach ($results as $row) {
+        $event['guests'][] = [
+          'guest_status' => $row['guest_status'],
+          'registered_at' => $row['registered_at'],
+          'confirmed_at' => $row['confirmed_at'],
+          'canceled_at' => $row['canceled_at'],
+          'guest_firstname' => $row['guest_firstname'],
+          'guest_lastname' => $row['guest_lastname'],
+          'guest_email' => $row['guest_email']
+        ];
+      }
+
+      return $event;
+    } else {
+      return new stdClass();
+    }
   }
+
   public function getAll(): bool|array|stdClass
   {
     $req = $this->db->prepare(
-      "SELECT e.id AS event_id, e.name AS event_name, e.image,e.type,e.created_at, e.time,place, e.description, e.size, e.user_id,e.group_id, 
-                u.id AS user_id, u.firstname, u.lastname, u.email
+      "SELECT e.id AS event_id, 
+      e.name AS event_name, 
+      e.image,e.type,e.created_at, e.time,e.place, e.description, e.size, e.user_id as author_id,e.group_id,
+      u.firstname as author_firstname, u.lastname as author_lastname, u.email as author_email, 
+      gu.status as guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at,
+      us.firstname as guest_firstname, us.lastname as guest_lastname, us.email as guest_email
          FROM events AS e
          INNER JOIN users AS u ON e.user_id = u.id
-         ORDER BY e.time DESC
-         "
+         INNER JOIN groups AS g ON e.group_id = g.id
+         INNER JOIN group_users AS gu ON gu.group_id = g.id
+         INNER JOIN users AS us ON gu.user_id = us.id
+         ORDER BY e.time DESC;"
     );
     $req->execute();
 
@@ -130,15 +182,17 @@ class EventModel extends SqlConnect
   public function getUserEvents($user_id): stdClass|bool|array
   {
     $req = $this->db->prepare(
-      "SELECT e.id AS event_id, e.name AS event_name, e.image,e.type,e.created_at, e.time,e.place, e.description, e.size, e.user_id,e.group_id, 
-                u.id AS user_id, u.firstname, u.lastname, u.email
+      "SELECT e.id AS event_id, e.name AS event_name, e.image,e.type,e.created_at, e.time,e.place, e.description, e.size, e.group_id, 
+        u.id AS author_id, u.firstname as author_firstname, u.lastname as author_lastname, u.email as author_email
          FROM events AS e
          INNER JOIN users AS u ON e.user_id = u.id
-         WHERE e.user_id = $user_id
+         WHERE e.user_id = :user_id
          ORDER BY e.time ASC
          "
     );
-    $req->execute();
+    $req->execute([
+      "user_id" => $user_id
+    ]);
 
     return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
   }

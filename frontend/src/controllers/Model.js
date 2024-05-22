@@ -106,7 +106,7 @@ const Model = class {
         const selectedUserIds = this.ms1.getSelects();
         const response = await this.getModelInfos(this.params);
         // Push the id of the user who has made the event
-        selectedUserIds.push(11);
+        selectedUserIds.push(parseInt(localStorage.getItem('id'), 10));
         const imageUrl = formData.get('image-url');
         const eventData = {
           name: formData.get('name'),
@@ -115,7 +115,7 @@ const Model = class {
           size: response.size,
           time: formattedDate,
           user_ids: selectedUserIds,
-          user_id: 11,
+          user_id: parseInt(localStorage.getItem('id'), 10),
           group_name: formData.get('group-name')
         };
         if (imageUrl) {

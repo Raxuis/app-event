@@ -164,10 +164,13 @@ class AllModelsController {
   }
 
   populateUserSelect(users) {
-    const userOptions = users.map((user) => ({
-      text: user.email,
-      value: user.id
-    }));
+    const userId = parseInt(localStorage.getItem('id'), 10);
+    const userOptions = users
+      .filter((user) => user.id !== userId)
+      .map((user) => ({
+        text: user.email,
+        value: user.id
+      }));
 
     this.ms1 = multipleSelect('#select1', {
       name: 'my-select',
@@ -191,7 +194,7 @@ class AllModelsController {
 
         const selectedUserIds = this.ms1.getSelects();
         // Push the id of the user who has made the event
-        selectedUserIds.push(11);
+        selectedUserIds.push(parseInt(localStorage.getItem('id'), 10));
         const imageUrl = formData.get('image-url');
         const eventData = {
           name: formData.get('name'),
@@ -200,7 +203,7 @@ class AllModelsController {
           size: formData.get('quantity'),
           time: formattedDate,
           user_ids: selectedUserIds,
-          user_id: 11,
+          user_id: parseInt(localStorage.getItem('id'), 10),
           group_name: formData.get('group-name')
         };
 

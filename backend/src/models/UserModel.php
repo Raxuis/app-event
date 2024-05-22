@@ -58,7 +58,7 @@ class UserModel extends SqlConnect
         return $user;
     }
 
-    public function update(array $data)
+    public function update(array $data): void
     {
         $query = "UPDATE users SET firstname = :firstname, lastname = :lastname, password = :password, email = :email WHERE id = :id";
         $req = $this->db->prepare($query);

@@ -102,7 +102,7 @@ const Account = class {
       const errorText = document.querySelector('.error-account-message');
       const formData = new FormData(elForm);
       if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length >= 8 && formData.get('password-confirmation').length >= 8 && formData.get('firstname') && formData.get('lastname') && formData.get('email')) {
-        axios.put(`http://localhost:${process.env.BACKEND_PORT}/user/account`, {
+        axios.put(`http://localhost:${process.env.BACKEND_PORT}/user`, {
           id: parseInt(localStorage.getItem('id'), 10),
           firstname: formData.get('firstname'),
           lastname: formData.get('lastname'),

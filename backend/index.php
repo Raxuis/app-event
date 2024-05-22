@@ -16,12 +16,13 @@ use App\Controllers\Form;
 new Router([
   'user/:id' => User::class,
   'auth' => Auth::class,
+  "user" => User::class,
   'user/register' => User::class,
   'users' => Users::class,
   'model/:id' => Model::class,
   'models' => Models::class,
   'event/:id' => Event::class,
-  'event/account' => Event::class,
+  'event' => Event::class,
   'events' => Events::class,
   'events/:user_id' => UserEvents::class,
   'form-infos' => Form::class

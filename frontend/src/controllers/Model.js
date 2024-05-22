@@ -52,10 +52,13 @@ const Model = class {
   }
 
   populateUserSelect(users) {
-    const userOptions = users.map((user) => ({
-      text: user.email,
-      value: user.id
-    }));
+    const userId = parseInt(localStorage.getItem('id'), 10);
+    const userOptions = users
+      .filter((user) => user.id !== userId)
+      .map((user) => ({
+        text: user.email,
+        value: user.id
+      }));
 
     this.ms1 = multipleSelect('#select1', {
       name: 'my-select',

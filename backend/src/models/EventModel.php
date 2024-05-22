@@ -24,9 +24,13 @@ class EventModel extends SqlConnect
         // Step 2: Add users to the new group
         $userIds = $data['user_ids'];
         foreach ($userIds as $userId) {
-          $groupUserQuery = "INSERT INTO group_users (group_id, user_id) VALUES (:group_id, :user_id)";
+          $groupUserQuery = "INSERT INTO group_users (group_id, user_id, status) VALUES (:group_id, :user_id, :status)";
           $groupUserStmt = $this->db->prepare($groupUserQuery);
-          $groupUserStmt->execute(['group_id' => $groupId, 'user_id' => $userId]);
+          if ($data['user_id'] === $userId) {
+            $groupUserStmt->execute(['group_id' => $groupId, 'user_id' => $userId, 'status' => 'confirmed']);
+          } else {
+            $groupUserStmt->execute(['group_id' => $groupId, 'user_id' => $userId, 'status' => 'registered']);
+          }
         }
         unset($data['user_ids']);
       }
@@ -171,7 +175,7 @@ class EventModel extends SqlConnect
          INNER JOIN groups AS g ON e.group_id = g.id
          INNER JOIN group_users AS gu ON gu.group_id = g.id
          INNER JOIN users AS us ON gu.user_id = us.id
-         ORDER BY e.time DESC;"
+         ORDER BY e.time DESC"
     );
     $req->execute();
 

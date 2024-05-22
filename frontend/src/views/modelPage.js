@@ -17,7 +17,7 @@ export default () => (`
         <input type="text" name="place" id="place" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter place" />
       </div>
       <div class="flex flex-col space-y-2">
-        <label for="image-url" class="text-gray-600">Image url</label>
+        <label for="image-url" class="text-gray-600">Image url (optional)</label>
         <input type="text" name="image-url" id="image-url" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter image url" />
       </div>
       <div class="flex flex-col space-y-2">

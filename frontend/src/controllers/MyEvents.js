@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import axios from 'axios';
 import viewNav from '../views/nav';
 import viewEvents from '../views/events';
@@ -9,7 +10,7 @@ class MyEvents {
     document.addEventListener('DOMContentLoaded', () => {
       this.el = document.querySelector('#root');
       this.isLogged = localStorage.getItem('isLogged');
-      this.userId = localStorage.getItem('id');
+      this.userId = parseInt(localStorage.getItem('id'), 10);
       this.initialize();
       window.addEventListener('popstate', (event) => {
         const action = new URLSearchParams(window.location.search).get('action');
@@ -53,6 +54,18 @@ class MyEvents {
         menu.classList.toggle('hidden');
       });
     }
+  }
+
+  verifSpecificGuests(elements) {
+    const specificGuestsMap = {};
+    elements.forEach((event) => {
+      if (event.author_id !== this.userId && Array.isArray(event.guests)) {
+        specificGuestsMap[event.event_id] = event.guests.filter(
+          (guest) => guest.guest_id === this.userId
+        );
+      }
+    });
+    return specificGuestsMap;
   }
 
   async getElements() {
@@ -100,11 +113,11 @@ class MyEvents {
     }
   }
 
-  renderAllEvents(elements) {
+  async renderAllEvents(elements) {
     const html = `
       ${viewNav(this.isLogged)}
       <div class="max-w-6xl mx-auto px-4">
-        ${viewEvents(elements, this.userId)}
+        ${viewEvents(elements, this.userId, this.verifSpecificGuests(elements))}
       </div>
     `;
     this.el.innerHTML = html;

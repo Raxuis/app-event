@@ -173,8 +173,7 @@ class EventModel extends SqlConnect
         e.name AS event_name, 
         e.image, e.type, e.created_at, e.time, e.place, e.description, e.size, e.user_id AS author_id, e.group_id,
         u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
-        gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at,
-        us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email
+        gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email
         FROM events AS e
         INNER JOIN users AS u ON e.user_id = u.id
         INNER JOIN groups AS g ON e.group_id = g.id
@@ -229,7 +228,7 @@ class EventModel extends SqlConnect
       e.name AS event_name, 
       e.image, COALESCE(m.type, e.type) AS type, e.created_at, e.time, e.place, e.description, e.size, e.user_id AS author_id, e.group_id,
       u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
-      gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at,
+      gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.id as guest_id,
       us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email
       FROM events AS e
       INNER JOIN users AS u ON e.user_id = u.id
@@ -270,6 +269,7 @@ class EventModel extends SqlConnect
         }
 
         $events[$event_id]['guests'][] = [
+          'guest_id' => $row['guest_id'],
           'guest_status' => $row['guest_status'],
           'registered_at' => $row['registered_at'],
           'confirmed_at' => $row['confirmed_at'],

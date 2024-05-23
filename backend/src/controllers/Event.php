@@ -40,19 +40,6 @@ class Event extends Controller
     $this->ifMethodExist();
   }
 
-  protected function header()
-  {
-    header('Access-Control-Allow-Origin: *');
-    header("Access-Control-Allow-Headers: Content-Type");
-    header("Access-Control-Allow-Methods: PUT, DELETE, PATCH, POST, OPTIONS");
-    header('Content-type: application/json; charset=utf-8');
-
-    if ($this->reqMethod === 'options') {
-      header('Access-Control-Max-Age: 86400');
-      exit;
-    }
-  }
-
   protected function ifMethodExist(): void
   {
     $method = $this->reqMethod . 'event';

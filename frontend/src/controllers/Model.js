@@ -116,7 +116,8 @@ const Model = class {
           time: formattedDate,
           user_ids: selectedUserIds,
           user_id: parseInt(localStorage.getItem('id'), 10),
-          group_name: formData.get('group-name')
+          group_name: formData.get('group-name'),
+          model_id: response.id
         };
         if (imageUrl) {
           eventData.image = imageUrl;

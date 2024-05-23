@@ -167,7 +167,7 @@ class EventModel extends SqlConnect
 
   public function getAll(): bool|array|stdClass
   {
-    //TODO : Add case model_id
+    //TODO : Add case model_id !== null
     $req = $this->db->prepare(
       "SELECT e.id AS event_id, 
         e.name AS event_name, 
@@ -321,9 +321,29 @@ class EventModel extends SqlConnect
   }
   public function userEventInteraction(array $body)
   {
-    $req = $this->db->prepare("UPDATE group_users SET status = :status WHERE user_id = :user_id AND group_id = :group_id");
+    $validStatuses = ['accepted', 'registered', 'canceled'];
+
+    if (!in_array($body['status'], $validStatuses)) {
+      throw new Exception("Invalid status value provided.");
+    }
+
+    // Mapping 'accepted' to 'confirmed' for consistency with the enum values
+    if ($body['status'] === "accepted") {
+      $body['status'] = "confirmed";
+    }
+
+    $statusColumnValue = $body['status'];
+
+    if ($statusColumnValue === "confirmed") {
+      $req = $this->db->prepare("UPDATE group_users SET status = :status, confirmed_at = NOW() WHERE user_id = :user_id AND group_id = :group_id");
+    } else if ($statusColumnValue === "registered") {
+      $req = $this->db->prepare("UPDATE group_users SET status = :status WHERE user_id = :user_id AND group_id = :group_id");
+    } else {
+      $req = $this->db->prepare("UPDATE group_users SET status = :status, canceled_at = NOW() WHERE user_id = :user_id AND group_id = :group_id");
+    }
+
     $req->execute([
-      "status" => $body['status'],
+      "status" => $statusColumnValue,
       "user_id" => $body['user_id'],
       "group_id" => $body['group_id']
     ]);

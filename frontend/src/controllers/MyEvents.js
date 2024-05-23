@@ -85,6 +85,10 @@ class MyEvents {
       const cardEvent = document.getElementById(`card-${event.event_id}`);
       const readMoreButton = document.getElementById(`read-more-${event.event_id}`);
       const editButton = document.getElementById(`edit-${event.event_id}`);
+      const acceptButton = document.getElementById(`accept-${event.event_id}`);
+      const declineButton = document.getElementById(`decline-${event.event_id}`);
+      const cancelButton = document.getElementById(`cancel-${event.event_id}`);
+
       if (deleteButton) {
         deleteButton.addEventListener('click', () => this.deleteEvent(event.event_id, cardEvent));
       }
@@ -94,7 +98,37 @@ class MyEvents {
       if (editButton) {
         editButton.addEventListener('click', () => this.navigateToEventEdit(event.event_id));
       }
+      if (acceptButton) {
+        acceptButton.addEventListener('click', () => this.userInteraction(event.event_id, event.group_id, 'accepted'));
+      }
+      if (declineButton) {
+        declineButton.addEventListener('click', () => this.userInteraction(event.event_id, event.group_id, 'registered'));
+      }
+      if (cancelButton) {
+        cancelButton.addEventListener('click', () => this.userInteraction(event.event_id, event.group_id, 'canceled'));
+      }
     });
+  }
+
+  async userInteraction(eventId, groupId, status) {
+    try {
+      const eventData = {
+        user_id: this.userId,
+        group_id: groupId,
+        event_id: eventId,
+        status
+      };
+      const response = await axios.put(`http://localhost:${process.env.BACKEND_PORT}/userinteraction`, eventData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.status === 200) {
+        this.initialize();
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
   }
 
   async deleteEvent(eventId, cardEvent) {

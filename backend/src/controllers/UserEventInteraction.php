@@ -17,8 +17,6 @@ class UserEventInteraction extends Controller
   public function putUserEventInteraction()
   {
 
-    $this->event->userEventInteraction($this->body);
-
-    return $this->event->getLast();
+    return $this->event->userEventInteraction($this->body);
   }
 }

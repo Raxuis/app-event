@@ -1,7 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "toastr";
+
+.bg-danger-light {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 236 236 / var(--tw-bg-opacity));
+}
+.bg-primary-dark {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 82 237 / var(--tw-bg-opacity));
+}
+.bg-danger-dark {
+  --tw-bg-opacity: 1;
+  background-color: rgb(236 6 6 / var(--tw-bg-opacity));
+}
+.bg-success-dark {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 135 62 / var(--tw-bg-opacity));
+}
+.bg-warning-dark {
+  --tw-bg-opacity: 1;
+  background-color: rgb(230 127 8 / var(--tw-bg-opacity));
+}
 
 body {
   font-family: "Inter", sans-serif;
+}
+#toast-container > div {
+  @apply opacity-100;
+}
+#toast-container > .toast-info {
+  @apply bg-primary-dark text-white !important;
+}
+#toast-container > .toast-error {
+  @apply bg-danger-dark text-white !important;
+}
+#toast-container > .toast-success {
+  @apply bg-success-dark text-white !important;
+}
+#toast-container > .toast-warning {
+  @apply bg-warning-dark text-white !important;
 }

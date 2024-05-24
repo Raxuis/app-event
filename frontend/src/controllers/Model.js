@@ -2,6 +2,7 @@ import axios from 'axios';
 import { multipleSelect } from 'multiple-select-vanilla';
 import viewNav from '../views/nav';
 import viewPageModel from '../views/modelPage';
+import renderToastr from '../utils/toastr/renderToastr';
 
 const Model = class {
   constructor(params) {
@@ -28,10 +29,10 @@ const Model = class {
       e.preventDefault();
       const response = await this.formSubmit(form);
       if (response === true) {
+        renderToastr('success', 'Success', 'Event created successfully!');
         const url = new URL(window.location);
         url.searchParams.delete('modelId');
         window.history.replaceState({}, '', url);
-        window.location.reload();
       }
     });
     cancelBtn.addEventListener('click', (e) => {
@@ -129,7 +130,7 @@ const Model = class {
         });
         return true;
       } catch (error) {
-        errorText.innerHTML = error.message;
+        renderToastr('error', 'Error', error.message);
         return false;
       }
     } else {

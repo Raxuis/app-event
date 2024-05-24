@@ -1,6 +1,7 @@
 import axios from 'axios';
 import viewNav from '../views/nav';
 import viewAccount from '../views/account';
+import renderToastr from '../utils/toastr/renderToastr';
 
 const Account = class {
   constructor(params) {
@@ -117,9 +118,11 @@ const Account = class {
             localStorage.setItem('email', response.data.email);
             localStorage.setItem('id', response.data.id);
             window.location.href = '/';
+            renderToastr('success', 'Success', 'Your account has been updated!');
           })
           .catch((error) => {
             errorText.innerHTML = error.message;
+            renderToastr('error', 'Error', error.message);
           });
       } else {
         errorText.innerHTML = 'Please fill in all the fields';

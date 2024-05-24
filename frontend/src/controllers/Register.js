@@ -1,6 +1,7 @@
 import axios from 'axios';
 import viewNav from '../views/nav';
 import viewRegister from '../views/register';
+import renderToastr from '../utils/toastr/renderToastr';
 
 const Register = class {
   constructor(params) {
@@ -70,6 +71,7 @@ const Register = class {
         })
           .then(() => {
             window.location.href = '/';
+            renderToastr('success', 'Success', 'Your account has been created!');
           })
           .catch(() => {
             this.errorInfos();

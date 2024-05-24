@@ -8,23 +8,23 @@ export default () => (`
         <label for="name" class="text-gray-600">Name</label>
         <input type="text" name="name" id="name" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter name" />
       </div>
-      <div class="flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2 pt-2">
         <label for="description" class="text-gray-600">Description</label>
         <input type="text" name="description" id="description" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter description" />
       </div>
-      <div class="flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2 pt-2">
         <label for="place" class="text-gray-600">Place</label>
         <input type="text" name="place" id="place" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter place" />
       </div>
-      <div class="flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2 pt-2">
         <label for="image-url" class="text-gray-600">Image url (optional)</label>
         <input type="text" name="image-url" id="image-url" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter image url" />
       </div>
-      <div class="flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2 pt-2">
       <label for="group-name" class="text-gray-600">Group Name</label>
       <input type="text" name="group-name" id="group-name" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter group name" />
       </div>
-      <div class="flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2 pt-2">
       <label for="guests" class="text-gray-600">Guests</label>
       <select id="select1" name="user-ids" class="w-full border border-gray-300 p-1 rounded-md outline-[#333] flex justify-center"  data-test="select1"></select>
       </div>

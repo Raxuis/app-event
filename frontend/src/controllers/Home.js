@@ -21,7 +21,7 @@ const Home = class {
   render() {
     return `
     ${viewNav(this.isLogged)}
-    ${viewHome()}
+    ${viewHome(this.isLogged)}
     `;
   }
 

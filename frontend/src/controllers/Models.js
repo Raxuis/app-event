@@ -4,6 +4,7 @@ import viewNav from '../views/nav';
 import viewModels from '../views/models';
 import viewBuiltModel from '../views/builtModel';
 import Model from './Model';
+import renderToastr from '../utils/toastr/renderToastr';
 
 class AllModelsController {
   constructor() {
@@ -216,9 +217,10 @@ class AllModelsController {
             'Content-Type': 'application/json'
           }
         });
+        renderToastr('success', 'Success', 'Event created successfully!');
         return true;
       } catch (error) {
-        errorText.innerHTML = 'An error occurred';
+        renderToastr('error', 'Error', error.message);
         return false;
       }
     } else {

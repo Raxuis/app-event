@@ -4,6 +4,7 @@ import viewNav from '../views/nav';
 import viewEvents from '../views/events';
 import EventMore from './EventMore';
 import EventEdit from './EventEdit';
+import renderToastr from '../utils/toastr/renderToastr';
 
 class MyEvents {
   constructor() {
@@ -56,6 +57,7 @@ class MyEvents {
     }
   }
 
+  // 👇 Mapping guests from events
   verifSpecificGuests(elements) {
     const specificGuestsMap = {};
     elements.forEach((event) => {
@@ -73,8 +75,7 @@ class MyEvents {
       const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/events/${this.userId}`);
       return response.data;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error fetching elements:', error);
+      renderToastr('error', 'Error', 'Error fetching elements.');
       return null;
     }
   }

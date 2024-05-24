@@ -15,7 +15,7 @@ export default (event, userId, specificGuests) => {
   const timeString = daysElapsed === 0 ? (hoursElapsed === 0 ? 'Just now' : `${hoursElapsed}h ago`) : (daysElapsed === 1 ? `${daysElapsed} day ago` : `${daysElapsed} days ago`);
 
   return `
-    <div tabindex="0" class="focus:outline-none mx-2 w-full sm:w-80 lg:w-72 xl:w-80 mb-8 flex flex-col shadow-md relative mt-16 hover:-translate-y-2 duration-300" id="card-${event.event_id}">
+    <div tabindex="0" class="focus:outline-none mx-2 w-full sm:w-80 lg:w-72 xl:w-80 mb-8 flex flex-col shadow-md relative mt-16" id="card-${event.event_id}">
       ${userId === event.author_id ? `
       <button id="delete-${event.event_id}" class="cursor-pointer absolute right-1 top-1 inline-flex items-center px-4 py-2 text-danger bg-danger-light hover:bg-danger hover:text-white duration-300 text-sm font-medium rounded-md">
       <svg xmlns="http://www.w3.org/2000/svg" class="size-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

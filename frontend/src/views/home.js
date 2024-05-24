@@ -6,7 +6,7 @@ import eventsModels from '../assets/homepage-bento/events-models.webp';
 import peopleInvitations from '../assets/homepage-bento/people-invitations.webp';
 import safety from '../assets/homepage-bento/safety.webp';
 
-export default () => (`
+export default (isLogged) => (`
 <div class="container my-24 mx-auto md:px-6">
   <section class="mb-32">
 
@@ -125,12 +125,18 @@ export default () => (`
     <div class="w-full mb-4">
       <div class="h-1 mx-auto bg-white w-1/6 opacity-25 my-0 py-0 rounded-t"></div>
     </div>
-    <h3 class="my-4 text-3xl text-gray-700 opacity-80 leading-tight">
-      Register and you're good to go!
-    </h3>
-    <button onclick="window.location.href='/register'" class="mx-auto lg:mx-0 bg-white text-gray-700 opacity-75 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-      Register
-    </button>
+    ${!isLogged ? `<h3 class="my-4 text-3xl text-gray-700 opacity-80 leading-tight">
+    Register and you're good to go!
+  </h3>
+  <button onclick="window.location.href='/register'" class="mx-auto lg:mx-0 bg-white text-gray-700 opacity-75 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+    Register
+  </button>` : `<h3 class="my-4 text-3xl text-gray-700 opacity-80 leading-tight">
+  Create your first event!
+</h3>
+<button onclick="window.location.href='/models'" class="mx-auto lg:mx-0 bg-white text-gray-700 opacity-75 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+  Create
+</button>`}
+    
   </section>
   <footer>
     <div class="container mx-auto max-sm:px-8">

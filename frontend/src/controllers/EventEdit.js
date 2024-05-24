@@ -1,6 +1,6 @@
 import axios from 'axios';
 import viewNav from '../views/nav';
-import viewEvent from '../views/eventMorePage';
+import viewEvent from '../views/eventEditPage';
 
 class Event {
   constructor(params) {

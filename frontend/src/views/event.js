@@ -36,8 +36,8 @@ export default (event, userId, specificGuests) => {
       : `<svg xmlns="http://www.w3.org/2000/svg" id="decline-${event.event_id}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cursor-pointer size-6 lucide lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><svg xmlns="http://www.w3.org/2000/svg" id="cancel-${event.event_id}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cursor-pointer size-6 lucide lucide-ban"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>`)).join('')}
           </div>
           ` : ''}
-          <div class="bg-yellow-200 py-1.5 px-6 rounded-full">
-            <p tabindex="0" class="focus:outline-none text-xs text-yellow-700">By ${userId === event.author_id ? 'Yourself' : `${event.author_lastname[0]}.${event.author_firstname}`}</p>
+          <div class="bg-yellow-200 text-yellow-700 py-1.5 px-6 rounded-full hover:bg-yellow-300 duration-300 cursor-default">
+            <p tabindex="0" class="focus:outline-none text-xs">By ${userId === event.author_id ? 'Yourself' : `${event.author_lastname[0]}.${event.author_firstname}`}</p>
           </div>
         </div>
         <div class="p-4 flex flex-col flex-1">
@@ -48,10 +48,10 @@ export default (event, userId, specificGuests) => {
           <p tabindex="0" class="focus:outline-none text-xs text-gray-600 mt-2">${event.description}</p>
           <div class="flex mt-4">
             <div>
-              <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 hover:bg-indigo-700 hover:text-white duration-500 py-1">${event.size} places</p>
+              <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 hover:bg-indigo-700 hover:text-white duration-500 py-1 cursor-default">${event.size} places</p>
             </div>
             <div class="pl-2">
-              <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 hover:bg-indigo-700 hover:text-white duration-500 py-1">${event.type[0].toUpperCase() + event.type.slice(1)}</p>
+              <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 hover:bg-indigo-700 hover:text-white duration-500 py-1 cursor-default">${event.type[0].toUpperCase() + event.type.slice(1)}</p>
             </div>
           </div>
           <div class="flex flex-col justify-center py-4">

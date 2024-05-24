@@ -339,7 +339,7 @@ class EventModel extends SqlConnect
     } else if ($statusColumnValue === "registered") {
       $req = $this->db->prepare("UPDATE group_users SET status = :status WHERE user_id = :user_id AND group_id = :group_id");
     } else {
-      $req = $this->db->prepare("UPDATE group_users SET status = :status, canceled_at = NOW() WHERE user_id = :user_id AND group_id = :group_id");
+      $req = $this->db->prepare("UPDATE group_users SET status = :status, confirmed_at = NULL, canceled_at = NOW() WHERE user_id = :user_id AND group_id = :group_id");
     }
 
     $req->execute([

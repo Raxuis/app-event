@@ -23,7 +23,7 @@ export default (isLogged) => (`
     ${!isLogged ? `
       <a href="/login" class="py-5 px-3">Login</a>
       <a href="/register" class="py-2 px-3 bg-primary hover:opacity-80 text-white rounded transition duration-300">Register</a>
-      ` : '<a href="/account"><lord-icon src="https://cdn.lordicon.com/bgebyztw.json" trigger="hover" stroke="bold" state="hover-looking-around" colors="primary:#000,secondary:#000" class="size-6"></lord-icon></a>'}
+      ` : '<lord-icon onclick="window.location.href=`/account`" src="https://cdn.lordicon.com/bgebyztw.json" trigger="hover" stroke="bold" state="hover-looking-around" colors="primary:#000,secondary:#000" class="size-6 cursor-pointer"></lord-icon>'}
     </div>
 
     <div class="md:hidden flex items-center">

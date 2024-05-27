@@ -393,13 +393,7 @@ class EventModel extends SqlConnect
       }
 
       // Step 2: Update the event details
-      $query = "UPDATE events SET name = :name, description = :description, size = :size, time = :time, place = :place";
-
-      if (isset($data['image'])) {
-        $query .= ", image = :image";
-      }
-
-      $query .= " WHERE id = :id";
+      $query = "UPDATE events SET name = :name, description = :description, size = :size, time = :time, place = :place, image = :image WHERE id = :id";
 
       $req = $this->db->prepare($query);
 
@@ -413,6 +407,8 @@ class EventModel extends SqlConnect
 
       if (isset($data['image'])) {
         $req->bindValue(':image', $data['image']);
+      } else {
+        $req->bindValue(':image', null);
       }
 
       $req->execute();

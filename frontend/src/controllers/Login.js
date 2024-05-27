@@ -52,7 +52,7 @@ const Login = class {
             .then((response) => {
               const { data } = response;
               if (data.PHP_SESSID) {
-                Cookies.set('PHP_SESSID', data.PHP_SESSID, { expires: 2 });
+                Cookies.set('PHP_SESSID', data.PHP_SESSID, { expires: 1 });
                 window.location.href = '/';
               }
             })

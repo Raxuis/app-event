@@ -30,7 +30,7 @@ export default (eventInfos) => (`
       </div>
         <div
         x-data
-        x-init="flatpickr($refs.datetimewidget, {wrap: true, enableTime: true, dateFormat: 'M j, Y h:i K', minDate:${Date.now()}});"
+        x-init="flatpickr($refs.datetimewidget, {wrap: true, enableTime: true, dateFormat: 'M j, Y h:i K', minDate:${Date.now()}, defaultDate: new Date('${eventInfos.time}')});"
         x-ref="datetimewidget"
         class="flatpickr container mx-auto col-span-6 sm:col-span-6 mt-5"
     >

@@ -141,8 +141,7 @@ class MyEvents {
         this.initialize();
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error updating event:', error);
+      renderToastr('error', 'Error updating event:', error);
     }
   }
 
@@ -157,7 +156,7 @@ class MyEvents {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error('Error deleting event:', error);
+      renderToastr('error', 'Error deleting event:', error);
       return false;
     }
   }

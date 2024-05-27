@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { multipleSelect } from 'multiple-select-vanilla';
+import flatpickr from 'flatpickr';
 import viewNav from '../views/nav';
 import viewModels from '../views/models';
 import viewBuiltModel from '../views/builtModel';
@@ -92,7 +93,6 @@ class AllModelsController {
   }
 
   datePickerFunction() {
-    // eslint-disable-next-line no-undef
     flatpickr('#datepicker', {});
   }
 
@@ -191,7 +191,8 @@ class AllModelsController {
       useSelectOptionLabelToHtml: true,
       data: userOptions,
       maxHeight: 5,
-      maxHeightUnit: 'row'
+      maxHeightUnit: 'row',
+      selectAll: false
     });
   }
 

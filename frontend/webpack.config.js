@@ -2,6 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const flatpickr = require("flatpickr");
+
 
 module.exports = {
   entry: './src/index.js', //if you unuse typescript entry

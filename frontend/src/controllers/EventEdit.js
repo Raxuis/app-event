@@ -1,8 +1,11 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import flatpickr from 'flatpickr';
+import { multipleSelect } from 'multiple-select-vanilla';
 import viewNav from '../views/nav';
 import viewEvent from '../views/eventEditPage';
 import viewCustomField from '../views/customField';
+import renderToastr from '../utils/toastr/renderToastr';
 
 class Event {
   constructor(params) {
@@ -32,13 +35,59 @@ class Event {
     this.run();
   }
 
-  async getEventInfos(eventId) {
+  async populateUserSelect() {
+    const users = await this.getUsers();
+    if (users) {
+      const selectedUserIds = this.response.guests.map((guest) => guest.guest_id);
+      const userOptions = users
+        .map((user) => ({
+          text: user.email,
+          value: user.id,
+          selected: selectedUserIds.includes(user.id)
+        }));
+
+      this.ms1 = multipleSelect('#select1', {
+        name: 'my-select',
+        single: false,
+        useSelectOptionLabelToHtml: true,
+        data: userOptions,
+        maxHeight: 5,
+        maxHeightUnit: 'row',
+        selectAll: false,
+        showClear: true
+      });
+    }
+  }
+
+  async getUsers() {
     try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/event/${eventId}`);
+      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/users`);
       return response.data;
     } catch (error) {
       return null;
     }
+  }
+
+  async getEventInfos(eventId) {
+    try {
+      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/event/${eventId}`);
+      // eslint-disable-next-line no-console
+      console.log(response.data.time);
+      return response.data;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  datePickerFunction() {
+    const dateString = this.response.time;
+    const date = new Date(dateString);
+    flatpickr('#datepicker', {
+      defaultDate: date,
+      locale: {
+        firstDayOfWeek: 1
+      }
+    });
   }
 
   navFunction() {
@@ -90,6 +139,7 @@ class Event {
 
     if (submitButton) {
       submitButton.addEventListener('click', async (e) => {
+        const errorText = document.getElementById('error-text');
         e.preventDefault();
         const formData = new FormData(form);
         const customFields = document.getElementById('custom-field-edit');
@@ -98,33 +148,49 @@ class Event {
           customFieldsArray.push({ name: field.name, value: field.value });
         });
         formData.append('custom_fields', JSON.stringify(customFieldsArray));
-        try {
-          const imageUrl = formData.get('image-url');
+        const requiredFields = ['name', 'description', 'place', 'quantity', 'time', 'group-name'];
+        if (
+          requiredFields.every(
+            (field) => formData.get(field)
+          )
+          && this.ms1.getSelects().length > 0
+        ) {
+          try {
+            const inputDate = new Date(formData.get('time'));
+            const formattedDate = `${inputDate.getFullYear()}-${String(inputDate.getMonth() + 1).padStart(2, '0')}-${String(inputDate.getDate()).padStart(2, '0')} ${String(inputDate.getHours()).padStart(2, '0')}:${String(inputDate.getMinutes()).padStart(2, '0')}:${String(inputDate.getSeconds()).padStart(2, '0')}`;
 
-          const eventData = {
-            name: formData.get('event_name'),
-            description: formData.get('event_description'),
-            date: formData.get('event_date'),
-            location: formData.get('event_location'),
-            custom_fields: formData.get('custom_fields')
-          };
+            const selectedUserIds = this.ms1.getSelects();
+            const imageUrl = formData.get('image-url');
 
-          if (imageUrl) {
-            eventData.image = imageUrl;
+            const eventData = {
+              name: formData.get('name'),
+              description: formData.get('description'),
+              place: formData.get('place'),
+              time: formattedDate,
+              user_ids: selectedUserIds,
+              user_id: this.userId,
+              group_name: formData.get('group-name'),
+              custom_fields: formData.get('custom_fields')
+            };
+
+            if (imageUrl) {
+              eventData.image = imageUrl;
+            }
+
+            const response = await axios.put(`http://localhost:${process.env.BACKEND_PORT}/event/${this.response.event_id}`, eventData, {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            if (response.status === 200) {
+              renderToastr('success', 'Success', 'Event updated successfully!');
+              window.location.href = '/my-events';
+            }
+          } catch (error) {
+            renderToastr('error', 'Error', error.response.statusText);
           }
-          // eslint-disable-next-line no-console
-          console.log(eventData);
-          // const response = await axios.put(`http://localhost:${process.env.BACKEND_PORT}/event/${this.response.event_id}`, eventData, {
-          //   headers: {
-          //     'Content-Type': 'application/json'
-          //   }
-          // });
-          // if (response.status === 200) {
-          //   window.location.href = '/my-events';
-          // }
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error('Error updating event:', error);
+        } else {
+          errorText.innerHTML = 'Please fill in all the fields';
         }
       });
     }
@@ -134,19 +200,20 @@ class Event {
     return `
     ${viewNav(this.userId)}
     <div class="container mx-auto h-screen px-6 py-2 sm:p-6 sm:mt-4">
-  <div class="flex flex-wrap gap-4 justify-center">
-    <h1 class="text-4xl hidden sm:block text-center font-bold">Editing Event n°${this.response.event_id} : ${this.response.event_name}</h1>
-  </div>
-  <div class="mx-auto flex flex-col items-center justify-center h-screen p-6">
-    ${viewEvent(this.response)}
-  </div>
-</div>
-
+      <div class="flex flex-wrap gap-4 justify-center">
+        <h1 class="text-4xl hidden sm:block text-center font-bold">Editing Event n°${this.response.event_id} : ${this.response.event_name}</h1>
+      </div>
+      <div class="mx-auto flex flex-col items-center justify-center h-screen p-6">
+        ${viewEvent(this.response)}
+      </div>
+    </div>
     `;
   }
 
   async run() {
     this.el.innerHTML = await this.render();
+    this.datePickerFunction();
+    await this.populateUserSelect();
     this.navFunction();
     this.addCustomFields();
     this.attachEventListeners();

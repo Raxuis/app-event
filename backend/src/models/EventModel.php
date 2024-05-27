@@ -96,25 +96,7 @@ class EventModel extends SqlConnect
     $req->execute();
     $eventId = $this->getLastEventId()['id'];
 
-    // Step 4: Add custom fields if provided
-    if (isset($data['custom_fields']) && is_array($data['custom_fields'])) {
-      $customFieldQuery = "INSERT INTO custom_fields (event_id, field_name, field_value) VALUES (:event_id, :field_name, :field_value)";
-      $customFieldStmt = $this->db->prepare($customFieldQuery);
-
-      foreach ($data['custom_fields'] as $field) {
-        if ($field instanceof stdClass) {
-          $field = (array) $field;
-        }
-
-        $customFieldStmt->execute([
-          'event_id' => $eventId,
-          'field_name' => $field['name'],
-          'field_value' => $field['value']
-        ]);
-      }
-    }
-
-    // Update group with event ID
+    // Step 4: Update group with event ID
     if (isset($data['group_id'])) {
       $groupQuery = "UPDATE groups SET event_id = :event_id WHERE id = :id";
       $groupStmt = $this->db->prepare($groupQuery);
@@ -139,7 +121,7 @@ class EventModel extends SqlConnect
     $req = $this->db->prepare(
       "SELECT e.id AS event_id, e.name AS event_name, e.image, e.type, e.created_at, e.time, e.place, e.description, e.size, e.user_id AS author_id, e.group_id, g.name as group_name,
         u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
-        gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at,
+        gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.id AS guest_id,
         us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email
         FROM events AS e
         INNER JOIN users AS u ON e.user_id = u.id
@@ -182,6 +164,7 @@ class EventModel extends SqlConnect
 
       foreach ($results as $row) {
         $event['guests'][] = [
+          'guest_id' => $row['guest_id'],
           'guest_status' => $row['guest_status'],
           'registered_at' => $row['registered_at'],
           'confirmed_at' => $row['confirmed_at'],

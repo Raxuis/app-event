@@ -48,6 +48,7 @@
   "dependencies": {
     "axios": "^1.6.7",
     "cookies": "^0.9.1",
+    "flatpickr": "^4.6.13",
     "js-cookie": "^3.0.5",
     "multiple-select-vanilla": "^3.2.1",
     "tailwindcss": "^3.4.3",

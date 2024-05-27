@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { multipleSelect } from 'multiple-select-vanilla';
+import flatpickr from 'flatpickr';
 import viewNav from '../views/nav';
 import viewPageModel from '../views/modelPage';
 import renderToastr from '../utils/toastr/renderToastr';
@@ -79,7 +80,8 @@ const Model = class {
       useSelectOptionLabelToHtml: true,
       data: userOptions,
       maxHeight: 5,
-      maxHeightUnit: 'row'
+      maxHeightUnit: 'row',
+      selectAll: false
     });
   }
 
@@ -102,7 +104,6 @@ const Model = class {
   }
 
   datePickerFunction() {
-    // eslint-disable-next-line no-undef
     flatpickr('#datepicker', {});
   }
 

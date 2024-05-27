@@ -43,7 +43,7 @@ export default () => (`
                 name="time"
                 data-input
                 placeholder="Select.."
-                class="border border-gray-300 h-11 text-center block w-full px-4 py-3 rounded-l-md"
+                class="border border-gray-300 h-11 block w-full px-4 py-3 rounded-l-md"
 
             >
 

@@ -71,8 +71,6 @@ class Event {
   async getEventInfos(eventId) {
     try {
       const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/event/${eventId}`);
-      // eslint-disable-next-line no-console
-      console.log(response.data.time);
       return response.data;
     } catch (error) {
       return null;

@@ -155,7 +155,6 @@ class MyEvents {
       cardEvent.remove();
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       renderToastr('error', 'Error deleting event:', error);
       return false;
     }

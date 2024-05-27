@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import viewNav from '../views/nav';

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Cookies from 'js-cookie';
 import viewNav from '../views/nav';
 

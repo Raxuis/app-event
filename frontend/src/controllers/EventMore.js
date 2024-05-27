@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import axios from 'axios';
 import viewNav from '../views/nav';
 import viewEvent from '../views/eventMorePage';
@@ -6,13 +7,25 @@ class Event {
   constructor(params) {
     this.el = document.querySelector('#root');
     this.params = params;
-    this.isLogged = localStorage.getItem('isLogged');
     this.init();
   }
 
   async init() {
     this.response = await this.getEventInfos(this.params);
-    if (parseInt(localStorage.getItem('id'), 10) !== this.response.author_id) {
+    const sessionId = Cookies.get('PHP_SESSID');
+
+    if (!sessionId) {
+      this.userId = null;
+      return;
+    }
+
+    try {
+      const response = await axios.get(`http://localhost:8080/auth/${sessionId}`);
+      this.userId = response.data.user_id;
+    } catch (e) {
+      this.userId = null;
+    }
+    if (this.userId !== this.response.author_id) {
       window.location.href = '/my-events';
     }
     this.run();
@@ -37,7 +50,7 @@ class Event {
 
   async render() {
     return `
-    ${viewNav(this.isLogged)}
+    ${viewNav(this.userId)}
     <div class="container mx-auto h-screen p-6 mt-4">
     <div class="flex flex-wrap gap-4">
     <div class="flex-shrink-0">

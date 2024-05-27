@@ -10,6 +10,9 @@ export default (event) => (`
             <span class="mr-3 font-semibold text-dark">Event n°${event.event_id} infos</span>
             <span class="mt-1 font-medium text-secondary-dark text-lg/normal">${event.event_name} | ${event.description}</span>
           </h3>
+          <h3 class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
+            <span class="mr-3 font-semibold text-dark">${event.size} places left</span>
+          </h3>
         </div>
         <div class="flex-auto block py-8 pt-6 px-9">
           <div class="overflow-x-auto">

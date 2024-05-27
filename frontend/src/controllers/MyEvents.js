@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import viewNav from '../views/nav';
 import viewEvents from '../views/events';
 import EventMore from './EventMore';
@@ -30,6 +30,19 @@ class MyEvents {
     const urlParams = new URLSearchParams(window.location.search);
     const eventId = urlParams.get('eventId');
     const action = urlParams.get('action');
+    const sessionId = Cookies.get('PHP_SESSID');
+
+    if (!sessionId) {
+      this.userId = null;
+      return;
+    }
+
+    try {
+      const response = await axios.get(`http://localhost:8080/auth/${sessionId}`);
+      this.userId = response.data.user_id;
+    } catch (e) {
+      this.userId = null;
+    }
 
     if (eventId) {
       if (action === 'more') {
@@ -128,7 +141,8 @@ class MyEvents {
         this.initialize();
       }
     } catch (error) {
-      console.error(error.message);
+      // eslint-disable-next-line no-console
+      console.error('Error updating event:', error);
     }
   }
 
@@ -150,7 +164,7 @@ class MyEvents {
 
   async renderAllEvents(elements) {
     const html = `
-      ${viewNav(this.isLogged)}
+      ${viewNav(this.userId)}
       <div class="max-w-6xl mx-auto px-4">
         ${viewEvents(elements, this.userId, this.verifSpecificGuests(elements))}
       </div>
@@ -162,7 +176,7 @@ class MyEvents {
 
   renderNoEvents() {
     const html = `
-      ${viewNav(this.isLogged)}
+      ${viewNav(this.userId)}
       <div class="max-w-6xl mx-auto px-4">
         <p class="text-3xl py-6">You don't have events.</p>
       </div>

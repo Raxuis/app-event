@@ -15,8 +15,9 @@ use App\Controllers\Form;
 use App\Controllers\UserEventInteraction;
 
 new Router([
-  'user/:id' => User::class,
-  'auth' => Auth::class,
+  "user/:id" => User::class,
+  "auth" => Auth::class,
+  "auth/:id" => Auth::class,
   "user" => User::class,
   'user/register' => User::class,
   'users' => Users::class,
@@ -24,8 +25,8 @@ new Router([
   'models' => Models::class,
   'event/:id' => Event::class,
   'event' => Event::class,
-  'userinteraction' => UserEventInteraction::class,
-  'events' => Events::class,
-  'events/:user_id' => UserEvents::class,
-  'form-infos' => Form::class
+  "userinteraction" => UserEventInteraction::class,
+  "events" => Events::class,
+  "events/:user_id" => UserEvents::class,
+  "form-infos" => Form::class
 ]);

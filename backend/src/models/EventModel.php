@@ -26,11 +26,8 @@ class EventModel extends SqlConnect
         foreach ($userIds as $userId) {
           $groupUserQuery = "INSERT INTO group_users (group_id, user_id, status) VALUES (:group_id, :user_id, :status)";
           $groupUserStmt = $this->db->prepare($groupUserQuery);
-          if ($data['user_id'] === $userId) {
-            $groupUserStmt->execute(['group_id' => $groupId, 'user_id' => $userId, 'status' => 'confirmed']);
-          } else {
-            $groupUserStmt->execute(['group_id' => $groupId, 'user_id' => $userId, 'status' => 'registered']);
-          }
+          $status = ($data['user_id'] === $userId) ? 'confirmed' : 'registered';
+          $groupUserStmt->execute(['group_id' => $groupId, 'user_id' => $userId, 'status' => $status]);
         }
         unset($data['user_ids']);
       }
@@ -92,9 +89,32 @@ class EventModel extends SqlConnect
 
       $req->execute();
       $eventId = $this->getLastEventId()['id'];
-      $groupQuery = "UPDATE groups SET event_id = :event_id WHERE id = :id";
-      $groupStmt = $this->db->prepare($groupQuery);
-      $groupStmt->execute(['event_id' => $eventId, 'id' => $this->getLastGroupId()['id']]);
+
+      // Step 4: Add custom fields if provided
+      if (isset($data['custom_fields']) && is_array($data['custom_fields'])) {
+        $customFieldQuery = "INSERT INTO custom_fields (event_id, field_name, field_value) VALUES (:event_id, :field_name, :field_value)";
+        $customFieldStmt = $this->db->prepare($customFieldQuery);
+
+        foreach ($data['custom_fields'] as $field) {
+          if ($field instanceof stdClass) {
+            $field = (array) $field;
+          }
+
+          $customFieldStmt->execute([
+            'event_id' => $eventId,
+            'field_name' => $field['name'],
+            'field_value' => $field['value']
+          ]);
+        }
+      }
+
+      // Update group with event ID
+      if (isset($data['group_id'])) {
+        $groupQuery = "UPDATE groups SET event_id = :event_id WHERE id = :id";
+        $groupStmt = $this->db->prepare($groupQuery);
+        $groupStmt->execute(['event_id' => $eventId, 'id' => $data['group_id']]);
+      }
+
     } catch (Exception $e) {
       throw $e;
     }
@@ -108,11 +128,9 @@ class EventModel extends SqlConnect
 
   public function get(int $id)
   {
-    //TODO : Add case model_id
+    // Retrieve basic event information
     $req = $this->db->prepare(
-      "SELECT e.id AS event_id, 
-        e.name AS event_name, 
-        e.image, e.type, e.created_at, e.time, e.place, e.description, e.size, e.user_id AS author_id, e.group_id,
+      "SELECT e.id AS event_id, e.name AS event_name, e.image, e.type, e.created_at, e.time, e.place, e.description, e.size, e.user_id AS author_id, e.group_id, g.name as group_name,
         u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
         gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at,
         us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email
@@ -144,8 +162,16 @@ class EventModel extends SqlConnect
         'author_lastname' => $results[0]['author_lastname'],
         'author_email' => $results[0]['author_email'],
         'group_id' => $results[0]['group_id'],
+        'group_name' => $results[0]['group_name'],
         'guests' => []
       ];
+
+      // Retrieve custom fields
+      $customFieldReq = $this->db->prepare("SELECT field_name, field_value FROM custom_fields WHERE event_id = :event_id");
+      $customFieldReq->execute(['event_id' => $id]);
+      $customFields = $customFieldReq->fetchAll(PDO::FETCH_ASSOC);
+
+      $event['custom_fields'] = $customFields;
 
       foreach ($results as $row) {
         $event['guests'][] = [
@@ -167,18 +193,20 @@ class EventModel extends SqlConnect
 
   public function getAll(): bool|array|stdClass
   {
-    //TODO : Add case model_id !== null
     $req = $this->db->prepare(
       "SELECT e.id AS event_id, 
-        e.name AS event_name, 
-        e.image, e.type, e.created_at, e.time, e.place, e.description, e.size, e.user_id AS author_id, e.group_id,
-        u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
-        gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email
+                e.name AS event_name, 
+                e.image, e.type, e.created_at, e.time, e.place, e.description, e.size, e.user_id AS author_id, e.group_id,
+                u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
+                gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, 
+                us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email,
+                cf.field_name AS custom_field_name, cf.field_value AS custom_field_value
         FROM events AS e
         INNER JOIN users AS u ON e.user_id = u.id
         INNER JOIN groups AS g ON e.group_id = g.id
         INNER JOIN group_users AS gu ON gu.group_id = g.id
         INNER JOIN users AS us ON gu.user_id = us.id
+        LEFT JOIN custom_fields AS cf ON cf.event_id = e.id
         ORDER BY e.time ASC"
     );
     $req->execute();
@@ -186,26 +214,32 @@ class EventModel extends SqlConnect
     $results = $req->fetchAll(PDO::FETCH_ASSOC);
 
     if (count($results) > 0) {
-      $event = [
-        'event_id' => $results[0]['event_id'],
-        'event_name' => $results[0]['event_name'],
-        'image' => $results[0]['image'],
-        'type' => $results[0]['type'],
-        'created_at' => $results[0]['created_at'],
-        'time' => $results[0]['time'],
-        'place' => $results[0]['place'],
-        'description' => $results[0]['description'],
-        'size' => $results[0]['size'],
-        'author_id' => $results[0]['author_id'],
-        'author_firstname' => $results[0]['author_firstname'],
-        'author_lastname' => $results[0]['author_lastname'],
-        'author_email' => $results[0]['author_email'],
-        'group_id' => $results[0]['group_id'],
-        'guests' => []
-      ];
-
+      $events = [];
       foreach ($results as $row) {
-        $event['guests'][] = [
+        $eventId = $row['event_id'];
+        if (!isset($events[$eventId])) {
+          $events[$eventId] = [
+            'event_id' => $eventId,
+            'event_name' => $row['event_name'],
+            'image' => $row['image'],
+            'type' => $row['type'],
+            'created_at' => $row['created_at'],
+            'time' => $row['time'],
+            'place' => $row['place'],
+            'description' => $row['description'],
+            'size' => $row['size'],
+            'author_id' => $row['author_id'],
+            'author_firstname' => $row['author_firstname'],
+            'author_lastname' => $row['author_lastname'],
+            'author_email' => $row['author_email'],
+            'group_id' => $row['group_id'],
+            'guests' => [], // Initialize guest list
+            'custom_fields' => [] // Initialize custom fields array
+          ];
+        }
+
+        // Add guest information
+        $events[$eventId]['guests'][] = [
           'guest_status' => $row['guest_status'],
           'registered_at' => $row['registered_at'],
           'confirmed_at' => $row['confirmed_at'],
@@ -214,9 +248,17 @@ class EventModel extends SqlConnect
           'guest_lastname' => $row['guest_lastname'],
           'guest_email' => $row['guest_email']
         ];
+
+        // Add custom field information
+        if (isset($row['custom_field_name']) && isset($row['custom_field_value'])) {
+          $events[$eventId]['custom_fields'][] = [
+            'name' => $row['custom_field_name'],
+            'value' => $row['custom_field_value']
+          ];
+        }
       }
 
-      return $event;
+      return array_values($events);
     } else {
       return new stdClass();
     }
@@ -348,4 +390,93 @@ class EventModel extends SqlConnect
       "group_id" => $body['group_id']
     ]);
   }
+  public function update(int $id, array $data)
+  {
+    try {
+      // Step 1: Update the event details
+      $query = "UPDATE events SET name = :name, description = :description, size = :size, time = :time, place = :place";
+
+      if (isset($data['image'])) {
+        $query .= ", image = :image";
+      }
+
+      $query .= " WHERE id = :id";
+
+      $req = $this->db->prepare($query);
+
+      // Bind parameters
+      $req->bindValue(':name', $data['name']);
+      $req->bindValue(':description', $data['description']);
+      $req->bindValue(':size', $data['size']);
+      $req->bindValue(':time', $data['time']);
+      $req->bindValue(':place', $data['place']);
+      $req->bindValue(':id', $id);
+
+      if (isset($data['image'])) {
+        $req->bindValue(':image', $data['image']);
+      }
+
+      $req->execute();
+
+      // Step 2: Update the group name if provided
+      if (isset($data['group_name'])) {
+        $groupQuery = "UPDATE groups SET name = :group_name WHERE id = (SELECT group_id FROM events WHERE id = :event_id)";
+        $groupStmt = $this->db->prepare($groupQuery);
+        $groupStmt->execute(['group_name' => $data['group_name'], 'event_id' => $id]);
+      }
+
+      // Step 3: Update guests if provided
+      if (isset($data['user_ids'])) {
+        $groupId = $this->getGroupIdByEventId($id);
+        // Remove existing guests
+        $deleteGuestsQuery = "DELETE FROM group_users WHERE group_id = :group_id";
+        $deleteGuestsStmt = $this->db->prepare($deleteGuestsQuery);
+        $deleteGuestsStmt->execute(['group_id' => $groupId]);
+
+        // Add new guests
+        foreach ($data['user_ids'] as $userId) {
+          $groupUserQuery = "INSERT INTO group_users (group_id, user_id, status) VALUES (:group_id, :user_id, :status)";
+          $groupUserStmt = $this->db->prepare($groupUserQuery);
+          $status = ($data['user_id'] === $userId) ? 'confirmed' : 'registered';
+          $groupUserStmt->execute(['group_id' => $groupId, 'user_id' => $userId, 'status' => $status]);
+        }
+      }
+
+      // Step 4: Handle custom fields
+      if (isset($data['custom_fields']) && is_array($data['custom_fields'])) {
+        // Delete existing custom fields for this event
+        $deleteQuery = "DELETE FROM custom_fields WHERE event_id = :event_id";
+        $deleteStmt = $this->db->prepare($deleteQuery);
+        $deleteStmt->execute(['event_id' => $id]);
+
+        // Insert new custom fields
+        $customFieldQuery = "INSERT INTO custom_fields (event_id, field_name, field_value) VALUES (:event_id, :field_name, :field_value)";
+        $customFieldStmt = $this->db->prepare($customFieldQuery);
+
+        foreach ($data['custom_fields'] as $field) {
+          if ($field instanceof stdClass) {
+            $field = (array) $field;
+          }
+
+          $customFieldStmt->execute([
+            'event_id' => $id,
+            'field_name' => $field['name'],
+            'field_value' => $field['value']
+          ]);
+        }
+      }
+
+    } catch (Exception $e) {
+      throw $e;
+    }
+  }
+
+  private function getGroupIdByEventId(int $eventId): int
+  {
+    $req = $this->db->prepare("SELECT group_id FROM events WHERE id = :event_id");
+    $req->execute(['event_id' => $eventId]);
+    $result = $req->fetch(PDO::FETCH_ASSOC);
+    return $result['group_id'];
+  }
 }
+

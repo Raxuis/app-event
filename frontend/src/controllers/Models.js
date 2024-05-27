@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { multipleSelect } from 'multiple-select-vanilla';
 import viewNav from '../views/nav';
 import viewModels from '../views/models';
@@ -10,7 +11,6 @@ class AllModelsController {
   constructor() {
     this.el = document.querySelector('#root');
     this.initialize();
-    this.isLogged = localStorage.getItem('isLogged');
     window.addEventListener('popstate', (event) => {
       if (event.state && event.state.modelId) {
         this.navigateToModelDetail(event.state.modelId);
@@ -23,6 +23,19 @@ class AllModelsController {
   async initialize() {
     const urlParams = new URLSearchParams(window.location.search);
     const modelId = urlParams.get('modelId');
+    const sessionId = Cookies.get('PHP_SESSID');
+
+    if (!sessionId) {
+      this.userId = null;
+      return;
+    }
+
+    try {
+      const response = await axios.get(`http://localhost:8080/auth/${sessionId}`);
+      this.userId = response.data.user_id;
+    } catch (e) {
+      this.userId = null;
+    }
 
     if (modelId) {
       this.navigateToModelDetail(modelId);
@@ -64,7 +77,7 @@ class AllModelsController {
 
   renderAllModels(elements) {
     const html = `
-      ${viewNav(this.isLogged)}
+      ${viewNav(this.userId)}
       <div class="max-w-6xl mx-auto px-4 mb-16">
         ${viewModels(elements)}
         ${viewBuiltModel()}
@@ -165,9 +178,8 @@ class AllModelsController {
   }
 
   populateUserSelect(users) {
-    const userId = parseInt(localStorage.getItem('id'), 10);
     const userOptions = users
-      .filter((user) => user.id !== userId)
+      .filter((user) => user.id !== this.userId)
       .map((user) => ({
         text: user.email,
         value: user.id
@@ -195,7 +207,7 @@ class AllModelsController {
 
         const selectedUserIds = this.ms1.getSelects();
         // Push the id of the user who has made the event
-        selectedUserIds.push(parseInt(localStorage.getItem('id'), 10));
+        selectedUserIds.push(this.userId);
         const imageUrl = formData.get('image-url');
         const eventData = {
           name: formData.get('name'),
@@ -204,7 +216,7 @@ class AllModelsController {
           size: formData.get('quantity'),
           time: formattedDate,
           user_ids: selectedUserIds,
-          user_id: parseInt(localStorage.getItem('id'), 10),
+          user_id: this.userId,
           group_name: formData.get('group-name')
         };
 

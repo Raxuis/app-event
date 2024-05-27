@@ -95,7 +95,6 @@ class UserModel extends SqlConnect
 
     public function userVerification(array $data): array
     {
-        session_start();
 
         $req = $this->db->prepare("SELECT * FROM users WHERE email = :email");
         $req->execute(["email" => $data['email']]);
@@ -108,13 +107,12 @@ class UserModel extends SqlConnect
                 'message' => 'Session Unauthorized'
             ];
         }
-
-        unset($user['password']); // Remove password from the response for security reasons
-        $_SESSION['isLogged'] = true;
-        $_SESSION['user']['email'] = $user['email'];
-        $_SESSION['user']['firstname'] = $user['firstname'];
-        $_SESSION['user']['lastname'] = $user['lastname'];
-        return $_SESSION;
+        header('HTTP/1.0 200 OK');
+        return [
+            'code' => '200',
+            'message' => 'Session OK',
+            'PHP_SESSID' => $user['session_id'],
+        ];
     }
 
     public function getByEmail(array $data)
@@ -124,6 +122,19 @@ class UserModel extends SqlConnect
         $user = $req->fetch(PDO::FETCH_ASSOC);
         unset($user['password']);
         return $user;
+    }
+
+    public function getBySessionId(string $session_id)
+    {
+        $req = $this->db->prepare("SELECT * FROM users WHERE session_id = :session_id");
+        $req->execute(["session_id" => $session_id]);
+        $user = $req->fetch(PDO::FETCH_ASSOC);
+        if ($user) {
+            unset($user['password']);
+            return $user;
+        }
+
+        return new stdClass();
     }
 
     public function sessionVerification(): array

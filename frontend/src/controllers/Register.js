@@ -8,7 +8,7 @@ const Register = class {
     this.el = document.querySelector('#root');
     this.params = params;
     this.emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    this.isLogged = localStorage.getItem('isLogged');
+    this.userId = null;
     this.run();
   }
 
@@ -115,7 +115,7 @@ const Register = class {
 
   render() {
     return `
-        ${viewNav(this.isLogged)}
+        ${viewNav(this.userId)}
         ${viewRegister()}
     `;
   }

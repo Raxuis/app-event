@@ -78,8 +78,6 @@ export default () => (`
                 </svg>
             </a>
         </div>
-    
-    </div>
         <p id="error-text" class="text-red-500 text-md pt-2"></p>
       </div>
         <div class="flex flex-col space-y-2">

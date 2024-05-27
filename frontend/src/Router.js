@@ -1,3 +1,5 @@
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import PageNotFound from './controllers/404';
 
 const Router = class {
@@ -10,8 +12,24 @@ const Router = class {
         .map((param) => param.split('='))
     );
     this.routes = routes;
-
+    this.getUserId();
     this.run();
+  }
+
+  async getUserId() {
+    const sessionId = Cookies.get('PHP_SESSID');
+
+    if (!sessionId) {
+      this.userId = null;
+      return;
+    }
+
+    try {
+      const response = await axios.get(`http://localhost:8080/auth/${sessionId}`);
+      this.userId = response.data.user_id;
+    } catch (e) {
+      this.userId = null;
+    }
   }
 
   startController() {
@@ -22,18 +40,14 @@ const Router = class {
 
       if (route.url === this.path) {
         if (route.logInRoute) {
-          const isLogged = localStorage.getItem('isLogged');
-
-          if (isLogged) {
+          if (this.userId !== null) {
             window.location.href = '/';
             break;
           }
         }
         if (route.private) {
-          const username = localStorage.getItem('isLogged');
-
-          if (!username) {
-            window.location.href = '/';
+          if (this.userId === null) {
+            window.location.href = '/login';
             break;
           }
         }

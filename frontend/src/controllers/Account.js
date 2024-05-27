@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import viewNav from '../views/nav';
 import viewAccount from '../views/account';
 import renderToastr from '../utils/toastr/renderToastr';
@@ -8,15 +9,28 @@ const Account = class {
     this.el = document.querySelector('#root');
     this.params = params;
     this.emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    this.isLogged = localStorage.getItem('isLogged');
-
     this.run();
   }
 
-  async getUserInfos() {
-    const id = localStorage.getItem('id');
+  async getUserId() {
+    const sessionId = Cookies.get('PHP_SESSID');
+
+    if (!sessionId) {
+      this.userId = null;
+      return;
+    }
+
     try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/user/${id}`);
+      const response = await axios.get(`http://localhost:8080/auth/${sessionId}`);
+      this.userId = response.data.user_id;
+    } catch (e) {
+      this.userId = null;
+    }
+  }
+
+  async getUserInfos() {
+    try {
+      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/user/${this.userId}`);
       return response.data;
     } catch (error) {
       return null;
@@ -34,7 +48,7 @@ const Account = class {
   async render() {
     const userInfos = await this.getUserInfos();
     this.el.innerHTML = `
-      ${viewNav(this.isLogged)}
+      ${viewNav(this.userId)}
       ${viewAccount(userInfos)}
     `;
   }
@@ -131,6 +145,7 @@ const Account = class {
   }
 
   async run() {
+    await this.getUserId();
     await this.render();
     this.eventListeners();
     this.navFunction();

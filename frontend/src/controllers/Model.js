@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { multipleSelect } from 'multiple-select-vanilla';
 import viewNav from '../views/nav';
 import viewPageModel from '../views/modelPage';
@@ -8,12 +9,24 @@ const Model = class {
   constructor(params) {
     this.el = document.querySelector('#root');
     this.params = params;
-    this.isLogged = localStorage.getItem('isLogged');
 
     this.run();
   }
 
   async initialize() {
+    const sessionId = Cookies.get('PHP_SESSID');
+
+    if (!sessionId) {
+      this.userId = null;
+      return;
+    }
+
+    try {
+      const response = await axios.get(`http://localhost:8080/auth/${sessionId}`);
+      this.userId = response.data.user_id;
+    } catch (e) {
+      this.userId = null;
+    }
     const users = await this.getUsers();
     if (users) {
       this.populateUserSelect(users);
@@ -33,6 +46,7 @@ const Model = class {
         const url = new URL(window.location);
         url.searchParams.delete('modelId');
         window.history.replaceState({}, '', url);
+        this.run();
       }
     });
     cancelBtn.addEventListener('click', (e) => {
@@ -53,9 +67,8 @@ const Model = class {
   }
 
   populateUserSelect(users) {
-    const userId = parseInt(localStorage.getItem('id'), 10);
     const userOptions = users
-      .filter((user) => user.id !== userId)
+      .filter((user) => user.id !== this.userId)
       .map((user) => ({
         text: user.email,
         value: user.id
@@ -107,7 +120,7 @@ const Model = class {
         const selectedUserIds = this.ms1.getSelects();
         const response = await this.getModelInfos(this.params);
         // Push the id of the user who has made the event
-        selectedUserIds.push(parseInt(localStorage.getItem('id'), 10));
+        selectedUserIds.push(this.userId);
         const imageUrl = formData.get('image-url');
         const eventData = {
           name: formData.get('name'),
@@ -116,7 +129,7 @@ const Model = class {
           size: response.size,
           time: formattedDate,
           user_ids: selectedUserIds,
-          user_id: parseInt(localStorage.getItem('id'), 10),
+          user_id: this.userId,
           group_name: formData.get('group-name'),
           model_id: response.id
         };
@@ -142,7 +155,7 @@ const Model = class {
   async render() {
     const response = await this.getModelInfos(this.params);
     return `
-    ${viewNav(this.isLogged)}
+    ${viewNav(this.userId)}
     <div class="container mx-auto h-screen p-6 mt-4">
     <div class="flex flex-wrap gap-4">
     <div class="flex-shrink-0">
@@ -166,9 +179,9 @@ const Model = class {
 
   async run() {
     this.datePickerFunction();
+    this.initialize();
     this.el.innerHTML = await this.render();
     this.navFunction();
-    this.initialize();
     this.attachEventListeners();
   }
 };

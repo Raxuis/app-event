@@ -22,13 +22,13 @@ class Auth extends Controller
 
     public function getAuth()
     {
-        session_start();
-        $user = $this->user->getByEmail($this->body);
-        if (isset($_COOKIE["PHPSESSID"]) && $_COOKIE["PHPSESSID"] === $user["session_id"]) {
+        $userInfos = $this->user->getBySessionId($this->params['id']);
+        if (!empty($userInfos)) {
             header('HTTP/1.0 200 OK');
             return [
                 'code' => '200',
-                'message' => 'Session OK'
+                'message' => 'Session OK',
+                'user_id' => $userInfos['id'],
             ];
         }
         header('HTTP/1.0 401 Unauthorized');
@@ -37,4 +37,5 @@ class Auth extends Controller
             'message' => 'Session Unauthorized'
         ];
     }
+
 }

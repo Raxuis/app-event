@@ -21,6 +21,11 @@ class Event extends Controller
 
     return $this->event->getLast();
   }
+  public function putEvent()
+  {
+    $eventId = intval($this->params['id']);
+    $this->event->update($eventId, $this->body);
+  }
 
   public function deleteEvent()
   {

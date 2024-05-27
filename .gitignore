@@ -11,4 +11,3 @@ id
 .vscode
 vendor
 .env
-.env.*

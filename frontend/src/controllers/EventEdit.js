@@ -41,6 +41,7 @@ class Event {
     if (users) {
       const selectedUserIds = this.response.guests.map((guest) => guest.guest_id);
       const userOptions = users
+        .filter((user) => user.id !== this.userId)
         .map((user) => ({
           text: user.email,
           value: user.id,

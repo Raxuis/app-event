@@ -232,7 +232,7 @@ class AllModelsController {
         renderToastr('success', 'Success', 'Event created successfully!');
         return true;
       } catch (error) {
-        renderToastr('error', 'Error', error.message);
+        renderToastr('error', 'Error', error.response.statusText);
         return false;
       }
     } else {

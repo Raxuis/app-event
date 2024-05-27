@@ -11,113 +11,120 @@ class EventModel extends SqlConnect
   protected string $type;
   public function add(array $data)
   {
-    try {
-      // Step 1: Create a new group if 'user_ids' is provided
-      if (isset($data['user_ids'])) {
-        $groupName = $data['group_name'];
-        $groupQuery = "INSERT INTO groups (name) VALUES (:group_name)";
-        $groupStmt = $this->db->prepare($groupQuery);
-        $groupStmt->execute(['group_name' => $groupName]);
-        $groupId = $this->getLastGroupId()['id']; // Retrieve the group_id from the result
-        $data['group_id'] = $groupId;
-
-        // Step 2: Add users to the new group
-        $userIds = $data['user_ids'];
-        foreach ($userIds as $userId) {
-          $groupUserQuery = "INSERT INTO group_users (group_id, user_id, status) VALUES (:group_id, :user_id, :status)";
-          $groupUserStmt = $this->db->prepare($groupUserQuery);
-          $status = ($data['user_id'] === $userId) ? 'confirmed' : 'registered';
-          $groupUserStmt->execute(['group_id' => $groupId, 'user_id' => $userId, 'status' => $status]);
-        }
-        unset($data['user_ids']);
+    // Step 1: Create a new group if 'user_ids' is provided
+    if (isset($data['user_ids'])) {
+      if (count($data['user_ids']) + 1 > $data['size']) {
+        header('HTTP/1.0 400 Too many Users');
+        return [
+          'code' => '400',
+          'message' => 'Too many users'
+        ];
       }
+      $groupName = $data['group_name'];
+      $groupQuery = "INSERT INTO groups (name) VALUES (:group_name)";
+      $groupStmt = $this->db->prepare($groupQuery);
+      $groupStmt->execute(['group_name' => $groupName]);
+      $groupId = $this->getLastGroupId()['id']; // Retrieve the group_id from the result
+      $data['group_id'] = $groupId;
 
-      // Step 3: Create the event
-      $query = "INSERT INTO events (name, description, size, time, place, user_id";
-
-      if (isset($data['image'])) {
-        $query .= ", image";
+      // Step 2: Add users to the new group
+      $userIds = $data['user_ids'];
+      foreach ($userIds as $userId) {
+        $groupUserQuery = "INSERT INTO group_users (group_id, user_id, status) VALUES (:group_id, :user_id, :status)";
+        $groupUserStmt = $this->db->prepare($groupUserQuery);
+        $status = ($data['user_id'] === $userId) ? 'confirmed' : 'registered';
+        $groupUserStmt->execute(['group_id' => $groupId, 'user_id' => $userId, 'status' => $status]);
       }
-
-      if (isset($data['model_id'])) {
-        $query .= ", model_id, type";
-      }
-
-      if (isset($data['group_id'])) {
-        $query .= ", group_id";
-      }
-
-      $query .= ") VALUES (:name, :description, :size, :time, :place, :user_id";
-
-      if (isset($data['image'])) {
-        $query .= ", :image";
-      }
-
-      if (isset($data['model_id'])) {
-        $query .= ", :model_id, :type";
-      }
-
-      if (isset($data['group_id'])) {
-        $query .= ", :group_id";
-      }
-
-      $query .= ")";
-
-      $req = $this->db->prepare($query);
-
-      // Bind parameters
-      $req->bindValue(':name', $data['name']);
-      $req->bindValue(':description', $data['description']);
-      $req->bindValue(':size', $data['size']);
-      $req->bindValue(':time', $data['time']);
-      $req->bindValue(':place', $data['place']);
-      $req->bindValue(':user_id', $data['user_id']);
-
-      if (isset($data['image'])) {
-        $req->bindValue(':image', $data['image']);
-      }
-
-      if (isset($data['model_id'])) {
-        $req->bindValue(':model_id', $data['model_id']);
-        $type = $this->getModelType($data['model_id'])['type'];
-        $req->bindValue(':type', $type);
-      }
-
-      if (isset($data['group_id'])) {
-        $req->bindValue(':group_id', $data['group_id']);
-      }
-
-      $req->execute();
-      $eventId = $this->getLastEventId()['id'];
-
-      // Step 4: Add custom fields if provided
-      if (isset($data['custom_fields']) && is_array($data['custom_fields'])) {
-        $customFieldQuery = "INSERT INTO custom_fields (event_id, field_name, field_value) VALUES (:event_id, :field_name, :field_value)";
-        $customFieldStmt = $this->db->prepare($customFieldQuery);
-
-        foreach ($data['custom_fields'] as $field) {
-          if ($field instanceof stdClass) {
-            $field = (array) $field;
-          }
-
-          $customFieldStmt->execute([
-            'event_id' => $eventId,
-            'field_name' => $field['name'],
-            'field_value' => $field['value']
-          ]);
-        }
-      }
-
-      // Update group with event ID
-      if (isset($data['group_id'])) {
-        $groupQuery = "UPDATE groups SET event_id = :event_id WHERE id = :id";
-        $groupStmt = $this->db->prepare($groupQuery);
-        $groupStmt->execute(['event_id' => $eventId, 'id' => $data['group_id']]);
-      }
-
-    } catch (Exception $e) {
-      throw $e;
+      unset($data['user_ids']);
     }
+
+    // Step 3: Create the event
+    $query = "INSERT INTO events (name, description, size, time, place, user_id";
+
+    if (isset($data['image'])) {
+      $query .= ", image";
+    }
+
+    if (isset($data['model_id'])) {
+      $query .= ", model_id, type";
+    }
+
+    if (isset($data['group_id'])) {
+      $query .= ", group_id";
+    }
+
+    $query .= ") VALUES (:name, :description, :size, :time, :place, :user_id";
+
+    if (isset($data['image'])) {
+      $query .= ", :image";
+    }
+
+    if (isset($data['model_id'])) {
+      $query .= ", :model_id, :type";
+    }
+
+    if (isset($data['group_id'])) {
+      $query .= ", :group_id";
+    }
+
+    $query .= ")";
+
+    $req = $this->db->prepare($query);
+
+    // Bind parameters
+    $req->bindValue(':name', $data['name']);
+    $req->bindValue(':description', $data['description']);
+    $req->bindValue(':size', $data['size']);
+    $req->bindValue(':time', $data['time']);
+    $req->bindValue(':place', $data['place']);
+    $req->bindValue(':user_id', $data['user_id']);
+
+    if (isset($data['image'])) {
+      $req->bindValue(':image', $data['image']);
+    }
+
+    if (isset($data['model_id'])) {
+      $req->bindValue(':model_id', $data['model_id']);
+      $type = $this->getModelType($data['model_id'])['type'];
+      $req->bindValue(':type', $type);
+    }
+
+    if (isset($data['group_id'])) {
+      $req->bindValue(':group_id', $data['group_id']);
+    }
+
+    $req->execute();
+    $eventId = $this->getLastEventId()['id'];
+
+    // Step 4: Add custom fields if provided
+    if (isset($data['custom_fields']) && is_array($data['custom_fields'])) {
+      $customFieldQuery = "INSERT INTO custom_fields (event_id, field_name, field_value) VALUES (:event_id, :field_name, :field_value)";
+      $customFieldStmt = $this->db->prepare($customFieldQuery);
+
+      foreach ($data['custom_fields'] as $field) {
+        if ($field instanceof stdClass) {
+          $field = (array) $field;
+        }
+
+        $customFieldStmt->execute([
+          'event_id' => $eventId,
+          'field_name' => $field['name'],
+          'field_value' => $field['value']
+        ]);
+      }
+    }
+
+    // Update group with event ID
+    if (isset($data['group_id'])) {
+      $groupQuery = "UPDATE groups SET event_id = :event_id WHERE id = :id";
+      $groupStmt = $this->db->prepare($groupQuery);
+      $groupStmt->execute(['event_id' => $eventId, 'id' => $data['group_id']]);
+    }
+    header('HTTP/1.0 201 Created');
+    return [
+      'code' => '201',
+      'message' => 'Event created',
+    ];
   }
 
   public function delete(int $id): void

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\EventModel;
+use Exception;
 
 class Event extends Controller
 {
@@ -16,11 +17,9 @@ class Event extends Controller
   }
   public function postEvent()
   {
-
-    $this->event->add($this->body);
-
-    return $this->event->getLast();
+    return $this->event->add($this->body);
   }
+
   public function putEvent()
   {
     $eventId = intval($this->params['id']);

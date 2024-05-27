@@ -42,7 +42,6 @@ const Model = class {
       e.preventDefault();
       const response = await this.formSubmit(form);
       if (response === true) {
-        renderToastr('success', 'Success', 'Event created successfully!');
         const url = new URL(window.location);
         url.searchParams.delete('modelId');
         window.history.replaceState({}, '', url);
@@ -141,9 +140,10 @@ const Model = class {
             'Content-Type': 'application/json'
           }
         });
+        renderToastr('success', 'Success', 'Event created successfully!');
         return true;
       } catch (error) {
-        renderToastr('error', 'Error', error.message);
+        renderToastr('error', 'Error', error.response.statusText);
         return false;
       }
     } else {

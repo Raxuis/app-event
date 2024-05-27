@@ -1,5 +1,5 @@
 <div align="center" id="top"> 
-  <img src="https://i.ibb.co/tZ34529/app-event.png" alt="app-event-banner" />
+  <img src="https://i.ibb.co/WvMgft1/app-event.jpg" alt="app-event-banner" />
 
 &#xa0;
 

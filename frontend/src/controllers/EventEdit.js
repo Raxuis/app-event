@@ -2,6 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import flatpickr from 'flatpickr';
 import { multipleSelect } from 'multiple-select-vanilla';
+import isURL from 'validator/lib/isURL';
 import viewNav from '../views/nav';
 import viewEvent from '../views/eventEditPage';
 import viewCustomField from '../views/customField';
@@ -146,7 +147,7 @@ class Event {
           customFieldsArray.push({ name: field.name, value: field.value });
         });
         formData.append('custom_fields', JSON.stringify(customFieldsArray));
-        const requiredFields = ['name', 'description', 'place', 'quantity', 'time', 'group-name'];
+        const requiredFields = ['name', 'description', 'place', 'size', 'time', 'group-name'];
         if (
           requiredFields.every(
             (field) => formData.get(field)
@@ -159,6 +160,7 @@ class Event {
 
             const selectedUserIds = this.ms1.getSelects();
             const imageUrl = formData.get('image-url');
+            selectedUserIds.push(this.userId);
 
             const eventData = {
               name: formData.get('name'),
@@ -168,21 +170,25 @@ class Event {
               user_ids: selectedUserIds,
               user_id: this.userId,
               group_name: formData.get('group-name'),
-              custom_fields: formData.get('custom_fields')
+              custom_fields: formData.get('custom_fields'),
+              size: formData.get('size')
             };
 
             if (imageUrl) {
-              eventData.image = imageUrl;
+              if (isURL(imageUrl)) {
+                eventData.image = imageUrl;
+              } else {
+                eventData.image = '';
+              }
             }
-
             const response = await axios.put(`http://localhost:${process.env.BACKEND_PORT}/event/${this.response.event_id}`, eventData, {
               headers: {
                 'Content-Type': 'application/json'
               }
             });
-            if (response.status === 200) {
+            if (response.status === 201) {
               renderToastr('success', 'Success', 'Event updated successfully!');
-              window.location.href = '/my-events';
+              setTimeout(() => { window.location.href = '/my-events'; }, 4000);
             }
           } catch (error) {
             renderToastr('error', 'Error', error.response.statusText);

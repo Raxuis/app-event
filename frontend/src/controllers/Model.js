@@ -2,6 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { multipleSelect } from 'multiple-select-vanilla';
 import flatpickr from 'flatpickr';
+import isURL from 'validator/lib/isURL';
 import viewNav from '../views/nav';
 import viewPageModel from '../views/modelPage';
 import renderToastr from '../utils/toastr/renderToastr';
@@ -134,7 +135,11 @@ const Model = class {
           model_id: response.id
         };
         if (imageUrl) {
-          eventData.image = imageUrl;
+          if (isURL(imageUrl)) {
+            eventData.image = imageUrl;
+          } else {
+            eventData.image = '';
+          }
         }
         await axios.post(`http://localhost:${process.env.BACKEND_PORT}/event`, eventData, {
           headers: {

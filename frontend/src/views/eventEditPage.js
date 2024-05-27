@@ -6,11 +6,15 @@ export default (eventInfos) => (`
     <p class="text-gray-600 mb-4 max-sm:hidden">Fill in the form below to create your event</p>
       <div class="flex flex-col space-y-2">
         <label for="name" class="text-gray-600">Name</label>
-        <input type="text" name="name" id="name" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter name" value=${eventInfos.event_name} />
+        <input type="text" name="name" id="name" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter name" value="${eventInfos.event_name}" />
       </div>
       <div class="flex flex-col space-y-2 mt-2">
         <label for="description" class="text-gray-600">Description</label>
-        <input type="text" name="description" id="description" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter description" value=${eventInfos.description}/>
+        <input type="text" name="description" id="description" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter description" value="${eventInfos.description}" />
+      </div>
+      <div class="flex flex-col space-y-2 mt-2">
+        <label for="size" class="text-gray-600">Size</label>
+        <input type="number" name="size" id="size" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter size" value="${eventInfos.size}"/>
       </div>
       <div class="flex flex-col space-y-2 mt-2">
         <label for="place" class="text-gray-600">Place</label>
@@ -18,11 +22,11 @@ export default (eventInfos) => (`
       </div>
       <div class="flex flex-col space-y-2 mt-2">
         <label for="image-url" class="text-gray-600">Image url (optional)</label>
-        <input type="text" name="image-url" id="image-url" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter image url" value="${eventInfos.image ? eventInfos.image : ''}" />
+        <input type="url" name="image-url" id="image-url" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter image url" value="${eventInfos.image ? eventInfos.image : ''}" />
       </div>
       <div class="flex flex-col space-y-2 mt-2">
       <label for="group-name" class="text-gray-600">Group Name</label>
-      <input type="text" name="group-name" id="group-name" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter group name" value=${eventInfos.group_name} />
+      <input type="text" name="group-name" id="group-name" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter group name" value="${eventInfos.group_name}" />
       </div>
       <div class="flex flex-col space-y-2 mt-2">
       <label for="guests" class="text-gray-600">Guests</label>

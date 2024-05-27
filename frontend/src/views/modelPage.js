@@ -18,7 +18,7 @@ export default () => (`
       </div>
       <div class="flex flex-col space-y-2 pt-2">
         <label for="image-url" class="text-gray-600">Image url (optional)</label>
-        <input type="text" name="image-url" id="image-url" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter image url" />
+        <input type="url" name="image-url" id="image-url" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter image url" />
       </div>
       <div class="flex flex-col space-y-2 pt-2">
       <label for="group-name" class="text-gray-600">Group Name</label>

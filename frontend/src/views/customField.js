@@ -1,7 +1,7 @@
 export default (customFieldsNumber) => (`<div class="flex flex-col space-y-2 mt-2">
-<label for=${customFieldsNumber} class="text-gray-600" contenteditable="true">Custom Field n°${customFieldsNumber}</label>
+<label for="${customFieldsNumber}" class="text-gray-600" contenteditable="true">Custom Field n°${customFieldsNumber}</label>
 <div class="flex align-middle align-content-center">
-<input type="text" id=${customFieldsNumber}
+<input type="text" id="${customFieldsNumber}"
 class="border border-gray-300 h-11 block w-full px-4 py-3 rounded-l-md"
 placeholder="Enter value"
 title="clear" data-clear

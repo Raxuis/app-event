@@ -13,7 +13,7 @@ class EventModel extends SqlConnect
   {
     // Step 1: Create a new group if 'user_ids' is provided
     if (isset($data['user_ids'])) {
-      if (count($data['user_ids']) + 1 > $data['size']) {
+      if (count($data['user_ids']) > $data['size']) {
         header('HTTP/1.0 400 Too many Users');
         return [
           'code' => '400',
@@ -383,7 +383,16 @@ class EventModel extends SqlConnect
   public function update(int $id, array $data)
   {
     try {
-      // Step 1: Update the event details
+      // Step 1: Validate user IDs and size
+      if (isset($data['user_ids']) && (count($data['user_ids']) > $data['size'])) {
+        header('HTTP/1.0 400 Too many Users');
+        return [
+          'code' => '400',
+          'message' => 'Too many users'
+        ];
+      }
+
+      // Step 2: Update the event details
       $query = "UPDATE events SET name = :name, description = :description, size = :size, time = :time, place = :place";
 
       if (isset($data['image'])) {
@@ -408,14 +417,14 @@ class EventModel extends SqlConnect
 
       $req->execute();
 
-      // Step 2: Update the group name if provided
+      // Step 3: Update the group name if provided
       if (isset($data['group_name'])) {
         $groupQuery = "UPDATE groups SET name = :group_name WHERE id = (SELECT group_id FROM events WHERE id = :event_id)";
         $groupStmt = $this->db->prepare($groupQuery);
         $groupStmt->execute(['group_name' => $data['group_name'], 'event_id' => $id]);
       }
 
-      // Step 3: Update guests if provided
+      // Step 4: Update guests if provided
       if (isset($data['user_ids'])) {
         $groupId = $this->getGroupIdByEventId($id);
         // Remove existing guests
@@ -432,7 +441,7 @@ class EventModel extends SqlConnect
         }
       }
 
-      // Step 4: Handle custom fields
+      // Step 5: Handle custom fields
       if (isset($data['custom_fields']) && is_array($data['custom_fields'])) {
         // Delete existing custom fields for this event
         $deleteQuery = "DELETE FROM custom_fields WHERE event_id = :event_id";
@@ -456,6 +465,11 @@ class EventModel extends SqlConnect
         }
       }
 
+      header('HTTP/1.0 201 Created');
+      return [
+        'code' => '201',
+        'message' => 'Event updated',
+      ];
     } catch (Exception $e) {
       throw $e;
     }
@@ -466,6 +480,11 @@ class EventModel extends SqlConnect
     $req = $this->db->prepare("SELECT group_id FROM events WHERE id = :event_id");
     $req->execute(['event_id' => $eventId]);
     $result = $req->fetch(PDO::FETCH_ASSOC);
+
+    if (!$result) {
+      throw new Exception("Event with ID $eventId not found");
+    }
+
     return $result['group_id'];
   }
 }

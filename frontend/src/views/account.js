@@ -9,19 +9,19 @@ export default (userInfos) => (`
               </div>
               <div class="flex flex-col space-y-2">
                 <label for="email" class="text-gray-600">Email<span class="text-red-500 pl-3 email-account-span"></span></label>
-                <input type="text" name="email" id="email" class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]  email-account-input" placeholder="Enter email" value=${userInfos.email} />
+                <input type="text" name="email" id="email" class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]  email-account-input" placeholder="Enter email" value="${userInfos.email}" />
               </div>
               <div class="flex max-sm:flex-col max-sm:space-y-6 justify-between">
               <div class="flex flex-col">
                 <label class="text-sm mb-2 block">Firstname</label>
                 <div class="relative flex items-center">
-                  <input name="firstname" type="text" required class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter firstname" value=${userInfos.firstname} />
+                  <input name="firstname" type="text" required class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter firstname" value="${userInfos.firstname}" />
                   </div>
                 </div>
               <div class="flex flex-col">
                 <label class="text-sm mb-2 block">Lastname</label>
                 <div class="relative flex items-center">
-                  <input name="lastname" type="text" required class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter lastname" value=${userInfos.lastname} />
+                  <input name="lastname" type="text" required class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter lastname" value="${userInfos.lastname}" />
                 </div>
                 </div>
               </div>

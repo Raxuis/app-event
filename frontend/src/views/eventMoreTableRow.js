@@ -1,4 +1,4 @@
-import viewColumn from './eventMoreTableColumn';
+import viewColumn from './eventMoreTableCol';
 
 export default (eventGuests) => {
   const guestsArray = Array.isArray(eventGuests) ? eventGuests : [eventGuests];

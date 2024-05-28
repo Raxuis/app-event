@@ -1,4 +1,5 @@
 import viewRow from './eventMoreTableRow';
+import viewRowCustom from './customFieldTableRow';
 
 export default (event) => (`
 <div class="flex flex-wrap -mx-3 mb-5">
@@ -28,6 +29,7 @@ export default (event) => (`
               </thead>
               <tbody>
                 ${viewRow(event.guests)}
+                ${viewRowCustom(event.custom_fields)}
               </tbody>
             </table>
           </div>

@@ -5,7 +5,7 @@ import { multipleSelect } from 'multiple-select-vanilla';
 import isURL from 'validator/lib/isURL';
 import viewNav from '../views/nav';
 import viewEvent from '../views/eventEditPage';
-import viewCustomField from '../views/customField';
+import viewCustomField from '../views/customFieldCreate';
 import renderToastr from '../utils/toastr/renderToastr';
 
 class Event {
@@ -102,25 +102,30 @@ class Event {
     const customFieldsAddBtn = document.getElementById('custom-field-btn');
     const customFields = document.getElementById('custom-field-edit');
     const errorText = document.getElementById('error-text');
+
     if (customFieldsAddBtn) {
       customFieldsAddBtn.addEventListener('click', () => {
         if (customFields.children.length < 2) {
           const customFieldsNumber = customFields.children.length + 1;
           customFields.innerHTML += `${viewCustomField(customFieldsNumber)}`;
 
-          const removeBtn = document.getElementById(`remove-${customFieldsNumber}`);
-          removeBtn.addEventListener('click', () => {
-            removeBtn.parentElement.parentElement.remove();
-          });
-
-          const label = document.querySelector(`label[for="${customFieldsNumber}"]`);
-          const input = document.getElementById(customFieldsNumber);
-          label.addEventListener('input', () => {
-            input.name = label.textContent;
-          });
+          this.attachRemoveEventListener(`remove-${customFieldsNumber}`);
         } else {
           errorText.innerHTML = 'Can\'t have more than two custom fields';
         }
+      });
+    }
+
+    this.response.custom_fields.forEach((custom_field) => {
+      this.attachRemoveEventListener(`remove-${custom_field.id}`);
+    });
+  }
+
+  attachRemoveEventListener(removeBtnId) {
+    const removeBtn = document.getElementById(removeBtnId);
+    if (removeBtn) {
+      removeBtn.addEventListener('click', () => {
+        removeBtn.parentElement.parentElement.remove();
       });
     }
   }

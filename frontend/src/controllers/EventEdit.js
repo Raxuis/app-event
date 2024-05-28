@@ -5,7 +5,7 @@ import { multipleSelect } from 'multiple-select-vanilla';
 import isURL from 'validator/lib/isURL';
 import viewNav from '../views/nav';
 import viewEvent from '../views/eventEditPage';
-import viewCustomField from '../views/customFieldCreate';
+import viewCustomFieldCreate from '../views/customFieldCreate';
 import renderToastr from '../utils/toastr/renderToastr';
 
 class Event {
@@ -100,15 +100,19 @@ class Event {
 
   addCustomFields() {
     const customFieldsAddBtn = document.getElementById('custom-field-btn');
-    const customFields = document.getElementById('custom-field-edit');
+    const customFieldsContainer = document.getElementById('custom-field-edit');
     const errorText = document.getElementById('error-text');
 
     if (customFieldsAddBtn) {
       customFieldsAddBtn.addEventListener('click', () => {
-        if (customFields.children.length < 2) {
-          const customFieldsNumber = customFields.children.length + 1;
-          customFields.innerHTML += `${viewCustomField(customFieldsNumber)}`;
+        if (customFieldsContainer.children.length < 2) {
+          const customFieldsNumber = customFieldsContainer.children.length + 1;
+          const newCustomFieldHtml = viewCustomFieldCreate({ id: customFieldsNumber, field_name: '', field_value: '' });
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = newCustomFieldHtml;
+          const newCustomFieldElement = tempDiv.firstElementChild;
 
+          customFieldsContainer.appendChild(newCustomFieldElement);
           this.attachRemoveEventListener(`remove-${customFieldsNumber}`);
         } else {
           errorText.innerHTML = 'Can\'t have more than two custom fields';
@@ -122,12 +126,9 @@ class Event {
   }
 
   attachRemoveEventListener(removeBtnId) {
-    const removeBtn = document.getElementById(removeBtnId);
-    if (removeBtn) {
-      removeBtn.addEventListener('click', () => {
-        removeBtn.parentElement.parentElement.remove();
-      });
-    }
+    document.getElementById(removeBtnId).addEventListener('click', (event) => {
+      event.target.closest('.flex.flex-col.space-y-2.mt-2').remove();
+    });
   }
 
   attachEventListeners() {
@@ -147,18 +148,24 @@ class Event {
         const errorText = document.getElementById('error-text');
         e.preventDefault();
         const formData = new FormData(form);
-        const customFields = document.getElementById('custom-field-edit');
+        const customFieldsContainer = document.getElementById('custom-field-edit');
         const customFieldsArray = [];
-        customFields.querySelectorAll('input[type="text"]').forEach((field) => {
-          customFieldsArray.push({ name: field.name, value: field.value });
+
+        customFieldsContainer.querySelectorAll('.flex.flex-col.space-y-2.mt-2').forEach((field) => {
+          const fieldName = field.querySelector('input[name^="name-"]').value;
+          const fieldValue = field.querySelector('input[name^="value-"]').value;
+          if (fieldName && fieldValue) {
+            customFieldsArray.push({ name: fieldName, value: fieldValue });
+          }
         });
+
         formData.append('custom_fields', JSON.stringify(customFieldsArray));
+
         const requiredFields = ['name', 'description', 'place', 'size', 'time', 'group-name'];
         if (
           requiredFields.every(
             (field) => formData.get(field)
-          )
-          && this.ms1.getSelects().length > 0
+          ) && this.ms1.getSelects().length > 0
         ) {
           try {
             const inputDate = new Date(formData.get('time'));
@@ -176,7 +183,7 @@ class Event {
               user_ids: selectedUserIds,
               user_id: this.userId,
               group_name: formData.get('group-name'),
-              custom_fields: formData.get('custom_fields'),
+              custom_fields: JSON.parse(formData.get('custom_fields')),
               size: formData.get('size')
             };
 
@@ -187,20 +194,24 @@ class Event {
                 eventData.image = '';
               }
             }
+
             const response = await axios.put(`http://localhost:${process.env.BACKEND_PORT}/event/${this.response.event_id}`, eventData, {
               headers: {
                 'Content-Type': 'application/json'
               }
             });
+
             if (response.status === 201) {
               renderToastr('success', 'Success', 'Event updated successfully!');
-              setTimeout(() => { window.location.href = '/my-events'; }, 4000);
+              setTimeout(() => { window.location.href = '/my-events'; }, 2000);
+            } else {
+              renderToastr('error', 'Error', 'An error occurred while updating the event.');
             }
           } catch (error) {
-            renderToastr('error', 'Error', error.response.statusText);
+            renderToastr('error', 'Error', 'An error occurred while updating the event.');
           }
         } else {
-          errorText.innerHTML = 'Please fill in all the fields';
+          errorText.innerHTML = 'Please fill in all fields';
         }
       });
     }

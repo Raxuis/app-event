@@ -3,7 +3,9 @@ export default (customFields) => {
     return `${customFields.map((custom_field) => `
       <td class="pt-4 text-center">
         <div class="relative inline-block rounded-2xl font-semibold text-[0.95rem] text-secondary-dark">
+        <span class="text-center align-baseline inline-flex py-1.5 px-6 rounded-lg items-center font-semibold text-[.95rem] leading-none bg-cerise-red-200 text-cerise-red-700 cursor-default">
           ${custom_field.field_name.toUpperCase()} : ${custom_field.field_value.toUpperCase()}
+          </span>
         </div>
       </td>`).join('')}`;
   }

@@ -156,7 +156,7 @@ class EventModel extends SqlConnect
       ];
 
       // Retrieve custom fields
-      $customFieldReq = $this->db->prepare("SELECT field_name, field_value FROM custom_fields WHERE event_id = :event_id");
+      $customFieldReq = $this->db->prepare("SELECT field_name, field_value, id FROM custom_fields WHERE event_id = :event_id");
       $customFieldReq->execute(['event_id' => $id]);
       $customFields = $customFieldReq->fetchAll(PDO::FETCH_ASSOC);
 

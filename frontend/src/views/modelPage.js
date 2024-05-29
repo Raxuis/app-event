@@ -1,6 +1,6 @@
 export default () => (`
 <div class="w-full h-full justify-center items-center duration-500">
-  <form class="flex flex-col space-y-4" id="form-model">
+  <form class="flex flex-col space-y-4 form-model">
     <div>
     <h1 class="text-xl sm:text-2xl font-bold mb-4 max-sm:hidden">Create your event</h1>
     <p class="text-gray-600 mb-4 max-sm:hidden">Fill in the form below to create your event</p>
@@ -59,12 +59,12 @@ export default () => (`
             </a>
         </div>
     </div>
-        <p id="error-text" class="text-red-500 text-md pt-2"></p>
+        <p class="text-red-500 text-md pt-2 error-text-model"></p>
       </div>
         <div class="flex flex-col space-y-2">
           <div class="w-full flex justify-center gap-20 pt-4">
-            <button class="py-2.5 px-6 rounded-lg text-sm font-medium bg-red-500 text-white" id="cancel-model">Cancel</button>
-            <button class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-primary" id="submit-model">Create</button>
+            <button class="py-2.5 px-6 rounded-lg text-sm font-medium bg-red-500 text-white cancel-model">Cancel</button>
+            <button class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-primary submit-model">Create</button>
           </div>
         </div>
       </div>

@@ -5,21 +5,20 @@ export default (customField) => (`
             <div class="flex flex-col">
                 <label class="text-sm mb-2 block">Custom Field Name</label>
                 <div class="relative flex items-center">
-                    <input name="name-${customField.id}" id="name-${customField.id}" type="text" required class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter name" value="${customField.field_name}" />
+                    <input name="name-${customField.id}"type="text" required class="name-${customField.id} w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter name" value="${customField.field_name}" />
                 </div>
             </div>
             <div class="flex flex-col">
                 <label class="text-sm mb-2 block">Custom Field Value</label>
                 <div class="relative flex items-center">
-                    <input name="value-${customField.id}" id="value-${customField.id}" type="text" required class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter value" value="${customField.field_value}" />
+                    <input name="value-${customField.id}" type="text" required class="value-${customField.id} w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter value" value="${customField.field_value}" />
                 </div>
             </div>
         </div>
         <div>
             <a
-                class="h-11 w-10 input-button cursor-pointer rounded-r-md bg-transparent"
+                class="remove-${customField.id} h-11 w-10 input-button cursor-pointer rounded-r-md bg-transparent"
                 title="clear" data-clear
-                id="remove-${customField.id}"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mt-2 ml-1" viewBox="0 0 20 20" fill="#ef4444">
                     <path fill-rule="evenodd"

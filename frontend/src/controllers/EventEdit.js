@@ -100,9 +100,9 @@ class Event {
   }
 
   addCustomFields() {
-    const customFieldsAddBtn = document.getElementById('custom-field-btn');
-    const customFieldsContainer = document.getElementById('custom-field-edit');
-    const errorText = document.getElementById('error-text');
+    const customFieldsAddBtn = document.querySelector('.custom-field-btn');
+    const customFieldsContainer = document.querySelector('.custom-field-edit');
+    const errorText = document.querySelector('.error-text-edit');
 
     if (customFieldsAddBtn) {
       customFieldsAddBtn.addEventListener('click', () => {
@@ -114,7 +114,7 @@ class Event {
           const newCustomFieldElement = tempDiv.firstElementChild;
 
           customFieldsContainer.appendChild(newCustomFieldElement);
-          this.attachRemoveEventListener(`remove-${customFieldsNumber}`);
+          this.attachRemoveEventListener(`.remove-${customFieldsNumber}`);
         } else {
           errorText.innerHTML = 'No more than 2 custom fields.';
         }
@@ -122,20 +122,20 @@ class Event {
     }
 
     this.response.custom_fields.forEach((custom_field) => {
-      this.attachRemoveEventListener(`remove-${custom_field.id}`);
+      this.attachRemoveEventListener(`.remove-${custom_field.id}`);
     });
   }
 
   attachRemoveEventListener(removeBtnId) {
-    document.getElementById(removeBtnId).addEventListener('click', (event) => {
+    document.querySelector(removeBtnId).addEventListener('click', (event) => {
       event.target.closest('.flex.flex-col.space-y-2.mt-2').remove();
     });
   }
 
   attachEventListeners() {
-    const submitButton = document.getElementById('submit-edit');
-    const cancelButton = document.getElementById('cancel-edit');
-    const form = document.getElementById('form-edit');
+    const submitButton = document.querySelector('.submit-edit');
+    const cancelButton = document.querySelector('.cancel-edit');
+    const form = document.querySelector('.form-edit');
 
     if (cancelButton) {
       cancelButton.addEventListener('click', (e) => {
@@ -146,10 +146,10 @@ class Event {
 
     if (submitButton) {
       submitButton.addEventListener('click', async (e) => {
-        const errorText = document.getElementById('error-text');
+        const errorText = document.querySelector('.error-text-edit');
         e.preventDefault();
         const formData = new FormData(form);
-        const customFieldsContainer = document.getElementById('custom-field-edit');
+        const customFieldsContainer = document.querySelector('.custom-field-edit');
         const customFieldsArray = [];
 
         customFieldsContainer.querySelectorAll('.flex.flex-col.space-y-2.mt-2').forEach((field) => {

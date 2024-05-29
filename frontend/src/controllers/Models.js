@@ -98,9 +98,9 @@ class AllModelsController {
   }
 
   incrementDecrementInput() {
-    const numberInput = document.getElementById('quantity-input');
-    const incrementButton = document.getElementById('increment-button');
-    const decrementButton = document.getElementById('decrement-button');
+    const numberInput = document.querySelector('.quantity-input-custom');
+    const incrementButton = document.querySelector('.increment-button-custom');
+    const decrementButton = document.querySelector('.decrement-button-custom');
     numberInput.addEventListener('input', () => {
       let { value } = numberInput;
       value = value.replace(/\D/g, '');
@@ -141,11 +141,11 @@ class AllModelsController {
   }
 
   showDialog() {
-    const dialog = document.getElementById('dialog');
-    const activationBtn = document.getElementById('add-event');
-    const cancelBtn = document.getElementById('cancel-dialog');
-    const submitBtn = document.getElementById('submit-dialog');
-    const form = document.getElementById('form-dialog');
+    const dialog = document.querySelector('.dialog');
+    const activationBtn = document.querySelector('.add-event');
+    const cancelBtn = document.querySelector('.cancel-dialog');
+    const submitBtn = document.querySelector('.submit-dialog');
+    const form = document.querySelector('.form-dialog');
     activationBtn.addEventListener('click', async () => {
       dialog.classList.remove('hidden');
       dialog.classList.add('flex');
@@ -198,7 +198,7 @@ class AllModelsController {
   }
 
   async formSubmit(elForm) {
-    const errorText = document.getElementById('error-text');
+    const errorText = document.querySelector('.error-text-custom');
     const formData = new FormData(elForm);
 
     const requiredFields = ['name', 'description', 'place', 'quantity', 'time', 'group-name'];

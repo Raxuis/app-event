@@ -5,21 +5,20 @@ export default (customFieldsNumber) => (`
             <div class="flex flex-col">
                 <label class="text-sm mb-2 block">Custom Field Name</label>
                 <div class="relative flex items-center">
-                    <input name="name-${customFieldsNumber}" id="name-${customFieldsNumber}" type="text" required class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter name" />
+                    <input name="name-${customFieldsNumber}" type="text" required class="name-${customFieldsNumber} w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter name" />
                 </div>
             </div>
             <div class="flex flex-col">
                 <label class="text-sm mb-2 block">Custom Field Value</label>
                 <div class="relative flex items-center">
-                    <input name="value-${customFieldsNumber}" id="value-${customFieldsNumber}" type="text" required class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter value" />
+                    <input name="value-${customFieldsNumber}" type="text" required class="value-${customFieldsNumber} w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter value" />
                 </div>
             </div>
         </div>
         <div>
             <a
-                class="h-11 w-10 input-button cursor-pointer rounded-r-md bg-transparent"
+                class="remove-${customFieldsNumber.id} h-11 w-10 input-button cursor-pointer rounded-r-md bg-transparent"
                 title="clear" data-clear
-                id="remove-${customFieldsNumber.id}"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mt-2 ml-1" viewBox="0 0 20 20" fill="#ef4444">
                     <path fill-rule="evenodd"

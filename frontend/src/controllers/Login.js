@@ -21,8 +21,8 @@ const Login = class {
 
   eventListeners() {
     document.addEventListener('DOMContentLoaded', () => {
-      const password = document.querySelector('#password');
-      const passwordToggler = document.querySelector('.password-toggler');
+      const password = document.querySelector('.password-login');
+      const passwordToggler = document.querySelector('.password-toggler-login');
       passwordToggler.addEventListener('click', () => {
         if (password.type === 'password') {
           password.type = 'text';
@@ -32,8 +32,8 @@ const Login = class {
       });
     });
     document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('login-form');
-      const loginButton = document.querySelector('#login-button');
+      const form = document.querySelector('.login-form');
+      const loginButton = document.querySelector('.login-button');
       const errorMessage = document.querySelector('.error-message');
 
       loginButton.addEventListener('click', (e) => {

@@ -95,13 +95,13 @@ class MyEvents {
 
   attachEventListeners(events) {
     events.forEach((event) => {
-      const deleteButton = document.getElementById(`delete-${event.event_id}`);
-      const cardEvent = document.getElementById(`card-${event.event_id}`);
-      const readMoreButton = document.getElementById(`read-more-${event.event_id}`);
-      const editButton = document.getElementById(`edit-${event.event_id}`);
-      const acceptButton = document.getElementById(`accept-${event.event_id}`);
-      const declineButton = document.getElementById(`decline-${event.event_id}`);
-      const cancelButton = document.getElementById(`cancel-${event.event_id}`);
+      const deleteButton = document.querySelector(`.delete-${event.event_id}`);
+      const cardEvent = document.querySelector(`.card-${event.event_id}`);
+      const readMoreButton = document.querySelector(`.read-more-${event.event_id}`);
+      const editButton = document.querySelector(`.edit-${event.event_id}`);
+      const acceptButton = document.querySelector(`.accept-${event.event_id}`);
+      const declineButton = document.querySelector(`.decline-${event.event_id}`);
+      const cancelButton = document.querySelector(`.cancel-${event.event_id}`);
 
       if (deleteButton) {
         deleteButton.addEventListener('click', () => this.deleteEvent(event.event_id, cardEvent));

@@ -2,7 +2,7 @@ import viewCustomField from './customField';
 
 export default (eventInfos) => (`
 <div class="w-full h-full justify-center items-center duration-500">
-  <form class="flex flex-col space-y-4" id="form-edit">
+  <form class="flex flex-col space-y-4 form-edit">
     <div>
       <h1 class="text-xl sm:text-2xl font-bold mb-4 max-sm:hidden">Create your event</h1>
       <p class="text-gray-600 mb-4 max-sm:hidden">Fill in the form below to create your event</p>
@@ -66,13 +66,13 @@ export default (eventInfos) => (`
       <div id="custom-field-btn" class="select-none cursor-pointer text-gray-700 flex justify-center bg-clip-border border-2 border-primary border-dotted rounded-md bg-slate-400 bg-opacity-15 hover:bg-violet-300 hover:bg-opacity-30 duration-300 mt-2 p-2 w-full">
         <p class="flex justify-center items-center">Add a custom field (2 maximum)</p>
       </div>
-      <div id="custom-field-edit">${eventInfos.custom_fields ? eventInfos.custom_fields.map((custom_field) => viewCustomField(custom_field)).join('') : ''}</div>
-      <p id="error-text" class="text-red-500 text-md pt-2"></p>
+      <div class="custom-field-edit">${eventInfos.custom_fields ? eventInfos.custom_fields.map((custom_field) => viewCustomField(custom_field)).join('') : ''}</div>
+      <p class="error-text-edit text-red-500 text-md pt-2"></p>
     </div>
     <div class="flex flex-col space-y-2 pb-8">
       <div class="w-full flex justify-center gap-20 pt-4">
-        <button class="py-2.5 px-6 rounded-lg text-sm font-medium bg-red-500 text-white" id="cancel-edit">Cancel</button>
-        <button class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-primary" id="submit-edit">Create</button>
+        <button class="py-2.5 px-6 rounded-lg text-sm font-medium bg-red-500 text-white cancel-edit">Cancel</button>
+        <button class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-primary submit-edit">Create</button>
       </div>
     </div>
   </form>

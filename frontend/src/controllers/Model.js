@@ -36,9 +36,9 @@ const Model = class {
   }
 
   attachEventListeners() {
-    const submitBtn = document.getElementById('submit-model');
-    const cancelBtn = document.getElementById('cancel-model');
-    const form = document.getElementById('form-model');
+    const submitBtn = document.querySelector('.submit-model');
+    const cancelBtn = document.querySelector('.cancel-model');
+    const form = document.querySelector('.form-model');
 
     submitBtn.addEventListener('click', async (e) => {
       e.preventDefault();
@@ -109,7 +109,7 @@ const Model = class {
   }
 
   async formSubmit(elForm) {
-    const errorText = document.getElementById('error-text');
+    const errorText = document.querySelector('.error-text-model');
     const formData = new FormData(elForm);
 
     const requiredFields = ['name', 'description', 'place', 'time', 'group-name'];

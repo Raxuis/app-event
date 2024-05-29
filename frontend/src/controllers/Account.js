@@ -9,7 +9,12 @@ const Account = class {
     this.el = document.querySelector('#root');
     this.params = params;
     this.emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    this.run();
+    this.init();
+  }
+
+  async init() {
+    await this.getUserId();
+    await this.run();
   }
 
   async getUserId() {
@@ -29,6 +34,10 @@ const Account = class {
   }
 
   async getUserInfos() {
+    if (!this.userId) {
+      return null;
+    }
+
     try {
       const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/user/${this.userId}`);
       return response.data;
@@ -112,17 +121,29 @@ const Account = class {
   }
 
   formSubmit(elForm) {
-    function handleSubmit(e) {
+    elForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const errorText = document.querySelector('.error-account-message');
       const formData = new FormData(elForm);
-      if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length >= 8 && formData.get('password-confirmation').length >= 8 && formData.get('firstname') && formData.get('lastname') && formData.get('email')) {
+      const password = formData.get('password');
+      const passwordConfirmation = formData.get('password-confirmation');
+      const firstname = formData.get('firstname');
+      const lastname = formData.get('lastname');
+      const email = formData.get('email');
+
+      if (
+        password === passwordConfirmation
+        && password.length >= 8
+        && firstname
+        && lastname
+        && email
+      ) {
         axios.put(`http://localhost:${process.env.BACKEND_PORT}/user`, {
           id: this.userId,
-          firstname: formData.get('firstname'),
-          lastname: formData.get('lastname'),
-          email: formData.get('email'),
-          password: formData.get('password')
+          firstname,
+          lastname,
+          email,
+          password
         }, {
           headers: {
             'Content-Type': 'application/json'
@@ -143,19 +164,10 @@ const Account = class {
       } else {
         errorText.innerHTML = 'Please fill in all the fields';
       }
-    }
-
-    elForm.addEventListener('submit', handleSubmit);
-
-    elForm.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        handleSubmit(e);
-      }
     });
   }
 
   async run() {
-    await this.getUserId();
     await this.render();
     this.eventListeners();
     this.navFunction();

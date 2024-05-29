@@ -87,9 +87,9 @@ class AllModelsController {
     `;
     this.el.innerHTML = html;
     this.attachEventListeners(elements);
-    this.showDialog();
     this.incrementDecrementInput();
     this.datePickerFunction();
+    this.showDialog();
     this.navFunction();
   }
 
@@ -133,7 +133,7 @@ class AllModelsController {
 
   attachEventListeners(models) {
     models.forEach((model) => {
-      const readMoreButton = document.querySelector(`#read-more-${model.id}`);
+      const readMoreButton = document.querySelector(`.read-more-${model.id}`);
       if (readMoreButton) {
         readMoreButton.addEventListener('click', () => this.navigateToModelDetail(model.id));
       }
@@ -147,14 +147,14 @@ class AllModelsController {
     const submitBtn = document.querySelector('.submit-dialog');
     const form = document.querySelector('.form-dialog');
     activationBtn.addEventListener('click', async () => {
-      dialog.classList.remove('hidden');
-      dialog.classList.add('flex');
-      setTimeout(() => {
-        dialog.classList.add('opacity-100');
-      }, 20);
       const users = await this.getUsers();
       if (users) {
         this.populateUserSelect(users);
+        dialog.classList.remove('hidden');
+        dialog.classList.add('flex');
+        setTimeout(() => {
+          dialog.classList.add('opacity-100');
+        }, 20);
       }
     });
     cancelBtn.addEventListener('click', (e) => {

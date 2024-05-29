@@ -116,7 +116,7 @@ class Event {
           customFieldsContainer.appendChild(newCustomFieldElement);
           this.attachRemoveEventListener(`remove-${customFieldsNumber}`);
         } else {
-          errorText.innerHTML = 'Pas plus de deux champs personnalisés';
+          errorText.innerHTML = 'No more than 2 custom fields.';
         }
       });
     }
@@ -213,11 +213,9 @@ class Event {
               renderToastr('success', 'Success', 'Event updated!');
               setTimeout(() => { window.location.href = '/my-events'; }, 2000);
             } else {
-              console.log(response);
               renderToastr('error', 'Error', 'An error occurred.');
             }
           } catch (error) {
-            console.log(error);
             renderToastr('error', 'Error', 'An error occurred.');
           }
         } else {
@@ -228,7 +226,6 @@ class Event {
   }
 
   async render() {
-    console.log(this.response);
     return `
     ${viewNav(this.userId)}
     <div class="container mx-auto h-screen px-6 py-2 sm:p-6 sm:mt-4">

@@ -40,7 +40,7 @@ const Model = class {
     const cancelBtn = document.querySelector('.cancel-model');
     const form = document.querySelector('.form-model');
 
-    submitBtn.addEventListener('click', async (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
       const response = await this.formSubmit(form);
       if (response === true) {
@@ -49,7 +49,15 @@ const Model = class {
         window.history.replaceState({}, '', url);
         this.run();
       }
+    };
+
+    submitBtn.addEventListener('click', handleSubmit);
+    form.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        handleSubmit(e);
+      }
     });
+
     cancelBtn.addEventListener('click', (e) => {
       e.preventDefault();
       const url = new URL(window.location);

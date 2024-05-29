@@ -55,7 +55,7 @@ const Register = class {
   }
 
   formSubmit(elForm) {
-    elForm.addEventListener('submit', (e) => {
+    function handleSubmit(e) {
       e.preventDefault();
       const formData = new FormData(elForm);
       if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length >= 8 && formData.get('password-confirmation').length >= 8 && formData.get('firstname') && formData.get('lastname')) {
@@ -76,6 +76,14 @@ const Register = class {
           .catch(() => {
             this.errorInfos();
           });
+      }
+    }
+
+    elForm.addEventListener('submit', handleSubmit);
+
+    elForm.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        handleSubmit(e);
       }
     });
   }

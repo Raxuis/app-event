@@ -112,13 +112,13 @@ const Account = class {
   }
 
   formSubmit(elForm) {
-    elForm.addEventListener('submit', (e) => {
+    function handleSubmit(e) {
       e.preventDefault();
       const errorText = document.querySelector('.error-account-message');
       const formData = new FormData(elForm);
       if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length >= 8 && formData.get('password-confirmation').length >= 8 && formData.get('firstname') && formData.get('lastname') && formData.get('email')) {
         axios.put(`http://localhost:${process.env.BACKEND_PORT}/user`, {
-          id: parseInt(localStorage.getItem('id'), 10),
+          id: this.userId,
           firstname: formData.get('firstname'),
           lastname: formData.get('lastname'),
           email: formData.get('email'),
@@ -129,10 +129,12 @@ const Account = class {
           }
         })
           .then((response) => {
-            localStorage.setItem('email', response.data.email);
-            localStorage.setItem('id', response.data.id);
-            window.location.href = '/';
-            renderToastr('success', 'Success', 'Your account has been updated!');
+            const { data } = response;
+            if (data.session_id) {
+              Cookies.set('PHP_SESSID', data.session_id, { expires: 1 });
+              window.location.href = '/';
+              renderToastr('success', 'Success', 'Your account has been updated!');
+            }
           })
           .catch((error) => {
             errorText.innerHTML = error.message;
@@ -140,6 +142,14 @@ const Account = class {
           });
       } else {
         errorText.innerHTML = 'Please fill in all the fields';
+      }
+    }
+
+    elForm.addEventListener('submit', handleSubmit);
+
+    elForm.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        handleSubmit(e);
       }
     });
   }

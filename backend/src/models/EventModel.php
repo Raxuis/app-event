@@ -421,19 +421,22 @@ class EventModel extends SqlConnect
       }
 
       // Step 4: Update guests if provided
-      if (isset($data['user_ids'])) {
+      if (isset($data['user_ids']) && isset($data['guest_statuses'])) {
         $groupId = $this->getGroupIdByEventId($id);
-        // Remove existing guests
-        $deleteGuestsQuery = "DELETE FROM group_users WHERE group_id = :group_id";
-        $deleteGuestsStmt = $this->db->prepare($deleteGuestsQuery);
-        $deleteGuestsStmt->execute(['group_id' => $groupId]);
 
-        // Add new guests
-        foreach ($data['user_ids'] as $userId) {
-          $groupUserQuery = "INSERT INTO group_users (group_id, user_id, status) VALUES (:group_id, :user_id, :status)";
-          $groupUserStmt = $this->db->prepare($groupUserQuery);
-          $status = ($data['user_id'] === $userId) ? 'confirmed' : 'registered';
-          $groupUserStmt->execute(['group_id' => $groupId, 'user_id' => $userId, 'status' => $status]);
+        // Remove existing guests except the author
+        $deleteGuestsQuery = "DELETE FROM group_users WHERE group_id = :group_id AND user_id != :author_id";
+        $deleteGuestsStmt = $this->db->prepare($deleteGuestsQuery);
+        $deleteGuestsStmt->execute(['group_id' => $groupId, 'author_id' => $data['user_id']]);
+
+        // Add or update new guests with their statuses
+        foreach ($data['user_ids'] as $index => $userId) {
+          if ($userId !== $data['user_id']) {
+            $groupUserQuery = "INSERT INTO group_users (group_id, user_id, status) VALUES (:group_id, :user_id, :status)ON DUPLICATE KEY UPDATE status = :status";
+            $groupUserStmt = $this->db->prepare($groupUserQuery);
+            $status = ($userId == $data['user_id']) ? 'confirmed' : $data['guest_statuses'][$index];
+            $groupUserStmt->execute(['group_id' => $groupId, 'user_id' => $userId, 'status' => $status]);
+          }
         }
       }
 

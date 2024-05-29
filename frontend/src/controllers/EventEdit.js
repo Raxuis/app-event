@@ -45,7 +45,8 @@ class Event {
         .map((user) => ({
           text: user.email,
           value: user.id,
-          selected: selectedUserIds.includes(user.id)
+          selected: selectedUserIds.includes(user.id),
+          guest_status: this.response.guests.find((guest) => guest.guest_id === user.id)?.guest_status || 'registered'
         }));
 
       this.ms1 = multipleSelect('#select1', {
@@ -115,7 +116,7 @@ class Event {
           customFieldsContainer.appendChild(newCustomFieldElement);
           this.attachRemoveEventListener(`remove-${customFieldsNumber}`);
         } else {
-          errorText.innerHTML = 'Can\'t have more than two custom fields';
+          errorText.innerHTML = 'Pas plus de deux champs personnalisés';
         }
       });
     }
@@ -171,9 +172,16 @@ class Event {
             const inputDate = new Date(formData.get('time'));
             const formattedDate = `${inputDate.getFullYear()}-${String(inputDate.getMonth() + 1).padStart(2, '0')}-${String(inputDate.getDate()).padStart(2, '0')} ${String(inputDate.getHours()).padStart(2, '0')}:${String(inputDate.getMinutes()).padStart(2, '0')}:${String(inputDate.getSeconds()).padStart(2, '0')}`;
 
-            const selectedUserIds = this.ms1.getSelects();
             const imageUrl = formData.get('image-url');
+            const selectedUserIds = this.ms1.getSelects();
+            const guestStatuses = selectedUserIds.map((userId) => {
+              const userOption = this.ms1.data.find((option) => option.value === userId);
+              return userOption.guest_status || 'registered'; // default to 'registered' if no status is found
+            });
+
+            // Ensure the author is included and set their status to 'confirmed'
             selectedUserIds.push(this.userId);
+            guestStatuses.push('confirmed');
 
             const eventData = {
               name: formData.get('name'),
@@ -181,6 +189,7 @@ class Event {
               place: formData.get('place'),
               time: formattedDate,
               user_ids: selectedUserIds,
+              guest_statuses: guestStatuses,
               user_id: this.userId,
               group_name: formData.get('group-name'),
               custom_fields: JSON.parse(formData.get('custom_fields')),
@@ -200,29 +209,31 @@ class Event {
                 'Content-Type': 'application/json'
               }
             });
-
             if (response.status === 201) {
-              renderToastr('success', 'Success', 'Event updated successfully!');
+              renderToastr('success', 'Success', 'Event updated!');
               setTimeout(() => { window.location.href = '/my-events'; }, 2000);
             } else {
-              renderToastr('error', 'Error', 'An error occurred while updating the event.');
+              console.log(response);
+              renderToastr('error', 'Error', 'An error occurred.');
             }
           } catch (error) {
-            renderToastr('error', 'Error', 'An error occurred while updating the event.');
+            console.log(error);
+            renderToastr('error', 'Error', 'An error occurred.');
           }
         } else {
-          errorText.innerHTML = 'Please fill in all fields';
+          errorText.innerHTML = 'Please fill in the following fields.';
         }
       });
     }
   }
 
   async render() {
+    console.log(this.response);
     return `
     ${viewNav(this.userId)}
     <div class="container mx-auto h-screen px-6 py-2 sm:p-6 sm:mt-4">
       <div class="flex flex-wrap gap-4 justify-center">
-        <h1 class="text-4xl hidden sm:block text-center font-bold">Editing Event n°${this.response.event_id} : ${this.response.event_name}</h1>
+        <h1 class="text-4xl hidden sm:block text-center font-bold">Edit event n°${this.response.event_id} : ${this.response.event_name}</h1>
       </div>
       <div class="mx-auto flex flex-col items-center justify-center h-screen p-6">
         ${viewEvent(this.response)}

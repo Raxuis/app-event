@@ -72,6 +72,31 @@ class Event {
   async run() {
     this.el.innerHTML = await this.render();
     this.navFunction();
+    this.attachEventListeners();
+  }
+
+  attachEventListeners() {
+    const allocateButton = document.querySelector('.allocate-resources');
+    const editButton = document.querySelector('.edit-resources');
+
+    if (allocateButton) {
+      allocateButton.addEventListener('click', () => this.allocateResources(this.params));
+    }
+    if (editButton) {
+      editButton.addEventListener('click', () => this.editResources(this.params));
+    }
+  }
+
+  allocateResources(eventId) {
+    // eslint-disable-next-line no-console
+    console.log(`Allocating resources for event ID: ${eventId}`);
+    // Add the controller
+  }
+
+  editResources(eventId) {
+    // eslint-disable-next-line no-console
+    console.log(`Editing resources for event ID: ${eventId}`);
+    // Add the controller
   }
 }
 

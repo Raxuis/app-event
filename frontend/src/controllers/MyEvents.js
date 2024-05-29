@@ -49,6 +49,10 @@ class MyEvents {
         this.navigateToEventDetail(eventId);
       } else if (action === 'edit') {
         this.navigateToEventEdit(eventId);
+      } else if (action === 'allocate') {
+        this.navigateToAllocateResources(eventId);
+      } else if (action === 'check') {
+        this.navigateToCheckResources(eventId);
       }
     } else {
       const elements = await this.getElements();

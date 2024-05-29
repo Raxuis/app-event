@@ -83,8 +83,8 @@ const Register = class {
   eventListeners() {
     document.addEventListener('DOMContentLoaded', () => {
       const elForm = document.querySelector('.register-form');
-      const elPassword = document.querySelector('#password');
-      const elConfirmationPassword = document.querySelector('#confirmation-password');
+      const elPassword = document.querySelector('.password');
+      const elConfirmationPassword = document.querySelector('.confirmation-password');
       const elPasswordToggler = document.querySelector('.password-toggler');
       const elConfirmationPasswordToggler = document.querySelector('.confirmation-password-toggler');
       const emailInput = document.querySelector('.email-input');

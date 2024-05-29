@@ -88,8 +88,8 @@ const Account = class {
   }
 
   eventListeners() {
-    const elPassword = document.querySelector('#new-account-password');
-    const elConfirmationPassword = document.querySelector('#new-password-account-confirmation');
+    const elPassword = document.querySelector('.new-account-password');
+    const elConfirmationPassword = document.querySelector('.new-password-account-confirmation');
     const elPasswordToggler = document.querySelector('.password-account-toggler');
     const elConfirmationPasswordToggler = document.querySelector('.confirmation-password-account-toggler');
     const emailInput = document.querySelector('.email-account-input');

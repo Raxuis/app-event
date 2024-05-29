@@ -1,7 +1,15 @@
 import viewRow from './eventMoreTableRow';
 import viewRowCustom from './customFieldTableRow';
 
-export default (event) => (`
+export default (event) => {
+  let eventSize = event.size;
+  const eventGuests = event.guests;
+  eventGuests.forEach((guest) => {
+    if (guest.guest_status === 'confirmed') {
+      eventSize -= 1;
+    }
+  });
+  return (`
 <div class="flex flex-wrap -mx-3 mb-5">
   <div class="w-full max-w-full px-3 mb-6  mx-auto">
     <div class="relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem] bg-white m-5">
@@ -12,7 +20,7 @@ export default (event) => (`
             <span class="mt-1 font-medium text-secondary-dark text-lg/normal">${event.event_name} | ${event.description}</span>
           </h3>
           <h3 class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
-            <span class="mr-3 font-semibold text-dark">${event.size} places left</span>
+            <span class="mr-3 font-semibold text-dark">${eventSize} ${eventSize <= 1 ? 'place left' : 'places left'} </span>
           </h3>
         </div>
         <div class="flex-auto block py-8 pt-6 px-9">
@@ -40,3 +48,4 @@ export default (event) => (`
 </div>
 </div>
 `);
+};

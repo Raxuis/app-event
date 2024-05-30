@@ -5,22 +5,28 @@ import viewEvents from '../views/events';
 import EventMore from './EventMore';
 import EventEdit from './EventEdit';
 import renderToastr from '../utils/toastr/renderToastr';
+import EventAllocateResources from './EventAllocateResources';
+import EventEditResources from './EventEditResources';
+import EventCheckResources from './EventCheckResources';
 
 class MyEvents {
   constructor() {
     document.addEventListener('DOMContentLoaded', () => {
       this.el = document.querySelector('#root');
-      this.isLogged = localStorage.getItem('isLogged');
-      this.userId = parseInt(localStorage.getItem('id'), 10);
       this.initialize();
+      // 👇 This is top prevent issues when going back to previous page
       window.addEventListener('popstate', (event) => {
         const action = new URLSearchParams(window.location.search).get('action');
         if (action === 'more') {
           this.navigateToEventDetail(event.state.eventId, false);
         } else if (action === 'edit') {
           this.navigateToEventEdit(event.state.eventId, false);
-        } else {
-          this.initialize();
+        } else if (action === 'allocate-resources') {
+          this.navigateToAllocateResources(event.state.eventId, false);
+        } else if (action === 'check-resources') {
+          this.navigateToCheckResources(event.state.eventId, false);
+        } else if (action === 'edit-resources') {
+          this.navigateToEditResources(event.state.eventId, false);
         }
       });
     });
@@ -49,9 +55,11 @@ class MyEvents {
         this.navigateToEventDetail(eventId);
       } else if (action === 'edit') {
         this.navigateToEventEdit(eventId);
-      } else if (action === 'allocate') {
+      } else if (action === 'allocate-resources') {
         this.navigateToAllocateResources(eventId);
-      } else if (action === 'check') {
+      } else if (action === 'edit-resources') {
+        this.navigateToEditResources(eventId);
+      } else if (action === 'check-resources') {
         this.navigateToCheckResources(eventId);
       }
     } else {
@@ -198,6 +206,27 @@ class MyEvents {
       window.history.pushState({ eventId }, '', `?action=edit&eventId=${eventId}`);
     }
     new EventEdit(eventId);
+  }
+
+  navigateToAllocateResources(eventId, pushState = true) {
+    if (pushState) {
+      window.history.pushState({ eventId }, '', `?action=allocate-resources&eventId=${eventId}`);
+    }
+    new EventAllocateResources(eventId);
+  }
+
+  navigateToCheckResources(eventId, pushState = true) {
+    if (pushState) {
+      window.history.pushState({ eventId }, '', `?action=check-resources&eventId=${eventId}`);
+    }
+    new EventCheckResources(eventId);
+  }
+
+  navigateToEditResources(eventId, pushState = true) {
+    if (pushState) {
+      window.history.pushState({ eventId }, '', `?action=edit-resources&eventId=${eventId}`);
+    }
+    new EventEditResources(eventId);
   }
 }
 

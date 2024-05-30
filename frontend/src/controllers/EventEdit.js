@@ -25,7 +25,7 @@ class Event {
     }
 
     try {
-      const response = await axios.get(`http://localhost:8080/auth/${sessionId}`);
+      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/auth/${sessionId}`);
       this.userId = response.data.user_id;
     } catch (e) {
       this.userId = null;

@@ -8,7 +8,7 @@ export default (resource) => (`
   <span class="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none rounded-lg">${resource.resource_type[0].toUpperCase() + resource.resource_type.slice(1)}</span>
   </td>
   <td class="p-3 text-center">
-  <span class="font-semibold text-light-inverse text-md/normal">${resource.resource_cost}$</span>
+  <span class="font-semibold text-light-inverse text-md/normal">${resource.resource_cost} $</span>
   </td>
   <td class="text-center">
     <span class="font-semibold text-light-inverse text-md/normal">${resource.resource_quantity}</span>

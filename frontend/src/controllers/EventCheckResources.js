@@ -22,10 +22,12 @@ class EventCheckResources {
         return;
       }
 
-      const response = await axios.get(`http://localhost:8080/auth/${sessionId}`);
-      this.userId = response.data.user_id;
+      const authResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/auth/${sessionId}`);
+      this.userId = authResponse.data.user_id;
 
-      if (this.userId !== this.response.event_author_id) {
+      this.eventInfos = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/event/${this.params}`);
+
+      if (this.userId !== this.eventInfos.data.author_id) {
         window.location.href = '/my-events';
       } else {
         this.run();
@@ -119,7 +121,7 @@ class EventCheckResources {
         </div>
       </div>
       <div class="w-full mx-auto flex flex-col items-center justify-center">
-        ${viewCheckRessources(this.response)}
+        ${viewCheckRessources(this.eventInfos.data, this.response)}
       </div>
     </div>
     `;

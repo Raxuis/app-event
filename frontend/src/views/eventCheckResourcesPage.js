@@ -1,14 +1,14 @@
 import viewRow from './eventCheckRow';
 
-export default (data) => (`
+export default (eventInfos, resources) => (`
 <div class="flex flex-wrap -mx-3 mb-5 w-full">
   <div class="w-full px-3 mb-6 mx-auto">
     <div class="relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem] bg-white m-5">
       <div class="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
         <div class="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
           <h3 class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
-            <span class="mr-3 font-semibold text-dark">Check Resources : Event n°${data.event_id}</span>
-            <span class="mt-1 font-medium text-secondary-dark text-lg/normal">${data.event_name} | ${data.event_description}</span>
+            <span class="mr-3 font-semibold text-dark">Check Resources : Event n°${eventInfos.event_id}</span>
+            <span class="mt-1 font-medium text-secondary-dark text-lg/normal">${eventInfos.event_name} | ${eventInfos.description}</span>
           </h3>
           <h3 class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
             <span class="mr-3 font-semibold text-dark"></span>
@@ -28,7 +28,7 @@ export default (data) => (`
                 </tr>
               </thead>
               <tbody>
-              ${viewRow(data)}
+              ${viewRow(resources)}
               </tbody>
             </table>
           </div>

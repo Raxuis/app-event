@@ -32,5 +32,6 @@ new Router([
   "events/:user_id" => UserEvents::class,
   "form-infos" => Form::class,
   "resource/:id" => EventResource::class,
+  "resource" => EventResource::class,
   "resources/:event_id" => EventResources::class,
 ]);

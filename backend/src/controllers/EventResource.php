@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ResourceModel;
+use Exception;
 
 class EventResource extends Controller
 {
@@ -21,11 +22,23 @@ class EventResource extends Controller
 
   public function postEventResource()
   {
-    $body = (array) json_decode(file_get_contents('php://input'));
+    $body = (array) json_decode(file_get_contents('php://input'), true);
 
-    $this->event_resource->add($body);
+    try {
+      $this->event_resource->allocateEventResource($body);
+      $resource = $this->event_resource->getLast();
 
-    return $this->event_resource->getLast();
+      if ($resource) {
+        http_response_code(200); // OK
+        echo json_encode($resource);
+      } else {
+        http_response_code(500);
+        echo json_encode(['message' => 'Failed to retrieve the last event resource.']);
+      }
+    } catch (Exception $e) {
+      http_response_code(400);
+      echo json_encode(['message' => $e->getMessage()]);
+    }
   }
 
   public function deleteEventResource()

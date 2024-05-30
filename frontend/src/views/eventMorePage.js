@@ -59,14 +59,24 @@ export default (event) => {
           state="morph-coins">
         </lord-icon>
       </a>
-      <a class="check-resources flex items-center m-2 ml-0 font-medium text-lg/tight cursor-pointer text-black underline-offset-4 hover:underline gap-2">
-        Check resources.
-        <lord-icon 
-        class="size-6"
-        src="https://cdn.lordicon.com/wyqtxzeh.json"
-        trigger="hover">
-      </lord-icon>
-      </a>
+      ${event.event_resources.length > 0 ? `<a class="check-resources flex items-center m-2 ml-0 font-medium text-lg/tight cursor-pointer text-black underline-offset-4 hover:underline gap-2">
+      Check resources.
+      <lord-icon 
+      class="size-6"
+      src="https://cdn.lordicon.com/wyqtxzeh.json"
+      trigger="hover">
+    </lord-icon>
+    </a>` : `<h3 class="flex items-center m-2 ml-0 font-medium text-lg/tight cursor-pointer text-black underline-offset-4 hover:underline gap-2"> 
+    You have no resource allocate resources first.
+    <lord-icon
+    src="https://cdn.lordicon.com/nkfxhqqr.json"
+    trigger="hover"
+    state="morph-destroyed"
+    class="size-6">
+</lord-icon>
+</h3>
+`}
+      
       </div>
         </div>
       </div>

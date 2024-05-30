@@ -62,11 +62,11 @@ class EventCheckResources {
   resourcesEventListeners(resources) {
     const resourceArray = Array.isArray(resources) ? resources : [resources];
     resourceArray.forEach((resource) => {
-      const deleteButton = document.querySelector(`.delete-${resource.resource_id}`);
-      const rowResource = document.querySelector(`.row-${resource.resource_id}`);
+      const deleteButton = document.querySelector(`.delete-${resource.event_resource_id}`);
+      const rowResource = document.querySelector(`.row-${resource.event_resource_id}`);
 
       if (deleteButton) {
-        deleteButton.addEventListener('click', () => this.deleteEventResource(resource.resource_id, rowResource));
+        deleteButton.addEventListener('click', () => this.deleteEventResource(resource.event_resource_id, rowResource));
       }
     });
   }

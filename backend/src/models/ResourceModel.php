@@ -23,7 +23,7 @@ class ResourceModel extends SqlConnect
   public function getEventResources(int $event_id)
   {
     $req = $this->db->prepare(
-      "SELECT r.id as resource_id, r.name as resource_name, r.type as resource_type, r.cost as resource_cost,
+      "SELECT r.id as resource_id, er.id as event_resource_id, r.name as resource_name, r.type as resource_type, r.cost as resource_cost,
       r.updated_at as resource_updated_at, er.quantity as resource_quantity, er.status as resource_status,
       e.id as event_id, e.name as event_name, e.description as event_description, e.user_id as event_author_id
       FROM resources as r

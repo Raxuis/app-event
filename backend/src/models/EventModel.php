@@ -184,11 +184,6 @@ class EventModel extends SqlConnect
         if ($row['resource_id'] !== null) {
           $event['event_resources'][] = [
             'resource_id' => $row['resource_id'],
-            'resource_name' => $row['resource_name'],
-            'resource_type' => $row['resource_type'],
-            'resource_cost' => $row['resource_cost'],
-            'resource_quantity' => $row['resource_quantity'],
-            'resource_status' => $row['resource_status']
           ];
         }
       }

@@ -10,7 +10,7 @@ export default (eventGuest) => {
   <td class="p-3 pr-0 text-start">
     <span class="font-semibold text-light-inverse text-md/normal">${eventGuest.guest_firstname} ${eventGuest.guest_lastname}</span>
   </td>
-  <td class="p-3 pr-0 text-start">
+  <td class="p-3 pr-0 text-center">
   <span class="text-center align-baseline inline-flex px-2 py-1 mr-auto items-center font-semibold text-base/none text-success bg-success-light rounded-lg">${eventGuest.guest_email}</span>
   </td>
   <td class="p-3 text-center">

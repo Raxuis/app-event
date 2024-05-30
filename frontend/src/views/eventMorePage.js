@@ -10,8 +10,8 @@ export default (event) => {
     }
   });
   return (`
-<div class="flex flex-wrap -mx-3 mb-5">
-  <div class="w-full max-w-full px-3 mb-6 mx-auto">
+<div class="flex flex-wrap -mx-3 mb-5 w-full">
+  <div class="w-full px-3 mb-6 mx-auto">
     <div class="relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem] bg-white m-5">
       <div class="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
         <div class="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
@@ -28,11 +28,10 @@ export default (event) => {
             <table class="w-full my-0 align-middle text-dark border-neutral-200">
               <thead class="align-bottom">
                 <tr class="font-semibold text-[0.95rem] text-secondary-dark">
-                  <th class="pb-3 text-start min-w-[50px]">PROFILE PICTURE</th>
-                  <th class="pb-3 text-center min-w-[100px]">OWNER</th>
-                  <th class="pb-3 text-center min-w-[100px]">EMAIL</th>
-                  <th class="pb-3 pr-12 text-end min-w-[175px]">STATUS</th>
-                  <th class="pb-3 pr-12 text-end min-w-[100px]">WHEN?</th>
+                  <th class="pb-3 text-center">OWNER</th>
+                  <th class="pb-3 text-center">EMAIL</th>
+                  <th class="pb-3 text-center">STATUS</th>
+                  <th class="pb-3 text-center">WHEN?</th>
                 </tr>
               </thead>
               <tbody>
@@ -50,7 +49,7 @@ export default (event) => {
         <h3 class="flex items-center m-2 ml-0 font-medium text-2xl/tight text-black gap-2">
         Resources.
       </h3>
-      <div class="w-full flex justify-between">
+      <div class="w-full flex justify-between max-sm:flex-col">
         <a class="allocate-resources flex items-center m-2 ml-0 font-medium text-lg/tight cursor-pointer text-black underline-offset-4 hover:underline gap-2">
         Allocate resources.
         <lord-icon 
@@ -60,8 +59,8 @@ export default (event) => {
           state="morph-coins">
         </lord-icon>
       </a>
-      <a class="edit-resources flex items-center m-2 ml-0 font-medium text-lg/tight cursor-pointer text-black underline-offset-4 hover:underline gap-2">
-        Edit resources.
+      <a class="check-resources flex items-center m-2 ml-0 font-medium text-lg/tight cursor-pointer text-black underline-offset-4 hover:underline gap-2">
+        Check resources.
         <lord-icon 
         class="size-6"
         src="https://cdn.lordicon.com/wyqtxzeh.json"

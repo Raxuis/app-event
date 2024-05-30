@@ -35,13 +35,13 @@ export default () => (`
       <div class="flex flex-col space-y-2 pt-2">
         <label for="quantity-input" class="text-gray-600">Places number</label>
         <div class="relative flex items-center w-full">
-            <button type="button" data-input-counter-decrement="quantity" class="decrement-button-custom bg-primary border border-gray-300 rounded-s-lg p-3 h-11">
+            <button type="button" data-input-counter-decrement="quantity" class="decrement-button-custom bg-electric-violet-600 border border-gray-300 rounded-s-lg p-3 h-11">
                 <svg class="w-3 h-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
                 </svg>
             </button>
             <input type="text" name="quantity" data-input-counter aria-describedby="helper-text-explanation" class="quantity-input-custom border border-gray-300 h-11 text-center block w-full px-4 py-3" placeholder="999" required />
-            <button type="button" data-input-counter-increment="quantity" class="increment-button-custom bg-primary border border-gray-300 rounded-e-lg p-3 h-11">
+            <button type="button" data-input-counter-increment="quantity" class="increment-button-custom bg-electric-violet-600 border border-gray-300 rounded-e-lg p-3 h-11">
                 <svg class="w-3 h-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
                 </svg>
@@ -83,7 +83,7 @@ export default () => (`
         <div class="flex flex-col space-y-2">
           <div class="w-full flex justify-center gap-20 pt-4">
             <button class="py-2.5 px-6 rounded-lg text-sm font-medium bg-red-500 text-white cancel-dialog">Cancel</button>
-            <button class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-primary submit-dialog">Create</button>
+            <button class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-electric-violet-600 submit-dialog">Create</button>
           </div>
         </div>
       </div>

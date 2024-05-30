@@ -64,7 +64,7 @@ export default () => (`
         <div class="flex flex-col space-y-2">
           <div class="w-full flex justify-center gap-20 pt-4">
             <button class="py-2.5 px-6 rounded-lg text-sm font-medium bg-red-500 text-white cancel-model">Cancel</button>
-            <button class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-primary submit-model">Create</button>
+            <button class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-electric-violet-600 submit-model">Create</button>
           </div>
         </div>
       </div>

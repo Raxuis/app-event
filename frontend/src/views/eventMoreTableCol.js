@@ -16,7 +16,7 @@ export default (eventGuest) => {
   <td class="p-3 text-center">
   ${eventGuest.guest_status === 'confirmed'
       ? `<span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-success bg-success-light rounded-lg">${eventGuest.guest_status}</span>` : eventGuest.guest_status === 'canceled' ? `<span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-danger bg-danger-light rounded-lg">${eventGuest.guest_status}</span>`
-        : `<span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-primary bg-primary-light rounded-lg">${eventGuest.guest_status}</span>`
+        : `<span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-electric-violet-600 bg-primary-light rounded-lg">${eventGuest.guest_status}</span>`
     }
   </td>
   <td class="pr-0 text-start">

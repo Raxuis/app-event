@@ -60,8 +60,8 @@ export default (event, userId, specificGuests) => {
           </div>
           ${userId === event.author_id ? `
           <div class="flex justify-between items-center">
-            <button data-ripple-light="true" type="button" class="${`edit-${event.event_id}`} duration-500 select-none rounded-lg bg-primary py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Edit</button>
-            <button data-ripple-light="true" type="button" class="${`read-more-${event.event_id}`} duration-500 select-none rounded-lg bg-primary py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Read More</button>
+            <button data-ripple-light="true" type="button" class="${`edit-${event.event_id}`} duration-500 select-none rounded-lg bg-electric-violet-600 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Edit</button>
+            <button data-ripple-light="true" type="button" class="${`read-more-${event.event_id}`} duration-500 select-none rounded-lg bg-electric-violet-600 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Read More</button>
           </div>
           ` : ''}
         </div>

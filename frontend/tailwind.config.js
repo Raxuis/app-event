@@ -4,7 +4,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#bf10ff',
         'cerise-red': {
           50: '#fef1f7',
           100: '#fee5f0',
@@ -30,6 +29,19 @@ module.exports = {
           800: '#325158',
           900: '#2d464c',
           950: '#1a2c32'
+        },
+        'electric-violet': {
+          50: '#fdf2ff',
+          100: '#f9e3ff',
+          200: '#f2c6ff',
+          300: '#ed99ff',
+          400: '#e35dff',
+          500: '#d121ff',
+          600: '#bf10ff',
+          700: '#9c00cf',
+          800: '#8100a9',
+          900: '#6d0689',
+          950: '#49005e'
         }
       }
     }

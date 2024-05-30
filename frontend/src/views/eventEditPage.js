@@ -63,7 +63,7 @@ export default (eventInfos) => (`
           </a>
         </div>
       </div>
-      <div class="custom-field-btn select-none cursor-pointer text-gray-700 flex justify-center bg-clip-border border-2 border-primary border-dotted rounded-md bg-slate-400 bg-opacity-15 hover:bg-violet-300 hover:bg-opacity-30 duration-300 mt-2 p-2 w-full">
+      <div class="custom-field-btn select-none cursor-pointer text-gray-700 flex justify-center bg-clip-border border-2 border-electric-violet-600 border-dotted rounded-md bg-slate-400 bg-opacity-15 hover:bg-violet-300 hover:bg-opacity-30 duration-300 mt-2 p-2 w-full">
         <p class="flex justify-center items-center">Add a custom field (2 maximum)</p>
       </div>
       <div class="custom-field-edit">${eventInfos.custom_fields ? eventInfos.custom_fields.map((custom_field) => viewCustomField(custom_field)).join('') : ''}</div>
@@ -72,7 +72,7 @@ export default (eventInfos) => (`
     <div class="flex flex-col space-y-2 pb-8">
       <div class="w-full flex justify-center gap-20 pt-4">
         <button class="py-2.5 px-6 rounded-lg text-sm font-medium bg-red-500 text-white cancel-edit">Cancel</button>
-        <button class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-primary submit-edit">Apply</button>
+        <button class="py-2.5 px-6 rounded-lg text-sm font-medium text-white bg-electric-violet-600 submit-edit">Apply</button>
       </div>
     </div>
   </form>

@@ -9,7 +9,7 @@ export default () => (`
                     doorway to the great nothing
                 </h1>
                 <p class="my-2 text-gray-700">Sorry about that! Please visit our homepage to get where you need to go.</p>
-                <button onclick="window.location.href='/'" class="sm:w-full lg:w-auto my-2 border rounded md py-4 px-8 text-center bg-primary hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50 text-white">Take me there!</button>
+                <button onclick="window.location.href='/'" class="sm:w-full lg:w-auto my-2 border rounded md py-4 px-8 text-center bg-electric-violet-600 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50 text-white">Take me there!</button>
             </div>
         </div>
         <div>

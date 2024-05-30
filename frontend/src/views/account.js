@@ -44,7 +44,7 @@ export default (userInfos) => (`
               </div>
             </div>
               <div class="!mt-10">
-              <button type="submit" class="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-primary hover:opacity-90 focus:outline-none">
+              <button type="submit" class="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-electric-violet-600 hover:opacity-90 focus:outline-none">
               Edit
             </button>
               <div class="error-account-message w-full text-red-500 pt-2"></div>

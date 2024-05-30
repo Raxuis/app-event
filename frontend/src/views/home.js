@@ -15,7 +15,7 @@ export default (isLogged) => (`
         <div class="grid items-center gap-12 lg:grid-cols-2">
           <div class="mt-12 lg:mt-0">
             <h1 class="mb-12 text-5xl font-bold tracking-tight text-gray-700 md:text-6xl xl:text-7xl opacity-80">
-              Are you ready <br /><span class="text-primary">to ease your event</span><br/>planning?
+              Are you ready <br /><span class="text-electric-violet-600">to ease your event</span><br/>planning?
             </h1>
             <p class="text-lg text-[hsl(218,17%,28%)] opacity-75">
             Planning an event can be overwhelming. With App-Event, take the stress out of organizing any occasion, whether it's a corporate conference, a wedding celebration, or a casual get-together with friends.

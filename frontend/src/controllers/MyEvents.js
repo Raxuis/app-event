@@ -5,7 +5,7 @@ import viewEvents from '../views/events';
 import EventMore from './EventMore';
 import EventEdit from './EventEdit';
 import renderToastr from '../utils/toastr/renderToastr';
-import EventAllocateResources from './EventAllocateResources';
+import EventAllocateResources from './EventAllocateResource';
 import EventEditResources from './EventEditResources';
 import EventCheckResources from './EventCheckResources';
 

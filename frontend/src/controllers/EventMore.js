@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import viewNav from '../views/nav';
 import viewEvent from '../views/eventMorePage';
-import EventAllocateResources from './EventAllocateResources';
+import EventAllocateResources from './EventAllocateResource';
 import EventEditResources from './EventEditResources';
 import EventCheckResources from './EventCheckResources';
 

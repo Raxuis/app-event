@@ -86,7 +86,7 @@ class EventCheckResources {
         }
       });
       rowResource.remove();
-      renderToastr('success', 'Resource deleted successfully');
+      renderToastr('success', 'Success', 'Resource deleted successfully');
     } catch (error) {
       renderToastr('error', 'Error deleting resource:', error.message);
     }

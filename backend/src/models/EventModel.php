@@ -117,17 +117,19 @@ class EventModel extends SqlConnect
 
   public function get(int $id)
   {
-    // Retrieve basic event information
+    // Retrieve basic event information along with associated resources
     $req = $this->db->prepare(
       "SELECT e.id AS event_id, e.name AS event_name, e.image, e.type, e.created_at, e.time, e.place, e.description, e.size, e.user_id AS author_id, e.group_id, g.name as group_name,
-        u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
-        gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.id AS guest_id,
-        us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email
+            u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
+            gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.id AS guest_id,
+            us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email,
+            er.id AS resource_id
         FROM events AS e
         INNER JOIN users AS u ON e.user_id = u.id
         INNER JOIN groups AS g ON e.group_id = g.id
         INNER JOIN group_users AS gu ON gu.group_id = g.id
         INNER JOIN users AS us ON gu.user_id = us.id
+        LEFT JOIN event_resources AS er ON er.event_id = e.id
         WHERE e.id = :id
         ORDER BY e.time ASC"
     );
@@ -152,7 +154,8 @@ class EventModel extends SqlConnect
         'author_email' => $results[0]['author_email'],
         'group_id' => $results[0]['group_id'],
         'group_name' => $results[0]['group_name'],
-        'guests' => []
+        'guests' => [],
+        'event_resources' => []
       ];
 
       // Retrieve custom fields
@@ -162,17 +165,32 @@ class EventModel extends SqlConnect
 
       $event['custom_fields'] = $customFields;
 
+      $guestsAdded = [];
       foreach ($results as $row) {
-        $event['guests'][] = [
-          'guest_id' => $row['guest_id'],
-          'guest_status' => $row['guest_status'],
-          'registered_at' => $row['registered_at'],
-          'confirmed_at' => $row['confirmed_at'],
-          'canceled_at' => $row['canceled_at'],
-          'guest_firstname' => $row['guest_firstname'],
-          'guest_lastname' => $row['guest_lastname'],
-          'guest_email' => $row['guest_email']
-        ];
+        if (!in_array($row['guest_id'], $guestsAdded)) {
+          $event['guests'][] = [
+            'guest_id' => $row['guest_id'],
+            'guest_status' => $row['guest_status'],
+            'registered_at' => $row['registered_at'],
+            'confirmed_at' => $row['confirmed_at'],
+            'canceled_at' => $row['canceled_at'],
+            'guest_firstname' => $row['guest_firstname'],
+            'guest_lastname' => $row['guest_lastname'],
+            'guest_email' => $row['guest_email']
+          ];
+          $guestsAdded[] = $row['guest_id'];
+        }
+
+        if ($row['resource_id'] !== null) {
+          $event['event_resources'][] = [
+            'resource_id' => $row['resource_id'],
+            'resource_name' => $row['resource_name'],
+            'resource_type' => $row['resource_type'],
+            'resource_cost' => $row['resource_cost'],
+            'resource_quantity' => $row['resource_quantity'],
+            'resource_status' => $row['resource_status']
+          ];
+        }
       }
 
       return $event;
@@ -180,7 +198,6 @@ class EventModel extends SqlConnect
       return new stdClass();
     }
   }
-
   public function getAll(): bool|array|stdClass
   {
     $req = $this->db->prepare(

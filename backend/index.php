@@ -4,6 +4,8 @@ require 'vendor/autoload.php';
 
 use App\Controllers\Auth;
 use App\Controllers\Event;
+use App\Controllers\EventResource;
+use App\Controllers\EventResources;
 use App\Controllers\Events;
 use App\Router;
 use App\Controllers\User;
@@ -28,5 +30,7 @@ new Router([
   "userinteraction" => UserEventInteraction::class,
   "events" => Events::class,
   "events/:user_id" => UserEvents::class,
-  "form-infos" => Form::class
+  "form-infos" => Form::class,
+  "resource/:id" => EventResource::class,
+  "resources/:event_id" => EventResources::class,
 ]);

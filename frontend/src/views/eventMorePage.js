@@ -51,7 +51,7 @@ export default (event) => {
       </h3>
       <div class="w-full flex justify-between max-sm:flex-col">
         <a class="allocate-resources flex items-center m-2 ml-0 font-medium text-lg/tight cursor-pointer text-black underline-offset-4 hover:underline gap-2">
-        Allocate resources.
+        Allocate resource.
         <lord-icon 
           class="size-6"
           src="https://cdn.lordicon.com/iawrhwdo.json"
@@ -66,7 +66,7 @@ export default (event) => {
       src="https://cdn.lordicon.com/wyqtxzeh.json"
       trigger="hover">
     </lord-icon>
-    </a>` : `<h3 class="flex items-center m-2 ml-0 font-medium text-lg/tight cursor-pointer text-black underline-offset-4 hover:underline gap-2"> 
+    </a>` : `<h3 class="flex items-center m-2 ml-0 font-medium text-lg/tight text-black cursor-default"> 
     You have no resource allocate resources first.
     <lord-icon
     src="https://cdn.lordicon.com/nkfxhqqr.json"

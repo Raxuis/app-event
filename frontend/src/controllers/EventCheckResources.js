@@ -3,6 +3,7 @@ import axios from 'axios';
 import viewNav from '../views/nav';
 import viewCheckRessources from '../views/eventCheckResourcesPage';
 import renderToastr from '../utils/toastr/renderToastr';
+import EventEditResources from './EventEditResources';
 
 class EventCheckResources {
   constructor(params) {
@@ -63,10 +64,14 @@ class EventCheckResources {
     const resourceArray = Array.isArray(resources) ? resources : [resources];
     resourceArray.forEach((resource) => {
       const deleteButton = document.querySelector(`.delete-${resource.event_resource_id}`);
+      const editButton = document.querySelector(`.edit-${resource.event_resource_id}`);
       const rowResource = document.querySelector(`.row-${resource.event_resource_id}`);
 
       if (deleteButton) {
         deleteButton.addEventListener('click', () => this.deleteEventResource(resource.event_resource_id, rowResource));
+      }
+      if (editButton) {
+        editButton.addEventListener('click', () => this.editEventResource(resource.event_resource_id, rowResource));
       }
     });
   }
@@ -90,6 +95,13 @@ class EventCheckResources {
     } catch (error) {
       renderToastr('error', 'Error deleting resource:', error.message);
     }
+  }
+
+  async editEventResource(eventResourceId, eventId, pushState = true) {
+    if (pushState) {
+      window.history.pushState({ eventId }, '', `?action=edit-resources&eventId=${eventId}`);
+    }
+    new EventEditResources(eventId, eventResourceId);
   }
 
   async render() {

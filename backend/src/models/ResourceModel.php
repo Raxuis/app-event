@@ -13,6 +13,11 @@ class ResourceModel extends SqlConnect
   }
   public function delete(int $id): void
   {
+    $req = $this->db->prepare(
+      "DELETE FROM event_resources 
+    WHERE id =:id"
+    );
+    $req->execute(["id" => $id]);
   }
 
   public function getEventResources(int $event_id)

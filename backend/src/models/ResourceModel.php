@@ -1,9 +1,9 @@
 <?php
 namespace App\Models;
 
-use \PDO;
-use stdClass;
+use PDO;
 use Exception;
+use stdClass;
 
 class ResourceModel extends SqlConnect
 {
@@ -20,7 +20,7 @@ class ResourceModel extends SqlConnect
       $resourceId = $this->getLastResourceInserted()['id'];
 
       $query = "INSERT INTO event_resources (event_id, resource_id, quantity) 
-                VALUES (:event_id, :resource_id, :quantity)";
+                      VALUES (:event_id, :resource_id, :quantity)";
       $req = $this->db->prepare($query);
       $req->execute([
         "event_id" => $data['event_id'],
@@ -35,15 +35,14 @@ class ResourceModel extends SqlConnect
   public function get(int $id)
   {
     $req = $this->db->prepare(
-      "SELECT r.id as resource_id, er.id as event_resource_id, r.name as resource_name, r.type as resource_type, r.cost as resource_cost,
-      r.updated_at as resource_updated_at, er.quantity as resource_quantity, er.status as resource_status,
-      e.id as event_id, e.name as event_name, e.description as event_description, e.user_id as event_author_id
-      FROM resources as r
-      INNER JOIN event_resources as er ON r.id = er.resource_id
-      INNER JOIN events as e ON er.event_id = e.id
-      WHERE r.id = :id"
+      "SELECT r.id,r.cost, r.name, r.type, er.quantity, er.status
+            FROM resources as r
+            INNER JOIN event_resources as er ON r.id = er.resource_id
+            WHERE r.id = :id"
     );
     $req->execute(["id" => $id]);
+    $resource = $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
+    return $resource;
   }
 
   public function delete(int $id): void
@@ -56,12 +55,12 @@ class ResourceModel extends SqlConnect
   {
     $req = $this->db->prepare(
       "SELECT r.id as resource_id, er.id as event_resource_id, r.name as resource_name, r.type as resource_type, r.cost as resource_cost,
-      r.updated_at as resource_updated_at, er.quantity as resource_quantity, er.status as resource_status,
-      e.id as event_id, e.name as event_name, e.description as event_description, e.user_id as event_author_id
-      FROM resources as r
-      INNER JOIN event_resources as er ON r.id = er.resource_id
-      INNER JOIN events as e ON er.event_id = e.id
-      WHERE event_id = :event_id"
+            r.updated_at as resource_updated_at, er.quantity as resource_quantity, er.status as resource_status,
+            e.id as event_id, e.name as event_name, e.description as event_description, e.user_id as event_author_id
+            FROM resources as r
+            INNER JOIN event_resources as er ON r.id = er.resource_id
+            INNER JOIN events as e ON er.event_id = e.id
+            WHERE event_id = :event_id"
     );
     $req->execute(["event_id" => $event_id]);
 
@@ -70,14 +69,21 @@ class ResourceModel extends SqlConnect
 
   public function update(array $data)
   {
-    // Update method logic
+    $query = "UPDATE resources SET name = :name, cost = :cost, type = :type WHERE id = :id";
+    $req = $this->db->prepare($query);
+    $req->execute([
+      "id" => $data['id'],
+      "name" => $data['name'],
+      "cost" => $data['cost'],
+      "type" => $data['type']
+    ]);
+    return $req->rowCount() > 0;
   }
 
   public function getLastResourceInserted()
   {
     $req = $this->db->prepare("SELECT * FROM resources ORDER BY id DESC LIMIT 1");
     $req->execute();
-
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }
 
@@ -85,9 +91,9 @@ class ResourceModel extends SqlConnect
   {
     $req = $this->db->prepare("SELECT * FROM event_resources ORDER BY id DESC LIMIT 1");
     $req->execute();
-
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }
+
   public function updateRessourceQuantity(array $data)
   {
     try {
@@ -124,4 +130,3 @@ class ResourceModel extends SqlConnect
     }
   }
 }
-

@@ -38,7 +38,6 @@ export default () => (`
           <button type="submit" class="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-electric-violet-600 hover:opacity-90 focus:outline-none">
           Create
         </button>
-          <div class="error-allocate-message w-full text-red-500 pt-2"></div>
           </div>
         </form>
           </div>

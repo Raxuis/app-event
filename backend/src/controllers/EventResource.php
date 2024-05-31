@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controllers;
 
 use App\Models\ResourceModel;
@@ -12,9 +11,9 @@ class EventResource extends Controller
   public function __construct($params)
   {
     $this->event_resource = new ResourceModel();
-
     parent::__construct($params);
   }
+
   public function getEventResource()
   {
     return $this->event_resource->get(intval($this->params['id']));
@@ -45,11 +44,23 @@ class EventResource extends Controller
   {
     return $this->event_resource->delete(intval($this->params['id']));
   }
+
   public function putEventResource()
   {
+    $body = (array) json_decode(file_get_contents('php://input'), true);
 
-    $this->event_resource->update($this->body);
-
-    return $this->event_resource->getLast();
+    try {
+      $result = $this->event_resource->update($body);
+      if ($result) {
+        http_response_code(200); // OK
+        echo json_encode(['message' => 'Resource updated successfully.']);
+      } else {
+        http_response_code(500);
+        echo json_encode(['message' => 'Failed to update the resource.']);
+      }
+    } catch (Exception $e) {
+      http_response_code(400);
+      echo json_encode(['message' => $e->getMessage()]);
+    }
   }
 }

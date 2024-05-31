@@ -90,9 +90,13 @@ class ResourceModel extends SqlConnect
       }
 
       if ($data['action'] == 'minus') {
-        $query = "UPDATE event_resources SET quantity = quantity - 1 WHERE id = :id";
+        if ($quantity - 1 > 0) {
+          $query = "UPDATE event_resources SET quantity = quantity - 1 WHERE id = :id";
+        } else {
+          $query = "UPDATE event_resources SET quantity = quantity - 1, status = 'unavailable' WHERE id = :id";
+        }
       } else if ($data['action'] == 'plus') {
-        $query = "UPDATE event_resources SET quantity = quantity + 1 WHERE id = :id";
+        $query = "UPDATE event_resources SET quantity = quantity + 1, status = 'available' WHERE id = :id";
       }
 
       $req = $this->db->prepare($query);

@@ -3,11 +3,11 @@ import Cookies from 'js-cookie';
 import { multipleSelect } from 'multiple-select-vanilla';
 import flatpickr from 'flatpickr';
 import isURL from 'validator/lib/isURL';
-import viewNav from '../views/nav';
-import viewModels from '../views/models';
-import viewBuiltModel from '../views/builtModel';
+import viewNav from '../../views/components/nav';
+import viewModels from '../../views/models';
+import viewBuiltModel from '../../views/builtModel';
 import Model from './Model';
-import renderToastr from '../utils/toastr/renderToastr';
+import renderToastr from '../../utils/toastr/renderToastr';
 
 class AllModelsController {
   constructor() {
@@ -79,7 +79,7 @@ class AllModelsController {
 
   renderAllModels(elements) {
     const html = `
-      ${viewNav(this.userId)}
+    ${viewNav(this.userId)}
       <div class="max-w-6xl mx-auto px-4 mb-16">
         ${viewModels(elements)}
         ${viewBuiltModel()}
@@ -123,7 +123,7 @@ class AllModelsController {
 
   renderNoModels() {
     const html = `
-      ${viewNav()}
+    ${viewNav(this.userId)}
       <div class="max-w-6xl mx-auto px-4">
         <p class="text-3xl py-6">No models</p>
       </div>

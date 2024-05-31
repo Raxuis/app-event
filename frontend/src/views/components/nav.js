@@ -1,4 +1,4 @@
-import favicon from '../assets/favicon.png';
+import favicon from '../../assets/favicon.png';
 
 export default (userId) => (`
 <nav class="bg-gray-50 py-1">

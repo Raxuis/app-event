@@ -1,7 +1,7 @@
 import axios from 'axios';
-import viewNav from '../views/nav';
-import viewRegister from '../views/register';
-import renderToastr from '../utils/toastr/renderToastr';
+import viewNav from '../../views/components/nav';
+import viewRegister from '../../views/user/register';
+import renderToastr from '../../utils/toastr/renderToastr';
 
 const Register = class {
   constructor(params) {

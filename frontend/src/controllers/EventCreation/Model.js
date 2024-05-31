@@ -3,9 +3,9 @@ import Cookies from 'js-cookie';
 import { multipleSelect } from 'multiple-select-vanilla';
 import flatpickr from 'flatpickr';
 import isURL from 'validator/lib/isURL';
-import viewNav from '../views/nav';
-import viewPageModel from '../views/modelPage';
-import renderToastr from '../utils/toastr/renderToastr';
+import viewNav from '../../views/components/nav';
+import viewPageModel from '../../views/modelPage';
+import renderToastr from '../../utils/toastr/renderToastr';
 
 const Model = class {
   constructor(params) {

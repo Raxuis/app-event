@@ -1,8 +1,8 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import viewNav from '../views/nav';
-import viewAccount from '../views/account';
-import renderToastr from '../utils/toastr/renderToastr';
+import viewNav from '../../views/components/nav';
+import viewAccount from '../../views/user/account';
+import renderToastr from '../../utils/toastr/renderToastr';
 
 const Account = class {
   constructor(params) {
@@ -57,7 +57,7 @@ const Account = class {
   async render() {
     const userInfos = await this.getUserInfos();
     this.el.innerHTML = `
-      ${viewNav(this.userId)}
+    ${viewNav(this.userId)}
       ${viewAccount(userInfos)}
     `;
   }

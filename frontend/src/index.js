@@ -1,11 +1,11 @@
 import Router from './Router';
 import Home from './controllers/Home';
-import Login from './controllers/Login';
-import Logout from './controllers/Logout';
-import Register from './controllers/Register';
-import MyEvents from './controllers/MyEvents';
-import Models from './controllers/Models';
-import Account from './controllers/Account';
+import Login from './controllers/User/Login';
+import Logout from './controllers/User/Logout';
+import Register from './controllers/User/Register';
+import MyEvents from './controllers/Event/MyEvents';
+import Models from './controllers/EventCreation/Models';
+import Account from './controllers/User/Account';
 import './index.css';
 
 const routes = [

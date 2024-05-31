@@ -1,10 +1,10 @@
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import viewNav from '../views/nav';
-import viewEvent from '../views/eventMorePage';
-import EventAllocateResources from './EventAllocateResource';
-import EventEditResources from './EventEditResource';
-import EventCheckResources from './EventCheckResources';
+import viewNav from '../../views/components/nav';
+import viewEvent from '../../views/eventMorePage';
+import EventAllocateResources from '../EventResource/EventAllocateResource';
+import EventEditResources from '../EventResource/EventEditResource';
+import EventCheckResources from '../EventResource/EventCheckResources';
 
 class EventMore {
   constructor(params) {

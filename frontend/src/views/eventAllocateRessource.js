@@ -1,4 +1,4 @@
-import resourcesSvg from '../assets/resources.svg';
+import resourcesSvg from '../assets/resources/resources.svg';
 
 export default () => (`
 <div class="text-[#333] flex max-w-sm:flex-col items-center justify-center">

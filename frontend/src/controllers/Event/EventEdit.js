@@ -3,10 +3,10 @@ import Cookies from 'js-cookie';
 import flatpickr from 'flatpickr';
 import { multipleSelect } from 'multiple-select-vanilla';
 import isURL from 'validator/lib/isURL';
-import viewNav from '../views/nav';
-import viewEvent from '../views/eventEditPage';
-import viewCustomFieldCreate from '../views/customFieldCreate';
-import renderToastr from '../utils/toastr/renderToastr';
+import viewNav from '../../views/components/nav';
+import viewEvent from '../../views/eventEditPage';
+import viewCustomFieldCreate from '../../views/customFieldCreate';
+import renderToastr from '../../utils/toastr/renderToastr';
 
 class Event {
   constructor(params) {

@@ -1,9 +1,10 @@
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import viewNav from '../views/nav';
-import viewCheckRessources from '../views/eventCheckResourcesPage';
-import renderToastr from '../utils/toastr/renderToastr';
+import viewNav from '../../views/components/nav';
+import viewCheckRessources from '../../views/eventCheckResourcesPage';
+import renderToastr from '../../utils/toastr/renderToastr';
 import EventEditResources from './EventEditResource';
+import goBack from '../../utils/navigation/goBack';
 
 class EventCheckResources {
   constructor() {
@@ -33,7 +34,7 @@ class EventCheckResources {
       this.userId = authResponse.data.user_id;
 
       this.eventInfos = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/event/${this.params.eventId}`);
-      this.checkEventResourcesLength();
+      await this.checkEventResourcesLength();
       if (this.userId !== this.eventInfos.data.author_id) {
         window.location.href = '/my-events';
       } else {
@@ -44,16 +45,15 @@ class EventCheckResources {
     }
   }
 
-  checkEventResourcesLength(rowResource = null) {
+  async checkEventResourcesLength(rowResource = null) {
     if (rowResource) {
       rowResource.remove();
-      const resources = this.getEventResourcesInfos(this.params.eventId);
-      if (Object.keys(resources).length < 1) {
-        this.goBackToMore(this.params.eventId);
+      const resources = await this.getEventResourcesInfos(this.params.eventId);
+      if (!resources || Object.keys(resources).length < 1) {
+        goBack('more', this.params.eventId);
       }
-    }
-    if (Object.keys(this.response).length < 1) {
-      this.goBackToMore(this.params.eventId);
+    } else if (!this.response || Object.keys(this.response).length < 1) {
+      goBack('more', this.params.eventId);
     }
   }
 
@@ -78,7 +78,7 @@ class EventCheckResources {
   attachEventListeners() {
     const goBackButton = document.querySelector('.go-back-check');
     if (goBackButton) {
-      goBackButton.addEventListener('click', () => this.goBackToMore(this.params.eventId));
+      goBackButton.addEventListener('click', () => goBack('more', this.params.eventId));
     }
   }
 
@@ -121,10 +121,6 @@ class EventCheckResources {
     } catch (error) {
       renderToastr('error', 'Error', 'Failed to update quantity');
     }
-  }
-
-  goBackToMore(eventId) {
-    window.location.href = `my-events?action=more&eventId=${eventId}`;
   }
 
   async deleteEventResource(resourceId, rowResource) {

@@ -1,13 +1,12 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import viewNav from '../views/nav';
+import viewNav from '../views/components/nav';
 import viewHome from '../views/home';
 
 const Home = class {
   constructor(params) {
     this.el = document.querySelector('#root');
     this.params = params;
-    this.isLogged = localStorage.getItem('isLogged');
 
     this.run();
   }

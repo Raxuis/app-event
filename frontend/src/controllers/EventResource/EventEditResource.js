@@ -1,19 +1,29 @@
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { multipleSelect } from 'multiple-select-vanilla';
-import viewNav from '../views/nav';
-import viewAllocate from '../views/eventAllocateRessource';
-import renderToastr from '../utils/toastr/renderToastr';
+import viewNav from '../../views/components/nav';
+import viewEditResource from '../../views/eventEditResourcePage';
+import renderToastr from '../../utils/toastr/renderToastr';
+import goBack from '../../utils/navigation/goBack';
 
-class EventAllocateResources {
-  constructor(params) {
+class EventEditResources {
+  constructor() {
     this.el = document.querySelector('#root');
-    this.params = params;
+    this.params = this.getParams();
     this.init();
   }
 
+  getParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return {
+      eventId: urlParams.get('eventId'),
+      resourceId: urlParams.get('resourceId')
+    };
+  }
+
   async init() {
-    this.response = await this.getEventInfos(this.params);
+    this.eventInfos = await this.getEventInfos(this.params.eventId);
+    this.resourceInfos = await this.getResourceInfos(this.params.resourceId);
     const sessionId = Cookies.get('PHP_SESSID');
 
     if (!sessionId) {
@@ -27,7 +37,7 @@ class EventAllocateResources {
     } catch (e) {
       this.userId = null;
     }
-    if (this.userId !== this.response.author_id) {
+    if (this.userId !== this.eventInfos.author_id) {
       window.location.href = '/my-events';
     }
     this.run();
@@ -42,6 +52,15 @@ class EventAllocateResources {
     }
   }
 
+  async getResourceInfos(resourceId) {
+    try {
+      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/resource/${resourceId}`);
+      return response.data;
+    } catch (error) {
+      return null;
+    }
+  }
+
   navFunction() {
     const btn = document.querySelector('.mobile-menu-button');
     const menu = document.querySelector('.mobile-menu');
@@ -50,28 +69,13 @@ class EventAllocateResources {
     });
   }
 
-  populateSelect() {
-    const types = ['room', 'equipment', 'other'];
-    const options = types.map((type) => ({
-      text: type[0].toUpperCase() + type.slice(1),
-      value: type
-    }));
-
-    this.ms1 = multipleSelect('#resource-type', {
-      name: 'my-select',
-      single: true,
-      useSelectOptionLabelToHtml: true,
-      data: options,
-      maxHeight: 3,
-      maxHeightUnit: 'row',
-      showClear: true
-    });
-  }
-
   attachEventListeners() {
-    const form = document.querySelector('.form-allocate');
-    const goBackButton = document.querySelector('.go-back-allocate');
-    const numberInput = document.querySelector('.quantity-input-allocate');
+    const goBackButton = document.querySelector('.go-back-edit-resource');
+    if (goBackButton) {
+      goBackButton.addEventListener('click', () => goBack('check-resources', this.params.eventId));
+    }
+    const form = document.querySelector('.form-edit-resource');
+    const numberInput = document.querySelector('.quantity-input-edit-resource');
     if (numberInput) {
       numberInput.addEventListener('input', () => {
         let { value } = numberInput;
@@ -80,12 +84,6 @@ class EventAllocateResources {
           value = value.replace(/\.+$/, '');
         }
         numberInput.value = value;
-      });
-    }
-
-    if (goBackButton) {
-      goBackButton.addEventListener('click', () => {
-        window.location.href = `/my-events?action=more&eventId=${this.response.event_id}`;
       });
     }
     if (form) {
@@ -103,17 +101,16 @@ class EventAllocateResources {
 
       if (requiredFields.every((field) => formData.get(field)) && selectedType.length > 0) {
         const datas = {
+          id: this.params.resourceId,
           name: formData.get('name'),
           type: selectedType,
-          cost: formData.get('cost'),
-          quantity: 1,
-          event_id: this.response.event_id
+          cost: formData.get('cost')
         };
 
         try {
-          const response = await axios.post(`http://localhost:${process.env.BACKEND_PORT}/resource`, datas);
+          const response = await axios.put(`http://localhost:${process.env.BACKEND_PORT}/resource`, datas);
           if (response.status === 200) {
-            window.location.href = `/my-events?action=more&eventId=${this.response.event_id}`;
+            goBack('check-resources', this.params.eventId);
           }
         } catch (error) {
           renderToastr('error', 'Error', 'Failed to submit the form.');
@@ -124,21 +121,42 @@ class EventAllocateResources {
     });
   }
 
+  async populateTypeSelect() {
+    if (this.resourceInfos) {
+      const types = ['room', 'equipment', 'other'];
+      const options = types.map((type) => ({
+        text: type[0].toUpperCase() + type.slice(1),
+        value: type,
+        selected: this.resourceInfos.type === type
+      }));
+
+      this.ms1 = multipleSelect('#resource-type', {
+        name: 'my-select',
+        single: true,
+        useSelectOptionLabelToHtml: true,
+        data: options,
+        maxHeight: 3,
+        maxHeightUnit: 'row',
+        showClear: true
+      });
+    }
+  }
+
   async render() {
     return `
-      ${viewNav(this.userId)}
-      <div class="container mx-auto max-sm:h-full">
-      ${viewAllocate()}
-      </div>
+    ${viewNav(this.userId)}
+    <div class="container mx-auto max-sm:h-full">
+    ${viewEditResource(this.resourceInfos)}
+    </div>
     `;
   }
 
   async run() {
     this.el.innerHTML = await this.render();
-    this.populateSelect();
     this.navFunction();
     this.attachEventListeners();
+    this.populateTypeSelect();
   }
 }
 
-export default EventAllocateResources;
+export default EventEditResources;

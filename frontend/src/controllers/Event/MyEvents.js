@@ -1,13 +1,13 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import viewNav from '../views/nav';
-import viewEvents from '../views/events';
+import viewNav from '../../views/components/nav';
+import viewEvents from '../../views/events';
 import EventMore from './EventMore';
 import EventEdit from './EventEdit';
-import renderToastr from '../utils/toastr/renderToastr';
-import EventAllocateResources from './EventAllocateResource';
-import EventEditResources from './EventEditResource';
-import EventCheckResources from './EventCheckResources';
+import renderToastr from '../../utils/toastr/renderToastr';
+import EventAllocateResources from '../EventResource/EventAllocateResource';
+import EventEditResources from '../EventResource/EventEditResource';
+import EventCheckResources from '../EventResource/EventCheckResources';
 
 class MyEvents {
   constructor() {
@@ -179,7 +179,7 @@ class MyEvents {
 
   async renderAllEvents(elements) {
     const html = `
-      ${viewNav(this.userId)}
+    ${viewNav(this.userId)}
       <div class="max-w-6xl mx-auto px-4">
         ${viewEvents(elements, this.userId, this.verifSpecificGuests(elements))}
       </div>
@@ -191,7 +191,7 @@ class MyEvents {
 
   renderNoEvents() {
     const html = `
-      ${viewNav(this.userId)}
+    ${viewNav(this.userId)}
       <div class="max-w-6xl mx-auto px-4">
         <p class="text-3xl py-6">You don't have events.</p>
       </div>

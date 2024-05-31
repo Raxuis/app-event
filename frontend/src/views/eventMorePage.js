@@ -28,14 +28,14 @@ export default (event) => {
             <table class="w-full my-0 align-middle text-dark border-neutral-200">
               <thead class="align-bottom">
                 <tr class="font-semibold text-[0.95rem] text-secondary-dark">
-                  <th class="pb-3 text-center">OWNER</th>
+                  <th class="pb-3 text-center">PARTICIPANT</th>
                   <th class="pb-3 text-center">EMAIL</th>
                   <th class="pb-3 text-center">STATUS</th>
                   <th class="pb-3 text-center">WHEN?</th>
                 </tr>
               </thead>
               <tbody>
-                ${viewRow(event.guests)}
+                ${viewRow(event.guests, event)}
                 ${viewRowCustom(event.custom_fields)}
               </tbody>
             </table>

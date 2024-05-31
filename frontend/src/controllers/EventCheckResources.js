@@ -3,18 +3,25 @@ import axios from 'axios';
 import viewNav from '../views/nav';
 import viewCheckRessources from '../views/eventCheckResourcesPage';
 import renderToastr from '../utils/toastr/renderToastr';
-import EventEditResources from './EventEditResources';
+import EventEditResources from './EventEditResource';
 
 class EventCheckResources {
-  constructor(params) {
+  constructor() {
     this.el = document.querySelector('#root');
-    this.params = params;
+    this.params = this.getParams();
     this.init();
+  }
+
+  getParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return {
+      eventId: urlParams.get('eventId')
+    };
   }
 
   async init() {
     try {
-      this.response = await this.getEventResourcesInfos(this.params);
+      this.response = await this.getEventResourcesInfos(this.params.eventId);
       const sessionId = Cookies.get('PHP_SESSID');
 
       if (!sessionId) {
@@ -25,8 +32,8 @@ class EventCheckResources {
       const authResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/auth/${sessionId}`);
       this.userId = authResponse.data.user_id;
 
-      this.eventInfos = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/event/${this.params}`);
-
+      this.eventInfos = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/event/${this.params.eventId}`);
+      this.checkEventResourcesLength();
       if (this.userId !== this.eventInfos.data.author_id) {
         window.location.href = '/my-events';
       } else {
@@ -34,6 +41,19 @@ class EventCheckResources {
       }
     } catch (e) {
       renderToastr('error', 'Error during initialization:', e.message);
+    }
+  }
+
+  checkEventResourcesLength(rowResource = null) {
+    if (rowResource) {
+      rowResource.remove();
+      const resources = this.getEventResourcesInfos(this.params.eventId);
+      if (Object.keys(resources).length < 1) {
+        this.goBackToMore(this.params.eventId);
+      }
+    }
+    if (Object.keys(this.response).length < 1) {
+      this.goBackToMore(this.params.eventId);
     }
   }
 
@@ -58,24 +78,24 @@ class EventCheckResources {
   attachEventListeners() {
     const goBackButton = document.querySelector('.go-back-check');
     if (goBackButton) {
-      goBackButton.addEventListener('click', () => this.goBackToMore(this.params));
+      goBackButton.addEventListener('click', () => this.goBackToMore(this.params.eventId));
     }
   }
 
   resourcesEventListeners(resources) {
     const resourceArray = Array.isArray(resources) ? resources : [resources];
     resourceArray.forEach((resource) => {
-      const deleteButton = document.querySelector(`.delete-${resource.event_resource_id}`);
-      const editButton = document.querySelector(`.edit-${resource.event_resource_id}`);
+      const deleteButton = document.querySelector(`.delete-${resource.resource_id}`);
+      const editButton = document.querySelector(`.edit-${resource.resource_id}`);
       const rowResource = document.querySelector(`.row-${resource.event_resource_id}`);
       const incrementQuantityButton = document.querySelector(`.increment-${resource.event_resource_id}`);
       const decrementQuantityButton = document.querySelector(`.decrement-${resource.event_resource_id}`);
 
       if (deleteButton) {
-        deleteButton.addEventListener('click', () => this.deleteEventResource(resource.event_resource_id, rowResource));
+        deleteButton.addEventListener('click', () => this.deleteEventResource(resource.resource_id, rowResource));
       }
       if (editButton) {
-        editButton.addEventListener('click', () => this.editEventResource(resource.event_resource_id, rowResource));
+        editButton.addEventListener('click', () => this.editEventResource(resource.event_id, resource.resource_id));
       }
       if (incrementQuantityButton) {
         incrementQuantityButton.addEventListener('click', () => this.incrementDecrementQuantity(resource.event_resource_id, 'plus'));
@@ -107,25 +127,25 @@ class EventCheckResources {
     window.location.href = `my-events?action=more&eventId=${eventId}`;
   }
 
-  async deleteEventResource(eventResourceId, rowResource) {
+  async deleteEventResource(resourceId, rowResource) {
     try {
-      await axios.delete(`http://localhost:${process.env.BACKEND_PORT}/resource/${eventResourceId}`, {
+      await axios.delete(`http://localhost:${process.env.BACKEND_PORT}/resource/${resourceId}`, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
-      rowResource.remove();
+      this.checkEventResourcesLength(rowResource);
       renderToastr('success', 'Success', 'Resource deleted successfully');
     } catch (error) {
       renderToastr('error', 'Error deleting resource:', error.message);
     }
   }
 
-  async editEventResource(eventResourceId, eventId, pushState = true) {
+  editEventResource(eventId, resourceId, pushState = true) {
     if (pushState) {
-      window.history.pushState({ eventId }, '', `?action=edit-resources&eventId=${eventId}`);
+      window.history.pushState({ eventId, resourceId }, '', `?action=edit-resources&eventId=${eventId}&resourceId=${resourceId}`);
     }
-    new EventEditResources(eventId, eventResourceId);
+    new EventEditResources();
   }
 
   async render() {
@@ -134,7 +154,7 @@ class EventCheckResources {
     <div class="container mx-auto h-screen p-6 mt-4">
       <div class="flex flex-wrap gap-4">
         <div class="flex-shrink-0">
-          <button type="button" class="go-back-check flex items-center justify-center px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto hover:bg-gray-100">
+          <button type="button" class="go-back-check flex items-center justifycenter px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto hover:bg-gray-100">
             <svg class="w-5 h-5 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
             </svg>

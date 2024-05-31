@@ -1,16 +1,26 @@
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import viewNav from '../views/nav';
+import viewEditResource from '../views/eventEditResourcePage';
 
 class EventEditResources {
-  constructor(params) {
+  constructor() {
     this.el = document.querySelector('#root');
-    this.params = params;
+    this.params = this.getParams();
     this.init();
   }
 
+  getParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return {
+      eventId: urlParams.get('eventId'),
+      resourceId: urlParams.get('resourceId')
+    };
+  }
+
   async init() {
-    this.response = await this.getEventInfos(this.params);
+    this.eventInfos = await this.getEventInfos(this.params.eventId);
+    this.resourceInfos = await this.getResourceInfos(this.params.resourceId);
     const sessionId = Cookies.get('PHP_SESSID');
 
     if (!sessionId) {
@@ -24,7 +34,7 @@ class EventEditResources {
     } catch (e) {
       this.userId = null;
     }
-    if (this.userId !== this.response.author_id) {
+    if (this.userId !== this.eventInfos.author_id) {
       window.location.href = '/my-events';
     }
     this.run();
@@ -33,6 +43,15 @@ class EventEditResources {
   async getEventInfos(eventId) {
     try {
       const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/event/${eventId}`);
+      return response.data;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async getResourceInfos(resourceId) {
+    try {
+      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/resource/${resourceId}`);
       return response.data;
     } catch (error) {
       return null;
@@ -50,8 +69,8 @@ class EventEditResources {
   async render() {
     return `
     ${viewNav(this.userId)}
-    <div class="container mx-auto h-screen p-6 mt-4">
-    Edit
+    <div class="container mx-auto max-sm:h-full">
+    ${viewEditResource()}
     </div>
     `;
   }

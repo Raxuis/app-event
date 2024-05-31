@@ -15,9 +15,9 @@ class EventResource extends Controller
 
     parent::__construct($params);
   }
-  public function getEventRessource()
+  public function getEventResource()
   {
-    return $this->event_resource->getEventResources(intval($this->params['event_id']));
+    return $this->event_resource->get(intval($this->params['id']));
   }
 
   public function postEventResource()

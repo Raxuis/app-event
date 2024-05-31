@@ -3,7 +3,7 @@ import axios from 'axios';
 import viewNav from '../views/nav';
 import viewEvent from '../views/eventMorePage';
 import EventAllocateResources from './EventAllocateResource';
-import EventEditResources from './EventEditResources';
+import EventEditResources from './EventEditResource';
 import EventCheckResources from './EventCheckResources';
 
 class EventMore {

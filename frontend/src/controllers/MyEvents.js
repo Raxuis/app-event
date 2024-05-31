@@ -6,7 +6,7 @@ import EventMore from './EventMore';
 import EventEdit from './EventEdit';
 import renderToastr from '../utils/toastr/renderToastr';
 import EventAllocateResources from './EventAllocateResource';
-import EventEditResources from './EventEditResources';
+import EventEditResources from './EventEditResource';
 import EventCheckResources from './EventCheckResources';
 
 class MyEvents {
@@ -14,19 +14,23 @@ class MyEvents {
     document.addEventListener('DOMContentLoaded', () => {
       this.el = document.querySelector('#root');
       this.initialize();
-      // 👇 This is top prevent issues when going back to previous page
+      // 👇 This is to prevent issues when going back to the previous page
       window.addEventListener('popstate', (event) => {
-        const action = new URLSearchParams(window.location.search).get('action');
+        const urlParams = new URLSearchParams(window.location.search);
+        const action = urlParams.get('action');
+        const eventId = event.state?.eventId;
+        const resourceId = event.state?.resourceId;
+
         if (action === 'more') {
-          this.navigateToEventDetail(event.state.eventId, false);
+          this.navigateToEventDetail(eventId, false);
         } else if (action === 'edit') {
-          this.navigateToEventEdit(event.state.eventId, false);
+          this.navigateToEventEdit(eventId, false);
         } else if (action === 'allocate-resources') {
-          this.navigateToAllocateResources(event.state.eventId, false);
+          this.navigateToAllocateResources(eventId, false);
         } else if (action === 'check-resources') {
-          this.navigateToCheckResources(event.state.eventId, false);
+          this.navigateToCheckResources(eventId, false);
         } else if (action === 'edit-resources') {
-          this.navigateToEditResources(event.state.eventId, false);
+          this.navigateToEditResources(eventId, resourceId, false);
         }
       });
     });
@@ -34,8 +38,9 @@ class MyEvents {
 
   async initialize() {
     const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('eventId');
     const action = urlParams.get('action');
+    const eventId = urlParams.get('eventId');
+    const resourceId = urlParams.get('resourceId');
     const sessionId = Cookies.get('PHP_SESSID');
 
     if (!sessionId) {
@@ -58,7 +63,7 @@ class MyEvents {
       } else if (action === 'allocate-resources') {
         this.navigateToAllocateResources(eventId);
       } else if (action === 'edit-resources') {
-        this.navigateToEditResources(eventId);
+        this.navigateToEditResources(eventId, resourceId);
       } else if (action === 'check-resources') {
         this.navigateToCheckResources(eventId);
       }
@@ -219,14 +224,14 @@ class MyEvents {
     if (pushState) {
       window.history.pushState({ eventId }, '', `?action=check-resources&eventId=${eventId}`);
     }
-    new EventCheckResources(eventId);
+    new EventCheckResources();
   }
 
-  navigateToEditResources(eventId, pushState = true) {
+  navigateToEditResources(eventId, resourceId, pushState = true) {
     if (pushState) {
-      window.history.pushState({ eventId }, '', `?action=edit-resources&eventId=${eventId}`);
+      window.history.pushState({ eventId, resourceId }, '', `?action=edit-resources&eventId=${eventId}&resourceId=${resourceId}`);
     }
-    new EventEditResources(eventId);
+    new EventEditResources();
   }
 }
 

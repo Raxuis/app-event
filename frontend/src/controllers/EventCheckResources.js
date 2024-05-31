@@ -68,6 +68,8 @@ class EventCheckResources {
       const deleteButton = document.querySelector(`.delete-${resource.event_resource_id}`);
       const editButton = document.querySelector(`.edit-${resource.event_resource_id}`);
       const rowResource = document.querySelector(`.row-${resource.event_resource_id}`);
+      const incrementQuantityButton = document.querySelector(`.increment-${resource.event_resource_id}`);
+      const decrementQuantityButton = document.querySelector(`.decrement-${resource.event_resource_id}`);
 
       if (deleteButton) {
         deleteButton.addEventListener('click', () => this.deleteEventResource(resource.event_resource_id, rowResource));
@@ -75,14 +77,34 @@ class EventCheckResources {
       if (editButton) {
         editButton.addEventListener('click', () => this.editEventResource(resource.event_resource_id, rowResource));
       }
+      if (incrementQuantityButton) {
+        incrementQuantityButton.addEventListener('click', () => this.incrementDecrementQuantity(resource.event_resource_id, 'plus'));
+      }
+      if (decrementQuantityButton) {
+        decrementQuantityButton.addEventListener('click', () => this.incrementDecrementQuantity(resource.event_resource_id, 'minus'));
+      }
     });
   }
 
-  goBackToMore(eventId, pushState = true) {
-    if (pushState) {
-      window.history.pushState({ eventId }, '', `?action=more&eventId=${eventId}`);
-      window.location.reload();
+  async incrementDecrementQuantity(resource, action) {
+    const datas = {
+      event_resource_id: resource,
+      action
+    };
+    try {
+      const response = await axios.put(`http://localhost:${process.env.BACKEND_PORT}/resourcequantityinteraction`, datas);
+      if (response.status === 200) {
+        this.init();
+      } else if (response.status === 400) {
+        renderToastr('error', 'Error', response.data.message);
+      }
+    } catch (error) {
+      renderToastr('error', 'Error', 'Failed to update quantity');
     }
+  }
+
+  goBackToMore(eventId) {
+    window.location.href = `my-events?action=more&eventId=${eventId}`;
   }
 
   async deleteEventResource(eventResourceId, rowResource) {

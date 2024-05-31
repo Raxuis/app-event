@@ -211,7 +211,6 @@ class Event {
             });
             if (response.status === 201) {
               renderToastr('success', 'Success', 'Event updated!');
-              setTimeout(() => { window.location.href = '/my-events'; }, 2000);
             } else {
               renderToastr('error', 'Error', 'An error occurred.');
             }

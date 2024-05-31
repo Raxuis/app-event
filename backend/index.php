@@ -14,6 +14,7 @@ use App\Controllers\Model;
 use App\Controllers\Models;
 use App\Controllers\UserEvents;
 use App\Controllers\Form;
+use App\Controllers\RessourceQuantityInteraction;
 use App\Controllers\UserEventInteraction;
 
 new Router([
@@ -33,5 +34,6 @@ new Router([
   "form-infos" => Form::class,
   "resource/:id" => EventResource::class,
   "resource" => EventResource::class,
+  "resourcequantityinteraction" => RessourceQuantityInteraction::class,
   "resources/:event_id" => EventResources::class,
 ]);

@@ -74,4 +74,36 @@ class ResourceModel extends SqlConnect
 
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }
+  public function updateRessourceQuantity(array $data)
+  {
+    try {
+      $queryGetQuantity = "SELECT * FROM event_resources WHERE id = :id";
+      $reqGetQuantity = $this->db->prepare($queryGetQuantity);
+      $reqGetQuantity->execute([
+        "id" => $data['event_resource_id']
+      ]);
+      $result = $reqGetQuantity->fetch(PDO::FETCH_ASSOC);
+      $quantity = $result['quantity'];
+
+      if ($data['action'] == 'minus' && $quantity <= 0) {
+        return ['status' => 'error', 'message' => 'Quantity is already at zero'];
+      }
+
+      if ($data['action'] == 'minus') {
+        $query = "UPDATE event_resources SET quantity = quantity - 1 WHERE id = :id";
+      } else if ($data['action'] == 'plus') {
+        $query = "UPDATE event_resources SET quantity = quantity + 1 WHERE id = :id";
+      }
+
+      $req = $this->db->prepare($query);
+      $req->execute([
+        "id" => $data['event_resource_id']
+      ]);
+
+      return $req->rowCount() > 0 ? ['status' => 'success'] : ['status' => 'error', 'message' => 'No change made'];
+    } catch (Exception $e) {
+      return ['status' => 'error', 'message' => 'Error updating resource quantity: ' . $e->getMessage()];
+    }
+  }
 }
+

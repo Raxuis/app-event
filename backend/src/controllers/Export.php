@@ -30,10 +30,10 @@ class Export extends Controller
       $fileContent = $this->export->exportToCSVPDF($eventId, $format);
       if ($format === 'csv') {
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="event_' . $eventId . '.csv"');
+        header('Content-Disposition: attachment; filename="event-' . $eventId . '.csv"');
       } elseif ($format === 'pdf') {
         header('Content-Type: application/pdf');
-        header('Content-Disposition: attachment; filename="event_' . $eventId . '.pdf"');
+        header('Content-Disposition: attachment; filename="event-' . $eventId . '.pdf"');
       }
       echo $fileContent;
     } catch (\Exception $e) {

@@ -9,7 +9,13 @@ class ExportModel extends SqlConnect
   public function exportToCSVPDF($eventId, $format)
   {
     // Fetch event details from the database
-    $stmt = $this->db->prepare("SELECT * FROM events WHERE event_id = :eventId");
+    $stmt = $this->db->prepare(
+      "SELECT e.name as event_name, e.created_at as created_at, e.place as place, e.time as time,e.description as description, u.firstname as author_firstname, u.lastname as author_lastname
+      FROM events as e
+      INNER JOIN users as u ON e.user_id = u.id
+      LEFT JOIN custom_fields AS cf ON cf.event_id = e.id
+      WHERE e.id = :eventId"
+    );
     $stmt->execute(['eventId' => $eventId]);
     $event = $stmt->fetch(PDO::FETCH_ASSOC);
 

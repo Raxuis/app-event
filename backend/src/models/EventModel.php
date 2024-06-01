@@ -509,7 +509,7 @@ class EventModel extends SqlConnect
     }
   }
 
-  private function getGroupIdByEventId(int $eventId): int
+  protected function getGroupIdByEventId(int $eventId): int
   {
     $req = $this->db->prepare("SELECT group_id FROM events WHERE id = :event_id");
     $req->execute(['event_id' => $eventId]);

@@ -99,6 +99,8 @@ class MyEvents {
       const acceptButton = document.querySelector(`.accept-${event.event_id}`);
       const declineButton = document.querySelector(`.decline-${event.event_id}`);
       const cancelButton = document.querySelector(`.cancel-${event.event_id}`);
+      const exportCSVButton = document.querySelector(`.export-csv-${event.event_id}`);
+      const exportPDFButton = document.querySelector(`.export-pdf-${event.event_id}`);
 
       if (deleteButton) {
         deleteButton.addEventListener('click', () => this.deleteEvent(event.event_id, cardEvent));
@@ -118,7 +120,39 @@ class MyEvents {
       if (cancelButton) {
         cancelButton.addEventListener('click', () => this.userInteraction(event.event_id, event.group_id, 'canceled'));
       }
+      if (exportCSVButton) {
+        exportCSVButton.addEventListener('click', () => this.exportEvent(event.event_id, 'csv'));
+      }
+      if (exportPDFButton) {
+        exportPDFButton.addEventListener('click', () => this.exportEvent(event.event_id, 'pdf'));
+      }
     });
+  }
+
+  async exportEvent(eventId, format) {
+    try {
+      const exportDatas = {
+        event_id: eventId,
+        format
+      };
+      const response = await axios.post(`http://localhost:${process.env.BACKEND_PORT}/export`, exportDatas, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.status === 200) {
+        const blob = new Blob([response.data], { type: `text/${format}` });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `event-${eventId}.${format}`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }
+    } catch (error) {
+      renderToastr('error', 'Error exporting event:', error);
+    }
   }
 
   async userInteraction(eventId, groupId, status) {

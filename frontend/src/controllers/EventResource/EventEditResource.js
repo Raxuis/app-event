@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { multipleSelect } from 'multiple-select-vanilla';
 import viewNav from '../../views/components/nav';
-import viewEditResource from '../../views/eventEditResourcePage';
+import viewEditResource from '../../views/eventResource/eventEditResource/eventEditResourcePage';
 import renderToastr from '../../utils/toastr/renderToastr';
 import goBack from '../../utils/navigation/goBack';
 

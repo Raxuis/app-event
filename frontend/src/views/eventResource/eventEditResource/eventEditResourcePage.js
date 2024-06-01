@@ -1,4 +1,4 @@
-import editResourceSvg from '../assets/resources/edit-resource.svg';
+import editResourceSvg from '../../../assets/resources/edit-resource.svg';
 
 export default (ressource) => (`
 <div class="text-[#333] flex max-w-sm:flex-col items-center justify-center">

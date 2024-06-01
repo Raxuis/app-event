@@ -1,4 +1,4 @@
-import viewCustomField from './customField';
+import viewCustomField from '../customField/customField';
 
 export default (eventInfos) => (`
 <div class="w-full h-full justify-center items-center duration-500">

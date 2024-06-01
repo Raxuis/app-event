@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { multipleSelect } from 'multiple-select-vanilla';
 import viewNav from '../../views/components/nav';
-import viewAllocate from '../../views/eventAllocateRessource';
+import viewAllocate from '../../views/eventResource/eventAllocateResource/eventAllocateRessource';
 import renderToastr from '../../utils/toastr/renderToastr';
 
 class EventAllocateResources {

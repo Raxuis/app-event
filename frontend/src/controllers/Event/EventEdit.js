@@ -4,8 +4,8 @@ import flatpickr from 'flatpickr';
 import { multipleSelect } from 'multiple-select-vanilla';
 import isURL from 'validator/lib/isURL';
 import viewNav from '../../views/components/nav';
-import viewEvent from '../../views/eventEditPage';
-import viewCustomFieldCreate from '../../views/customFieldCreate';
+import viewEvent from '../../views/eventEdition/eventEditPage';
+import viewCustomFieldCreate from '../../views/customField/customFieldCreate';
 import renderToastr from '../../utils/toastr/renderToastr';
 
 class Event {

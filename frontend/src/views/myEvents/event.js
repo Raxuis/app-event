@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import gradient from '../assets/gradient.jpeg';
+import gradient from '../../assets/gradient.jpeg';
 
 export default (event, userId, specificGuests) => {
   const currentDate = new Date();

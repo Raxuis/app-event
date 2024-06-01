@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import viewNav from '../../views/components/nav';
-import viewLogin from '../../views/login';
+import viewLogin from '../../views/user/login';
 
 const Login = class {
   constructor(params) {

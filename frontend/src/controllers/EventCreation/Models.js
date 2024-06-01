@@ -4,8 +4,8 @@ import { multipleSelect } from 'multiple-select-vanilla';
 import flatpickr from 'flatpickr';
 import isURL from 'validator/lib/isURL';
 import viewNav from '../../views/components/nav';
-import viewModels from '../../views/models';
-import viewBuiltModel from '../../views/builtModel';
+import viewModels from '../../views/eventCreation/models/models';
+import viewBuiltModel from '../../views/eventCreation/customEvent/builtModel';
 import Model from './Model';
 import renderToastr from '../../utils/toastr/renderToastr';
 

@@ -1,5 +1,5 @@
-import viewRow from './eventMoreTableRow';
-import viewRowCustom from './customFieldTableRow';
+import viewRow from './eventMoreTable/eventMoreTableRow';
+import viewRowCustom from '../customField/customFieldTableRow';
 
 export default (event) => {
   let eventSize = event.size;

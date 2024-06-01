@@ -1,4 +1,4 @@
-import viewRow from './eventCheckRow';
+import viewRow from './eventCheckTable/eventCheckRow';
 
 export default (eventInfos, resources) => (`
 <div class="flex flex-wrap -mx-3 mb-5 w-full">

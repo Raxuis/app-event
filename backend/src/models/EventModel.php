@@ -269,20 +269,22 @@ class EventModel extends SqlConnect
   {
     $req = $this->db->prepare(
       "SELECT e.id AS event_id, 
-      e.name AS event_name, 
-      e.image, COALESCE(m.type, e.type) AS type, e.created_at, e.time, e.place, e.description, e.size, e.user_id AS author_id, e.group_id,
-      u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
-      gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.id as guest_id,
-      us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email
-      FROM events AS e
-      INNER JOIN users AS u ON e.user_id = u.id
-      LEFT JOIN models AS m ON e.model_id = m.id
-      INNER JOIN groups AS g ON e.group_id = g.id
-      INNER JOIN group_users AS gu ON gu.group_id = g.id
-      INNER JOIN users AS us ON gu.user_id = us.id
-      WHERE e.user_id = :user_id
-      OR e.group_id IN (SELECT group_id FROM group_users WHERE user_id = :user_id)
-      ORDER BY e.time ASC"
+        e.name AS event_name, 
+        e.image, COALESCE(m.type, e.type) AS type, e.created_at, e.time, e.place, e.description, e.size, e.user_id AS author_id, e.group_id,
+        u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
+        gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.id as guest_id,
+        us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email,
+        cf.id AS custom_field_id, cf.field_name AS custom_field_name, cf.field_value AS custom_field_value
+        FROM events AS e
+        INNER JOIN users AS u ON e.user_id = u.id
+        LEFT JOIN models AS m ON e.model_id = m.id
+        INNER JOIN groups AS g ON e.group_id = g.id
+        INNER JOIN group_users AS gu ON gu.group_id = g.id
+        INNER JOIN users AS us ON gu.user_id = us.id
+        LEFT JOIN custom_fields AS cf ON cf.event_id = e.id
+        WHERE e.user_id = :user_id
+        OR e.group_id IN (SELECT group_id FROM group_users WHERE user_id = :user_id)
+        ORDER BY e.time ASC"
     );
     $req->execute(["user_id" => $user_id]);
 
@@ -308,26 +310,47 @@ class EventModel extends SqlConnect
             'author_lastname' => $row['author_lastname'],
             'author_email' => $row['author_email'],
             'group_id' => $row['group_id'],
-            'guests' => []
+            'guests' => [],
+            'custom_fields' => []
           ];
         }
 
-        $events[$event_id]['guests'][] = [
-          'guest_id' => $row['guest_id'],
-          'guest_status' => $row['guest_status'],
-          'registered_at' => $row['registered_at'],
-          'confirmed_at' => $row['confirmed_at'],
-          'canceled_at' => $row['canceled_at'],
-          'guest_firstname' => $row['guest_firstname'],
-          'guest_lastname' => $row['guest_lastname'],
-          'guest_email' => $row['guest_email']
-        ];
+        $guest_key = $row['guest_id'];
+        if (!array_key_exists($guest_key, $events[$event_id]['guests'])) {
+          $events[$event_id]['guests'][$guest_key] = [
+            'guest_id' => $row['guest_id'],
+            'guest_status' => $row['guest_status'],
+            'registered_at' => $row['registered_at'],
+            'confirmed_at' => $row['confirmed_at'],
+            'canceled_at' => $row['canceled_at'],
+            'guest_firstname' => $row['guest_firstname'],
+            'guest_lastname' => $row['guest_lastname'],
+            'guest_email' => $row['guest_email']
+          ];
+        }
+
+        $custom_field_key = $row['custom_field_id'];
+        if ($custom_field_key && !array_key_exists($custom_field_key, $events[$event_id]['custom_fields'])) {
+          $events[$event_id]['custom_fields'][$custom_field_key] = [
+            'custom_field_id' => $row['custom_field_id'],
+            'custom_field_name' => $row['custom_field_name'],
+            'custom_field_value' => $row['custom_field_value']
+          ];
+        }
       }
+
+      // Reset array keys to numeric
+      foreach ($events as &$event) {
+        $event['guests'] = array_values($event['guests']);
+        $event['custom_fields'] = array_values($event['custom_fields']);
+      }
+
       return array_values($events);
     } else {
       return new stdClass();
     }
   }
+
 
   public function getLast()
   {

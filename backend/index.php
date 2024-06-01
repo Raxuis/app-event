@@ -7,6 +7,7 @@ use App\Controllers\Event;
 use App\Controllers\EventResource;
 use App\Controllers\EventResources;
 use App\Controllers\Events;
+use App\Controllers\Export;
 use App\Router;
 use App\Controllers\User;
 use App\Controllers\Users;
@@ -36,4 +37,5 @@ new Router([
   "resource" => EventResource::class,
   "resourcequantityinteraction" => RessourceQuantityInteraction::class,
   "resources/:event_id" => EventResources::class,
+  "export" => Export::class
 ]);

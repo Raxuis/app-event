@@ -17,5 +17,7 @@
       "email": "raclot.raphael@gmail.com"
     }
   ],
-  "require": {}
+  "require": {
+    "dompdf/dompdf": "^3.0"
+  }
 }

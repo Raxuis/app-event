@@ -72,7 +72,7 @@ export default (event) => {
     src="https://cdn.lordicon.com/nkfxhqqr.json"
     trigger="hover"
     state="morph-destroyed"
-    class="size-6">
+    class="size-8 sm:size-6">
 </lord-icon>
 </h3>
 `}

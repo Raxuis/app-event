@@ -7,20 +7,13 @@ import renderToastr from '../../utils/toastr/renderToastr';
 import goBack from '../../utils/navigation/goBack';
 import navFunction from '../../utils/navbar/navFunction';
 import getById from '../../utils/getters/getById';
+import getParams from '../../utils/getters/getParams';
 
 class EventEditResources {
   constructor() {
     this.el = document.querySelector('#root');
-    this.params = this.getParams();
+    this.params = getParams();
     this.init();
-  }
-
-  getParams() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return {
-      eventId: urlParams.get('eventId'),
-      resourceId: urlParams.get('resourceId')
-    };
   }
 
   async init() {

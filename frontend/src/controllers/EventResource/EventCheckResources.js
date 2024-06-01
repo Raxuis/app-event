@@ -8,19 +8,13 @@ import navFunction from '../../utils/navbar/navFunction';
 import getAll from '../../utils/getters/getAll';
 import getUserId from '../../utils/getters/getUserId';
 import getById from '../../utils/getters/getById';
+import getParams from '../../utils/getters/getParams';
 
 class EventCheckResources {
   constructor() {
     this.el = document.querySelector('#root');
-    this.params = this.getParams();
+    this.params = getParams();
     this.init();
-  }
-
-  getParams() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return {
-      eventId: urlParams.get('eventId')
-    };
   }
 
   async init() {

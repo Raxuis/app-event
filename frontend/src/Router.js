@@ -11,7 +11,12 @@ const Router = class {
         .map((param) => param.split('='))
     );
     this.routes = routes;
-    this.userId = getUserId();
+    this.userId = null;
+    this.initialize();
+  }
+
+  async initialize() {
+    this.userId = await getUserId();
     this.run();
   }
 

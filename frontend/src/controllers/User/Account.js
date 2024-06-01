@@ -5,6 +5,8 @@ import viewAccount from '../../views/user/account';
 import renderToastr from '../../utils/toastr/renderToastr';
 import navFunction from '../../utils/navbar/navFunction';
 import getUserId from '../../utils/getters/getUserId';
+import getById from '../../utils/getters/getById';
+import passwordVerif from '../../utils/forms/password/passwordVerify';
 
 const Account = class {
   constructor(params) {
@@ -19,21 +21,8 @@ const Account = class {
     await this.run();
   }
 
-  async getUserInfos() {
-    if (!this.userId) {
-      return null;
-    }
-
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/user/${this.userId}`);
-      return response.data;
-    } catch (error) {
-      return null;
-    }
-  }
-
   async render() {
-    const userInfos = await this.getUserInfos();
+    const userInfos = await getById('user', this.userId);
     this.el.innerHTML = `
     ${viewNav(this.userId)}
       ${viewAccount(userInfos)}
@@ -47,29 +36,6 @@ const Account = class {
         emailSpan.innerHTML = 'Email is not valid';
       } else {
         emailSpan.innerHTML = '';
-      }
-    });
-  }
-
-  passwordVerif(password, passwordConfirmation) {
-    const passwordSpan = document.querySelector('.password-account-span');
-    const confirmationSpan = document.querySelector('.confirmation-account-span');
-    password.addEventListener('input', (e) => {
-      if (e.target.value.length < 8) {
-        passwordSpan.innerHTML = 'Password must be at least 8 characters';
-      } else {
-        passwordSpan.innerHTML = '';
-      }
-    });
-    passwordConfirmation.addEventListener('input', (e) => {
-      if (e.target.value.length < 8) {
-        confirmationSpan.innerHTML = 'Password must be at least 8 characters';
-      } else if (password.value !== passwordConfirmation.value) {
-        passwordSpan.innerHTML = "Passwords don't match";
-        confirmationSpan.innerHTML = "Passwords don't match";
-      } else {
-        passwordSpan.innerHTML = '';
-        confirmationSpan.innerHTML = '';
       }
     });
   }
@@ -94,7 +60,7 @@ const Account = class {
       });
     }
     this.emailVerify(emailInput);
-    this.passwordVerif(elPassword, elConfirmationPassword);
+    passwordVerif(elPassword, elConfirmationPassword, '-account');
     this.formSubmit(elForm);
   }
 

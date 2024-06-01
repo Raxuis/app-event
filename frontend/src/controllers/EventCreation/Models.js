@@ -9,7 +9,7 @@ import viewBuiltModel from '../../views/eventCreation/customEvent/builtModel';
 import Model from './Model';
 import renderToastr from '../../utils/toastr/renderToastr';
 import navFunction from '../../utils/navbar/navFunction';
-import incrementDecrementInput from '../../utils/dialog/quantity/incrementDecrementInput';
+import incrementDecrementInput from '../../utils/forms/quantity/incrementDecrementInput';
 import getAll from '../../utils/getters/getAll';
 
 class AllModelsController {

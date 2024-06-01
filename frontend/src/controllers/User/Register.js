@@ -3,6 +3,7 @@ import viewNav from '../../views/components/nav';
 import viewRegister from '../../views/user/register';
 import renderToastr from '../../utils/toastr/renderToastr';
 import navFunction from '../../utils/navbar/navFunction';
+import passwordVerif from '../../utils/forms/password/passwordVerify';
 
 const Register = class {
   constructor(params) {
@@ -11,29 +12,6 @@ const Register = class {
     this.emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     this.userId = null;
     this.run();
-  }
-
-  passwordVerif(password, passwordConfirmation) {
-    const passwordSpan = document.querySelector('.password-span');
-    const confirmationSpan = document.querySelector('.confirmation-span');
-    password.addEventListener('input', (e) => {
-      if (e.target.value.length < 8) {
-        passwordSpan.innerHTML = 'Password must be at least 8 characters';
-      } else {
-        passwordSpan.innerHTML = '';
-      }
-    });
-    passwordConfirmation.addEventListener('input', (e) => {
-      if (e.target.value.length < 8) {
-        confirmationSpan.innerHTML = 'Password must be at least 8 characters';
-      } else if (password.value !== passwordConfirmation.value) {
-        passwordSpan.innerHTML = "Password don't match";
-        confirmationSpan.innerHTML = "Password don't match";
-      } else {
-        passwordSpan.innerHTML = '';
-        confirmationSpan.innerHTML = '';
-      }
-    });
   }
 
   emailVerify(email) {
@@ -105,7 +83,7 @@ const Register = class {
         }
       });
       this.emailVerify(emailInput);
-      this.passwordVerif(elPassword, elConfirmationPassword);
+      passwordVerif(elPassword, elConfirmationPassword);
       this.formSubmit(elForm);
     });
   }

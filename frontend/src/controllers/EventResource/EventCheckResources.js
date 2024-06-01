@@ -5,6 +5,7 @@ import viewCheckRessources from '../../views/eventResource/eventCheckResource/ev
 import renderToastr from '../../utils/toastr/renderToastr';
 import EventEditResources from './EventEditResource';
 import goBack from '../../utils/navigation/goBack';
+import navFunction from '../../utils/navbar/navFunction';
 
 class EventCheckResources {
   constructor() {
@@ -65,14 +66,6 @@ class EventCheckResources {
       renderToastr('error', 'Error fetching event resources:', error.message);
       return null;
     }
-  }
-
-  navFunction() {
-    const btn = document.querySelector('.mobile-menu-button');
-    const menu = document.querySelector('.mobile-menu');
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
   }
 
   attachEventListeners() {
@@ -169,7 +162,7 @@ class EventCheckResources {
     this.el.innerHTML = await this.render();
     this.attachEventListeners();
     this.resourcesEventListeners(this.response);
-    this.navFunction();
+    navFunction();
   }
 }
 

@@ -8,6 +8,7 @@ import renderToastr from '../../utils/toastr/renderToastr';
 import EventAllocateResources from '../EventResource/EventAllocateResource';
 import EventEditResources from '../EventResource/EventEditResource';
 import EventCheckResources from '../EventResource/EventCheckResources';
+import navFunction from '../../utils/navbar/navFunction';
 
 class MyEvents {
   constructor() {
@@ -74,16 +75,6 @@ class MyEvents {
       } else {
         this.renderNoEvents();
       }
-    }
-  }
-
-  navFunction() {
-    const btn = document.querySelector('.mobile-menu-button');
-    const menu = document.querySelector('.mobile-menu');
-    if (btn && menu) {
-      btn.addEventListener('click', () => {
-        menu.classList.toggle('hidden');
-      });
     }
   }
 
@@ -185,7 +176,7 @@ class MyEvents {
       </div>
     `;
     this.el.innerHTML = html;
-    this.navFunction();
+    navFunction();
     this.attachEventListeners(elements);
   }
 

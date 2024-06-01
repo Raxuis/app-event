@@ -5,6 +5,7 @@ import viewNav from '../../views/components/nav';
 import viewEditResource from '../../views/eventResource/eventEditResource/eventEditResourcePage';
 import renderToastr from '../../utils/toastr/renderToastr';
 import goBack from '../../utils/navigation/goBack';
+import navFunction from '../../utils/navbar/navFunction';
 
 class EventEditResources {
   constructor() {
@@ -59,14 +60,6 @@ class EventEditResources {
     } catch (error) {
       return null;
     }
-  }
-
-  navFunction() {
-    const btn = document.querySelector('.mobile-menu-button');
-    const menu = document.querySelector('.mobile-menu');
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
   }
 
   attachEventListeners() {
@@ -153,7 +146,7 @@ class EventEditResources {
 
   async run() {
     this.el.innerHTML = await this.render();
-    this.navFunction();
+    navFunction();
     this.attachEventListeners();
     this.populateTypeSelect();
   }

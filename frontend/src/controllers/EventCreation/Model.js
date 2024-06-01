@@ -6,6 +6,7 @@ import isURL from 'validator/lib/isURL';
 import viewNav from '../../views/components/nav';
 import viewPageModel from '../../views/eventCreation/modelPage';
 import renderToastr from '../../utils/toastr/renderToastr';
+import navFunction from '../../utils/navbar/navFunction';
 
 const Model = class {
   constructor(params) {
@@ -64,14 +65,6 @@ const Model = class {
       url.searchParams.delete('modelId');
       window.history.replaceState({}, '', url);
       window.location.reload();
-    });
-  }
-
-  navFunction() {
-    const btn = document.querySelector('.mobile-menu-button');
-    const menu = document.querySelector('.mobile-menu');
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
     });
   }
 
@@ -195,7 +188,7 @@ const Model = class {
     this.datePickerFunction();
     this.initialize();
     this.el.innerHTML = await this.render();
-    this.navFunction();
+    navFunction();
     this.attachEventListeners();
   }
 };

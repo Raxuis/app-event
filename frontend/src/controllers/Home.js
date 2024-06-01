@@ -2,6 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import viewNav from '../views/components/nav';
 import viewHome from '../views/home';
+import navFunction from '../utils/navbar/navFunction';
 
 const Home = class {
   constructor(params) {
@@ -27,14 +28,6 @@ const Home = class {
     }
   }
 
-  navFunction() {
-    const btn = document.querySelector('.mobile-menu-button');
-    const menu = document.querySelector('.mobile-menu');
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
-  }
-
   render() {
     return `
     ${viewNav(this.userId)}
@@ -45,7 +38,7 @@ const Home = class {
   async run() {
     await this.getUserId();
     this.el.innerHTML = this.render();
-    this.navFunction();
+    navFunction();
   }
 };
 

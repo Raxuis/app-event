@@ -4,6 +4,7 @@ import { multipleSelect } from 'multiple-select-vanilla';
 import viewNav from '../../views/components/nav';
 import viewAllocate from '../../views/eventResource/eventAllocateResource/eventAllocateRessource';
 import renderToastr from '../../utils/toastr/renderToastr';
+import navFunction from '../../utils/navbar/navFunction';
 
 class EventAllocateResources {
   constructor(params) {
@@ -40,14 +41,6 @@ class EventAllocateResources {
     } catch (error) {
       return null;
     }
-  }
-
-  navFunction() {
-    const btn = document.querySelector('.mobile-menu-button');
-    const menu = document.querySelector('.mobile-menu');
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
   }
 
   populateSelect() {
@@ -136,7 +129,7 @@ class EventAllocateResources {
   async run() {
     this.el.innerHTML = await this.render();
     this.populateSelect();
-    this.navFunction();
+    navFunction();
     this.attachEventListeners();
   }
 }

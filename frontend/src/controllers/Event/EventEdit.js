@@ -7,6 +7,8 @@ import viewNav from '../../views/components/nav';
 import viewEvent from '../../views/eventEdition/eventEditPage';
 import viewCustomFieldCreate from '../../views/customField/customFieldCreate';
 import renderToastr from '../../utils/toastr/renderToastr';
+import getEventInfos from '../../utils/getters/event/getEventInfos';
+import navFunction from '../../utils/navbar/navFunction';
 
 class Event {
   constructor(params) {
@@ -16,7 +18,7 @@ class Event {
   }
 
   async init() {
-    this.response = await this.getEventInfos(this.params);
+    this.response = await getEventInfos(this.params);
     const sessionId = Cookies.get('PHP_SESSID');
 
     if (!sessionId) {
@@ -71,15 +73,6 @@ class Event {
     }
   }
 
-  async getEventInfos(eventId) {
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/event/${eventId}`);
-      return response.data;
-    } catch (error) {
-      return null;
-    }
-  }
-
   datePickerFunction() {
     const dateString = this.response.time;
     const date = new Date(dateString);
@@ -88,14 +81,6 @@ class Event {
       locale: {
         firstDayOfWeek: 1
       }
-    });
-  }
-
-  navFunction() {
-    const btn = document.querySelector('.mobile-menu-button');
-    const menu = document.querySelector('.mobile-menu');
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
     });
   }
 
@@ -242,7 +227,7 @@ class Event {
     this.el.innerHTML = await this.render();
     this.datePickerFunction();
     await this.populateUserSelect();
-    this.navFunction();
+    navFunction();
     this.addCustomFields();
     this.attachEventListeners();
   }

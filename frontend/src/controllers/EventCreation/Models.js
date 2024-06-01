@@ -8,6 +8,7 @@ import viewModels from '../../views/eventCreation/models/models';
 import viewBuiltModel from '../../views/eventCreation/customEvent/builtModel';
 import Model from './Model';
 import renderToastr from '../../utils/toastr/renderToastr';
+import navFunction from '../../utils/navbar/navFunction';
 
 class AllModelsController {
   constructor() {
@@ -51,14 +52,6 @@ class AllModelsController {
     }
   }
 
-  navFunction() {
-    const btn = document.querySelector('.mobile-menu-button');
-    const menu = document.querySelector('.mobile-menu');
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
-  }
-
   async getElements() {
     try {
       const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/models`);
@@ -90,7 +83,7 @@ class AllModelsController {
     this.incrementDecrementInput();
     this.datePickerFunction();
     this.showDialog();
-    this.navFunction();
+    navFunction();
   }
 
   datePickerFunction() {

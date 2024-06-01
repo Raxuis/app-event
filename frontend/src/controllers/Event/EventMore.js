@@ -5,6 +5,8 @@ import viewEvent from '../../views/eventMore/eventMorePage';
 import EventAllocateResources from '../EventResource/EventAllocateResource';
 import EventEditResources from '../EventResource/EventEditResource';
 import EventCheckResources from '../EventResource/EventCheckResources';
+import getEventInfos from '../../utils/getters/event/getEventInfos';
+import navFunction from '../../utils/navbar/navFunction';
 
 class EventMore {
   constructor(params) {
@@ -14,7 +16,7 @@ class EventMore {
   }
 
   async init() {
-    this.response = await this.getEventInfos(this.params);
+    this.response = await getEventInfos(this.params);
     const sessionId = Cookies.get('PHP_SESSID');
 
     if (!sessionId) {
@@ -34,23 +36,6 @@ class EventMore {
     } else {
       this.run();
     }
-  }
-
-  async getEventInfos(eventId) {
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/event/${eventId}`);
-      return response.data;
-    } catch (error) {
-      return null;
-    }
-  }
-
-  navFunction() {
-    const btn = document.querySelector('.mobile-menu-button');
-    const menu = document.querySelector('.mobile-menu');
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
   }
 
   async render() {
@@ -77,7 +62,7 @@ class EventMore {
   async run() {
     if (this.response && this.userId) {
       this.el.innerHTML = await this.render();
-      this.navFunction();
+      navFunction();
       this.attachEventListeners();
     } else {
       this.el.innerHTML = '<p>Error loading event details.</p>';

@@ -2,6 +2,7 @@ import axios from 'axios';
 import viewNav from '../../views/components/nav';
 import viewRegister from '../../views/user/register';
 import renderToastr from '../../utils/toastr/renderToastr';
+import navFunction from '../../utils/navbar/navFunction';
 
 const Register = class {
   constructor(params) {
@@ -10,14 +11,6 @@ const Register = class {
     this.emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     this.userId = null;
     this.run();
-  }
-
-  navFunction() {
-    const btn = document.querySelector('.mobile-menu-button');
-    const menu = document.querySelector('.mobile-menu');
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
   }
 
   passwordVerif(password, passwordConfirmation) {
@@ -131,7 +124,7 @@ const Register = class {
   run() {
     this.el.innerHTML = this.render();
     this.eventListeners();
-    this.navFunction();
+    navFunction();
   }
 };
 

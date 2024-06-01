@@ -13,28 +13,26 @@ import getAll from '../../utils/getters/getAll';
 
 class MyEvents {
   constructor() {
-    document.addEventListener('DOMContentLoaded', () => {
-      this.el = document.querySelector('#root');
-      this.initialize();
-      // 👇 This is to prevent issues when going back to the previous page
-      window.addEventListener('popstate', (event) => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const action = urlParams.get('action');
-        const eventId = event.state?.eventId;
-        const resourceId = event.state?.resourceId;
+    this.el = document.querySelector('#root');
+    this.initialize();
+    // 👇 This is to prevent issues when going back to the previous page
+    window.addEventListener('popstate', (event) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const action = urlParams.get('action');
+      const eventId = event.state?.eventId;
+      const resourceId = event.state?.resourceId;
 
-        if (action === 'more') {
-          this.navigateToEventDetail(eventId, false);
-        } else if (action === 'edit') {
-          this.navigateToEventEdit(eventId, false);
-        } else if (action === 'allocate-resources') {
-          this.navigateToAllocateResources(eventId, false);
-        } else if (action === 'check-resources') {
-          this.navigateToCheckResources(eventId, false);
-        } else if (action === 'edit-resources') {
-          this.navigateToEditResources(eventId, resourceId, false);
-        }
-      });
+      if (action === 'more') {
+        this.navigateToEventDetail(eventId, false);
+      } else if (action === 'edit') {
+        this.navigateToEventEdit(eventId, false);
+      } else if (action === 'allocate-resources') {
+        this.navigateToAllocateResources(eventId, false);
+      } else if (action === 'check-resources') {
+        this.navigateToCheckResources(eventId, false);
+      } else if (action === 'edit-resources') {
+        this.navigateToEditResources(eventId, resourceId, false);
+      }
     });
   }
 

@@ -7,6 +7,8 @@ import viewNav from '../../views/components/nav';
 import viewPageModel from '../../views/eventCreation/modelPage';
 import renderToastr from '../../utils/toastr/renderToastr';
 import navFunction from '../../utils/navbar/navFunction';
+import getAll from '../../utils/getters/getAll';
+import getById from '../../utils/getters/getById';
 
 const Model = class {
   constructor(params) {
@@ -30,7 +32,7 @@ const Model = class {
     } catch (e) {
       this.userId = null;
     }
-    const users = await this.getUsers();
+    const users = await getAll('users');
     if (users) {
       this.populateUserSelect(users);
     }
@@ -87,24 +89,6 @@ const Model = class {
     });
   }
 
-  async getUsers() {
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/users`);
-      return response.data;
-    } catch (error) {
-      return null;
-    }
-  }
-
-  async getModelInfos(modelId) {
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/model/${modelId}`);
-      return response.data;
-    } catch (error) {
-      return null;
-    }
-  }
-
   datePickerFunction() {
     flatpickr('#datepicker', {});
   }
@@ -120,7 +104,7 @@ const Model = class {
         const formattedDate = `${inputDate.getFullYear()}-${String(inputDate.getMonth() + 1).padStart(2, '0')}-${String(inputDate.getDate()).padStart(2, '0')} ${String(inputDate.getHours()).padStart(2, '0')}:${String(inputDate.getMinutes()).padStart(2, '0')}:${String(inputDate.getSeconds()).padStart(2, '0')}`;
 
         const selectedUserIds = this.ms1.getSelects();
-        const response = await this.getModelInfos(this.params);
+        const response = await getById('model', this.params);
         // Push the id of the user who has made the event
         selectedUserIds.push(this.userId);
         const imageUrl = formData.get('image-url');
@@ -160,7 +144,7 @@ const Model = class {
   }
 
   async render() {
-    const response = await this.getModelInfos(this.params);
+    const response = await getById('model', this.params);
     return `
     ${viewNav(this.userId)}
     <div class="container mx-auto h-screen p-6 mt-4">

@@ -4,6 +4,7 @@ import viewNav from '../../views/components/nav';
 import viewAccount from '../../views/user/account';
 import renderToastr from '../../utils/toastr/renderToastr';
 import navFunction from '../../utils/navbar/navFunction';
+import getUserId from '../../utils/getters/getUserId';
 
 const Account = class {
   constructor(params) {
@@ -14,24 +15,8 @@ const Account = class {
   }
 
   async init() {
-    await this.getUserId();
+    this.userId = await getUserId();
     await this.run();
-  }
-
-  async getUserId() {
-    const sessionId = Cookies.get('PHP_SESSID');
-
-    if (!sessionId) {
-      this.userId = null;
-      return;
-    }
-
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/auth/${sessionId}`);
-      this.userId = response.data.user_id;
-    } catch (e) {
-      this.userId = null;
-    }
   }
 
   async getUserInfos() {

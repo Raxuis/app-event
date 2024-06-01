@@ -9,6 +9,7 @@ import EventAllocateResources from '../EventResource/EventAllocateResource';
 import EventEditResources from '../EventResource/EventEditResource';
 import EventCheckResources from '../EventResource/EventCheckResources';
 import navFunction from '../../utils/navbar/navFunction';
+import getAll from '../../utils/getters/getAll';
 
 class MyEvents {
   constructor() {
@@ -69,7 +70,7 @@ class MyEvents {
         this.navigateToCheckResources(eventId);
       }
     } else {
-      const elements = await this.getElements();
+      const elements = await getAll('events', this.userId);
       if (elements !== null && elements.length > 0) {
         this.renderAllEvents(elements);
       } else {
@@ -89,16 +90,6 @@ class MyEvents {
       }
     });
     return specificGuestsMap;
-  }
-
-  async getElements() {
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/events/${this.userId}`);
-      return response.data;
-    } catch (error) {
-      renderToastr('error', 'Error', 'Error fetching elements.');
-      return null;
-    }
   }
 
   attachEventListeners(events) {

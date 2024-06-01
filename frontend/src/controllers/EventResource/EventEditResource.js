@@ -6,6 +6,7 @@ import viewEditResource from '../../views/eventResource/eventEditResource/eventE
 import renderToastr from '../../utils/toastr/renderToastr';
 import goBack from '../../utils/navigation/goBack';
 import navFunction from '../../utils/navbar/navFunction';
+import getById from '../../utils/getters/getById';
 
 class EventEditResources {
   constructor() {
@@ -23,8 +24,8 @@ class EventEditResources {
   }
 
   async init() {
-    this.eventInfos = await this.getEventInfos(this.params.eventId);
-    this.resourceInfos = await this.getResourceInfos(this.params.resourceId);
+    this.eventInfos = await getById('event', this.params.eventId);
+    this.resourceInfos = await getById('resource', this.params.resourceId);
     const sessionId = Cookies.get('PHP_SESSID');
 
     if (!sessionId) {
@@ -42,24 +43,6 @@ class EventEditResources {
       window.location.href = '/my-events';
     }
     this.run();
-  }
-
-  async getEventInfos(eventId) {
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/event/${eventId}`);
-      return response.data;
-    } catch (error) {
-      return null;
-    }
-  }
-
-  async getResourceInfos(resourceId) {
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/resource/${resourceId}`);
-      return response.data;
-    } catch (error) {
-      return null;
-    }
   }
 
   attachEventListeners() {

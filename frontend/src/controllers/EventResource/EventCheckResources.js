@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import axios from 'axios';
 import viewNav from '../../views/components/nav';
 import viewCheckRessources from '../../views/eventResource/eventCheckResource/eventCheckResourcesPage';
@@ -6,6 +5,9 @@ import renderToastr from '../../utils/toastr/renderToastr';
 import EventEditResources from './EventEditResource';
 import goBack from '../../utils/navigation/goBack';
 import navFunction from '../../utils/navbar/navFunction';
+import getAll from '../../utils/getters/getAll';
+import getUserId from '../../utils/getters/getUserId';
+import getById from '../../utils/getters/getById';
 
 class EventCheckResources {
   constructor() {
@@ -23,20 +25,12 @@ class EventCheckResources {
 
   async init() {
     try {
-      this.response = await this.getEventResourcesInfos(this.params.eventId);
-      const sessionId = Cookies.get('PHP_SESSID');
+      this.response = await getAll('resources', this.params.eventId);
+      this.userId = await getUserId();
 
-      if (!sessionId) {
-        this.userId = null;
-        return;
-      }
-
-      const authResponse = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/auth/${sessionId}`);
-      this.userId = authResponse.data.user_id;
-
-      this.eventInfos = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/event/${this.params.eventId}`);
+      this.eventInfos = await getById('event', this.params.eventId);
       await this.checkEventResourcesLength();
-      if (this.userId !== this.eventInfos.data.author_id) {
+      if (this.userId !== this.eventInfos.author_id) {
         window.location.href = '/my-events';
       } else {
         this.run();
@@ -49,22 +43,12 @@ class EventCheckResources {
   async checkEventResourcesLength(rowResource = null) {
     if (rowResource) {
       rowResource.remove();
-      const resources = await this.getEventResourcesInfos(this.params.eventId);
+      const resources = await this.getAll('resources ', this.params.eventId);
       if (!resources || Object.keys(resources).length < 1) {
         goBack('more', this.params.eventId);
       }
     } else if (!this.response || Object.keys(this.response).length < 1) {
       goBack('more', this.params.eventId);
-    }
-  }
-
-  async getEventResourcesInfos(eventId) {
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/resources/${eventId}`);
-      return response.data;
-    } catch (error) {
-      renderToastr('error', 'Error fetching event resources:', error.message);
-      return null;
     }
   }
 
@@ -152,7 +136,7 @@ class EventCheckResources {
         </div>
       </div>
       <div class="w-full mx-auto flex flex-col items-center justify-center">
-        ${viewCheckRessources(this.eventInfos.data, this.response)}
+        ${viewCheckRessources(this.eventInfos, this.response)}
       </div>
     </div>
     `;

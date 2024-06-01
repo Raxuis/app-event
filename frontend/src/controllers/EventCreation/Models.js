@@ -9,6 +9,8 @@ import viewBuiltModel from '../../views/eventCreation/customEvent/builtModel';
 import Model from './Model';
 import renderToastr from '../../utils/toastr/renderToastr';
 import navFunction from '../../utils/navbar/navFunction';
+import incrementDecrementInput from '../../utils/dialog/quantity/incrementDecrementInput';
+import getAll from '../../utils/getters/getAll';
 
 class AllModelsController {
   constructor() {
@@ -43,94 +45,13 @@ class AllModelsController {
     if (modelId) {
       this.navigateToModelDetail(modelId);
     } else {
-      const elements = await this.getElements();
-      if (elements !== null && elements.length > 0) {
-        this.renderAllModels(elements);
+      const models = await getAll('models');
+      if (models !== null && models.length > 0) {
+        this.renderAllModels(models);
       } else {
         this.renderNoModels();
       }
     }
-  }
-
-  async getElements() {
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/models`);
-      return response.data;
-    } catch (error) {
-      return null;
-    }
-  }
-
-  async getUsers() {
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/users`);
-      return response.data;
-    } catch (error) {
-      return null;
-    }
-  }
-
-  renderAllModels(elements) {
-    const html = `
-    ${viewNav(this.userId)}
-      <div class="max-w-6xl mx-auto px-4 mb-16">
-        ${viewModels(elements)}
-        ${viewBuiltModel()}
-      </div>
-    `;
-    this.el.innerHTML = html;
-    this.attachEventListeners(elements);
-    this.incrementDecrementInput();
-    this.datePickerFunction();
-    this.showDialog();
-    navFunction();
-  }
-
-  datePickerFunction() {
-    flatpickr('#datepicker', {});
-  }
-
-  incrementDecrementInput() {
-    const numberInput = document.querySelector('.quantity-input-custom');
-    const incrementButton = document.querySelector('.increment-button-custom');
-    const decrementButton = document.querySelector('.decrement-button-custom');
-    numberInput.addEventListener('input', () => {
-      let { value } = numberInput;
-      value = value.replace(/\D/g, '');
-      numberInput.value = value;
-    });
-    incrementButton.addEventListener('click', () => {
-      const { value } = numberInput;
-      let parsedValue = Number.isInteger(parseInt(value, 10)) ? parseInt(value, 10) : 0;
-      parsedValue += 1;
-      numberInput.value = parsedValue;
-    });
-
-    decrementButton.addEventListener('click', () => {
-      const { value } = numberInput;
-      let parsedValue = Number.isInteger(parseInt(value, 10)) ? parseInt(value, 10) : 0;
-      parsedValue -= 1;
-      numberInput.value = parsedValue >= 0 ? parsedValue : 0;
-    });
-  }
-
-  renderNoModels() {
-    const html = `
-    ${viewNav(this.userId)}
-      <div class="max-w-6xl mx-auto px-4">
-        <p class="text-3xl py-6">No models</p>
-      </div>
-    `;
-    this.el.innerHTML = html;
-  }
-
-  attachEventListeners(models) {
-    models.forEach((model) => {
-      const readMoreButton = document.querySelector(`.read-more-${model.id}`);
-      if (readMoreButton) {
-        readMoreButton.addEventListener('click', () => this.navigateToModelDetail(model.id));
-      }
-    });
   }
 
   showDialog() {
@@ -140,7 +61,7 @@ class AllModelsController {
     const submitBtn = document.querySelector('.submit-dialog');
     const form = document.querySelector('.form-dialog');
     activationBtn.addEventListener('click', async () => {
-      const users = await this.getUsers();
+      const users = await getAll('users');
       if (users) {
         this.populateUserSelect(users);
         dialog.classList.remove('hidden');
@@ -167,6 +88,45 @@ class AllModelsController {
           dialog.classList.remove('flex');
           dialog.classList.add('hidden');
         }, 500);
+      }
+    });
+  }
+
+  renderAllModels(models) {
+    const html = `
+    ${viewNav(this.userId)}
+      <div class="max-w-6xl mx-auto px-4 mb-16">
+        ${viewModels(models)}
+        ${viewBuiltModel()}
+      </div>
+    `;
+    this.el.innerHTML = html;
+    this.attachEventListeners(models);
+    incrementDecrementInput();
+    this.datePickerFunction();
+    this.showDialog();
+    navFunction();
+  }
+
+  datePickerFunction() {
+    flatpickr('#datepicker', {});
+  }
+
+  renderNoModels() {
+    const html = `
+    ${viewNav(this.userId)}
+      <div class="max-w-6xl mx-auto px-4">
+        <p class="text-3xl py-6">No models</p>
+      </div>
+    `;
+    this.el.innerHTML = html;
+  }
+
+  attachEventListeners(models) {
+    models.forEach((model) => {
+      const readMoreButton = document.querySelector(`.read-more-${model.id}`);
+      if (readMoreButton) {
+        readMoreButton.addEventListener('click', () => this.navigateToModelDetail(model.id));
       }
     });
   }

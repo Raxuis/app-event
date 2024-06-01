@@ -5,6 +5,7 @@ import viewNav from '../../views/components/nav';
 import viewAllocate from '../../views/eventResource/eventAllocateResource/eventAllocateRessource';
 import renderToastr from '../../utils/toastr/renderToastr';
 import navFunction from '../../utils/navbar/navFunction';
+import getById from '../../utils/getters/getById';
 
 class EventAllocateResources {
   constructor(params) {
@@ -14,7 +15,7 @@ class EventAllocateResources {
   }
 
   async init() {
-    this.response = await this.getEventInfos(this.params);
+    this.response = await getById('event', this.params);
     const sessionId = Cookies.get('PHP_SESSID');
 
     if (!sessionId) {
@@ -32,15 +33,6 @@ class EventAllocateResources {
       window.location.href = '/my-events';
     }
     this.run();
-  }
-
-  async getEventInfos(eventId) {
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/event/${eventId}`);
-      return response.data;
-    } catch (error) {
-      return null;
-    }
   }
 
   populateSelect() {

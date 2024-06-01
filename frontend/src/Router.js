@@ -1,6 +1,5 @@
-import axios from 'axios';
-import Cookies from 'js-cookie';
 import PageNotFound from './controllers/404';
+import getUserId from './utils/getters/getUserId';
 
 const Router = class {
   constructor(routes = []) {
@@ -12,24 +11,8 @@ const Router = class {
         .map((param) => param.split('='))
     );
     this.routes = routes;
-    this.getUserId();
+    this.userId = getUserId();
     this.run();
-  }
-
-  async getUserId() {
-    const sessionId = Cookies.get('PHP_SESSID');
-
-    if (!sessionId) {
-      this.userId = null;
-      return;
-    }
-
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/auth/${sessionId}`);
-      this.userId = response.data.user_id;
-    } catch (e) {
-      this.userId = null;
-    }
   }
 
   startController() {

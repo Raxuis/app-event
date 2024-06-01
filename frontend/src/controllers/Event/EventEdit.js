@@ -7,8 +7,9 @@ import viewNav from '../../views/components/nav';
 import viewEvent from '../../views/eventEdition/eventEditPage';
 import viewCustomFieldCreate from '../../views/customField/customFieldCreate';
 import renderToastr from '../../utils/toastr/renderToastr';
-import getEventInfos from '../../utils/getters/event/getEventInfos';
+import getById from '../../utils/getters/getById';
 import navFunction from '../../utils/navbar/navFunction';
+import getAll from '../../utils/getters/getAll';
 
 class Event {
   constructor(params) {
@@ -18,7 +19,7 @@ class Event {
   }
 
   async init() {
-    this.response = await getEventInfos(this.params);
+    this.response = await getById('event', this.params);
     const sessionId = Cookies.get('PHP_SESSID');
 
     if (!sessionId) {
@@ -39,7 +40,7 @@ class Event {
   }
 
   async populateUserSelect() {
-    const users = await this.getUsers();
+    const users = await getAll('users');
     if (users) {
       const selectedUserIds = this.response.guests.map((guest) => guest.guest_id);
       const userOptions = users
@@ -61,15 +62,6 @@ class Event {
         selectAll: false,
         showClear: true
       });
-    }
-  }
-
-  async getUsers() {
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/users`);
-      return response.data;
-    } catch (error) {
-      return null;
     }
   }
 

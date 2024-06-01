@@ -5,7 +5,7 @@ import viewEvent from '../../views/eventMore/eventMorePage';
 import EventAllocateResources from '../EventResource/EventAllocateResource';
 import EventEditResources from '../EventResource/EventEditResource';
 import EventCheckResources from '../EventResource/EventCheckResources';
-import getEventInfos from '../../utils/getters/event/getEventInfos';
+import getById from '../../utils/getters/getById';
 import navFunction from '../../utils/navbar/navFunction';
 
 class EventMore {
@@ -16,7 +16,7 @@ class EventMore {
   }
 
   async init() {
-    this.response = await getEventInfos(this.params);
+    this.response = await getById('event', this.params);
     const sessionId = Cookies.get('PHP_SESSID');
 
     if (!sessionId) {

@@ -1,8 +1,7 @@
-import axios from 'axios';
-import Cookies from 'js-cookie';
 import viewNav from '../views/components/nav';
 import viewHome from '../views/home';
 import navFunction from '../utils/navbar/navFunction';
+import getUserId from '../utils/getters/getUserId';
 
 const Home = class {
   constructor(params) {
@@ -10,22 +9,6 @@ const Home = class {
     this.params = params;
 
     this.run();
-  }
-
-  async getUserId() {
-    const sessionId = Cookies.get('PHP_SESSID');
-
-    if (!sessionId) {
-      this.userId = null;
-      return;
-    }
-
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/auth/${sessionId}`);
-      this.userId = response.data.user_id;
-    } catch (e) {
-      this.userId = null;
-    }
   }
 
   render() {
@@ -36,7 +19,7 @@ const Home = class {
   }
 
   async run() {
-    await this.getUserId();
+    this.userId = await getUserId();
     this.el.innerHTML = this.render();
     navFunction();
   }

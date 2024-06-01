@@ -16,8 +16,9 @@ class Export extends Controller
 
   protected function postExport()
   {
-    $eventId = $_POST['event_id'] ?? null;
-    $format = $_POST['format'] ?? null;
+    $body = (array) json_decode(file_get_contents('php://input'));
+    $eventId = $body['event_id'] ?? null;
+    $format = $body['format'] ?? null;
 
     if (!$eventId || !$format) {
       http_response_code(400);

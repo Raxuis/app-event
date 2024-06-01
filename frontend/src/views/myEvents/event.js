@@ -11,7 +11,6 @@ export default (event, userId, specificGuests) => {
 
   const daysElapsed = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-  // eslint-disable-next-line no-nested-ternary
   const timeString = daysElapsed === 0 ? (hoursElapsed === 0 ? 'Just now' : `${hoursElapsed}h ago`) : (daysElapsed === 1 ? `${daysElapsed} day ago` : `${daysElapsed} days ago`);
 
   return `
@@ -46,22 +45,29 @@ export default (event, userId, specificGuests) => {
             <p tabindex="0" class="focus:outline-none text-xs text-gray-600">${timeString}</p>
           </div>
           <p tabindex="0" class="focus:outline-none text-xs text-gray-600 mt-2">${event.description}</p>
-          <div class="flex mt-4">
+          <div class="flex flex-wrap mt-4 gap-2">
             <div>
               <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 hover:bg-indigo-700 hover:text-white duration-500 py-1 cursor-default">${event.size} places</p>
             </div>
-            <div class="pl-2">
+            <div>
               <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 hover:bg-indigo-700 hover:text-white duration-500 py-1 cursor-default">${event.type[0].toUpperCase() + event.type.slice(1)}</p>
             </div>
-          </div>
-          <div class="flex flex-col justify-center py-4">
-            <h2 tabindex="0" class="focus:outline-none text-indigo-700 text-xs font-semibold">${event.place}</h2>
-            <h3 tabindex="0" class="focus:outline-none text-indigo-700 text-sm font-semibold">${event.time}</h3>
-          </div>
+            ${event.custom_fields.map((field) => `
+              <div>
+                <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 hover:bg-blue-chill-500 hover:text-white duration-500 py-1 cursor-default">${field.custom_field_name} : ${field.custom_field_value}</p>
+              </div>
+            `).join('')}
+            </div>
+            <div class="mt-2">
+              <h2 tabindex="0" class="focus:outline-none text-indigo-700 text-xs font-semibold">${event.place}</h2>
+            </div>
+            <div>
+              <h3 tabindex="0" class="focus:outline-none text-indigo-700 text-sm font-semibold">${event.time}</h3>
+            </div>
           ${userId === event.author_id ? `
-          <div class="flex justify-between items-center">
-            <button data-ripple-light="true" type="button" class="${`edit-${event.event_id}`} duration-500 select-none rounded-lg bg-electric-violet-600 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Edit</button>
-            <button data-ripple-light="true" type="button" class="${`read-more-${event.event_id}`} duration-500 select-none rounded-lg bg-electric-violet-600 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Read More</button>
+          <div class="flex justify-between items-center mt-auto">
+            <button data-ripple-light="true" type="button" class="mt-2 ${`edit-${event.event_id}`} duration-500 select-none rounded-lg bg-electric-violet-600 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Edit</button>
+            <button data-ripple-light="true" type="button" class="mt-2 ${`read-more-${event.event_id}`} duration-500 select-none rounded-lg bg-electric-violet-600 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Read More</button>
           </div>
           ` : ''}
         </div>

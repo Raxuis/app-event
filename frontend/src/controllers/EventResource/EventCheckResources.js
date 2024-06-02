@@ -37,7 +37,7 @@ class EventCheckResources {
   async checkEventResourcesLength(rowResource = null) {
     if (rowResource) {
       rowResource.remove();
-      const resources = await this.getAll('resources ', this.params.eventId);
+      const resources = await getAll('resources', this.params.eventId);
       if (!resources || Object.keys(resources).length < 1) {
         goBack('more', this.params.eventId);
       }

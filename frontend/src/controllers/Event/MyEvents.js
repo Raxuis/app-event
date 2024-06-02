@@ -138,10 +138,14 @@ class MyEvents {
       const response = await axios.post(`http://localhost:${process.env.BACKEND_PORT}/export`, exportDatas, {
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        responseType: 'blob' // This is important to correctly handle binary data => PDF was blank before adding it
       });
+
       if (response.status === 200) {
-        const blob = new Blob([response.data], { type: `text/${format}` });
+        const blob = new Blob([response.data], {
+          type: format === 'csv' ? 'text/csv;charset=utf-8;' : 'application/pdf'
+        });
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;

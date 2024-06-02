@@ -8,7 +8,6 @@ class ExportModel extends SqlConnect
 {
   public function exportToCSVPDF($eventId, $format)
   {
-    // Fetch event details from the database
     $stmt = $this->db->prepare(
       "SELECT e.name as event_name, e.created_at as created_at, e.place as place, e.time as time,e.description as description, u.firstname as author_firstname, u.lastname as author_lastname
       FROM events as e
@@ -43,14 +42,20 @@ class ExportModel extends SqlConnect
       ['Time', $event['time']],
     ];
 
-    $output = fopen('php://output', 'w');
+    // Use output buffering to capture CSV output
     ob_start();
+    $output = fopen('php://output', 'w');
     foreach ($csvData as $row) {
+      // Write each row to the CSV
       fputcsv($output, $row);
     }
     fclose($output);
-    return ob_get_clean();
+
+    // Capture the CSV content and ensure no extra content => There was a extra null row at the end
+    $csvContent = trim(ob_get_clean());
+    return $csvContent;
   }
+
 
   private function generatePDF($event)
   {
@@ -62,9 +67,15 @@ class ExportModel extends SqlConnect
         <p><strong>Place:</strong> {$event['place']}</p>
         <p><strong>Time:</strong> {$event['time']}</p>
         ";
+    $options = new \Dompdf\Options();
+    $options->set('isHtml5ParserEnabled', true);
+    $options->set('isRemoteEnabled', true);
+    $options->set('debugPng', true);
+    $options->set('debugKeepTemp', true);
+    $options->set('isPhpEnabled', true);
 
-    // Use Dompdf to convert HTML to PDF
-    $dompdf = new Dompdf();
+    // Use Dompdf with options to convert HTML to PDF
+    $dompdf = new Dompdf($options);
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4', 'portrait');
     $dompdf->render();

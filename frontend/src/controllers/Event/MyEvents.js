@@ -1,3 +1,4 @@
+// MyEvents.js
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import viewNav from '../../views/components/nav';
@@ -69,7 +70,7 @@ class MyEvents {
       }
     } else {
       const elements = await getAll('events', this.userId);
-      if (elements !== null && elements.length > 0) {
+      if (Array.isArray(elements) && elements.length > 0) {
         this.renderAllEvents(elements);
       } else {
         this.renderNoEvents();

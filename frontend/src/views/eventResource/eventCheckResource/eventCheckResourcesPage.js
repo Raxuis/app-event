@@ -1,4 +1,5 @@
 import viewRow from './eventCheckTable/eventCheckRow';
+import viewRowTotal from './eventCheckTable/eventCheckTotal';
 
 export default (eventInfos, resources) => (`
 <div class="flex flex-wrap -mx-3 mb-5 w-full">
@@ -29,6 +30,7 @@ export default (eventInfos, resources) => (`
               </thead>
               <tbody>
               ${viewRow(resources)}
+              ${viewRowTotal(resources)}
               </tbody>
             </table>
           </div>

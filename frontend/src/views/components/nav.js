@@ -1,7 +1,7 @@
 import favicon from '../../assets/favicon.png';
 
 export default (userId) => (`
-<nav class="bg-gray-50 py-1">
+<nav class="bg-gray-50 z-10 py-1 sticky top-0 nav">
 <div class="max-w-6xl mx-auto px-4">
   <div class="flex justify-between">
 

@@ -48,6 +48,7 @@ class AllModelsController {
     const cancelBtn = document.querySelector('.cancel-dialog');
     const submitBtn = document.querySelector('.submit-dialog');
     const form = document.querySelector('.form-dialog');
+    const nav = document.querySelector('.nav');
     activationBtn.addEventListener('click', async () => {
       const users = await getAll('users');
       if (users) {
@@ -55,6 +56,7 @@ class AllModelsController {
         dialog.classList.remove('hidden');
         dialog.classList.add('flex');
         setTimeout(() => {
+          nav.classList.add('opacity-0');
           dialog.classList.add('opacity-100');
         }, 20);
       }
@@ -62,6 +64,7 @@ class AllModelsController {
     cancelBtn.addEventListener('click', (e) => {
       e.preventDefault();
       dialog.classList.remove('opacity-100');
+      nav.classList.remove('opacity-0');
       setTimeout(() => {
         dialog.classList.remove('flex');
         dialog.classList.add('hidden');

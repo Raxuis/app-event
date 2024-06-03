@@ -62,7 +62,7 @@ export default (event, userId, specificGuests) => {
             </div>
             ${event.custom_fields.map((field) => `
               <div>
-                <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 hover:bg-blue-chill-500 hover:text-white duration-500 py-1 cursor-default">${field.custom_field_name} : ${field.custom_field_value}</p>
+                <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 hover:bg-blue-chill-500 hover:text-white duration-500 py-1 cursor-default">${field.field_name} : ${field.field_value}</p>
               </div>
             `).join('')}
             </div>

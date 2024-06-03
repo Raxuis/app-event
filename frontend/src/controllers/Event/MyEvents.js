@@ -1,6 +1,5 @@
 // MyEvents.js
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import viewNav from '../../views/components/nav';
 import viewEvents from '../../views/myEvents/events';
 import EventMore from './EventMore';
@@ -11,6 +10,7 @@ import EventEditResources from '../EventResource/EventEditResource';
 import EventCheckResources from '../EventResource/EventCheckResources';
 import navFunction from '../../utils/navbar/navFunction';
 import getAll from '../../utils/getters/getAll';
+import getUserId from '../../utils/getters/getUserId';
 
 class MyEvents {
   constructor() {
@@ -42,19 +42,8 @@ class MyEvents {
     const action = urlParams.get('action');
     const eventId = urlParams.get('eventId');
     const resourceId = urlParams.get('resourceId');
-    const sessionId = Cookies.get('PHP_SESSID');
 
-    if (!sessionId) {
-      this.userId = null;
-      return;
-    }
-
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/auth/${sessionId}`);
-      this.userId = response.data.user_id;
-    } catch (e) {
-      this.userId = null;
-    }
+    this.userId = await getUserId();
 
     if (eventId) {
       if (action === 'more') {

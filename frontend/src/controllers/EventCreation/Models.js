@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import { multipleSelect } from 'multiple-select-vanilla';
 import flatpickr from 'flatpickr';
 import isURL from 'validator/lib/isURL';
@@ -11,6 +10,7 @@ import renderToastr from '../../utils/toastr/renderToastr';
 import navFunction from '../../utils/navbar/navFunction';
 import incrementDecrementInput from '../../utils/forms/quantity/incrementDecrementInput';
 import getAll from '../../utils/getters/getAll';
+import getUserId from '../../utils/getters/getUserId';
 
 class AllModelsController {
   constructor() {
@@ -28,19 +28,7 @@ class AllModelsController {
   async initialize() {
     const urlParams = new URLSearchParams(window.location.search);
     const modelId = urlParams.get('modelId');
-    const sessionId = Cookies.get('PHP_SESSID');
-
-    if (!sessionId) {
-      this.userId = null;
-      return;
-    }
-
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/auth/${sessionId}`);
-      this.userId = response.data.user_id;
-    } catch (e) {
-      this.userId = null;
-    }
+    this.userId = await getUserId();
 
     if (modelId) {
       this.navigateToModelDetail(modelId);

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import { multipleSelect } from 'multiple-select-vanilla';
 import flatpickr from 'flatpickr';
 import isURL from 'validator/lib/isURL';
@@ -9,6 +8,7 @@ import renderToastr from '../../utils/toastr/renderToastr';
 import navFunction from '../../utils/navbar/navFunction';
 import getAll from '../../utils/getters/getAll';
 import getById from '../../utils/getters/getById';
+import getUserId from '../../utils/getters/getUserId';
 
 const Model = class {
   constructor(params) {
@@ -19,19 +19,7 @@ const Model = class {
   }
 
   async initialize() {
-    const sessionId = Cookies.get('PHP_SESSID');
-
-    if (!sessionId) {
-      this.userId = null;
-      return;
-    }
-
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/auth/${sessionId}`);
-      this.userId = response.data.user_id;
-    } catch (e) {
-      this.userId = null;
-    }
+    this.userId = getUserId();
     const users = await getAll('users');
     if (users) {
       this.populateUserSelect(users);

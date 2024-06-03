@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import axios from 'axios';
 import { multipleSelect } from 'multiple-select-vanilla';
 import viewNav from '../../views/components/nav';
@@ -8,6 +7,7 @@ import goBack from '../../utils/navigation/goBack';
 import navFunction from '../../utils/navbar/navFunction';
 import getById from '../../utils/getters/getById';
 import getParams from '../../utils/getters/getParams';
+import getUserId from '../../utils/getters/getUserId';
 
 class EventEditResources {
   constructor() {
@@ -19,19 +19,8 @@ class EventEditResources {
   async init() {
     this.eventInfos = await getById('event', this.params.eventId);
     this.resourceInfos = await getById('resource', this.params.resourceId);
-    const sessionId = Cookies.get('PHP_SESSID');
+    this.userId = await getUserId();
 
-    if (!sessionId) {
-      this.userId = null;
-      return;
-    }
-
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/auth/${sessionId}`);
-      this.userId = response.data.user_id;
-    } catch (e) {
-      this.userId = null;
-    }
     if (this.userId !== this.eventInfos.author_id) {
       window.location.href = '/my-events';
     }

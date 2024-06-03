@@ -1,5 +1,3 @@
-import Cookies from 'js-cookie';
-import axios from 'axios';
 import viewNav from '../../views/components/nav';
 import viewEvent from '../../views/eventMore/eventMorePage';
 import EventAllocateResources from '../EventResource/EventAllocateResource';
@@ -7,6 +5,7 @@ import EventEditResources from '../EventResource/EventEditResource';
 import EventCheckResources from '../EventResource/EventCheckResources';
 import getById from '../../utils/getters/getById';
 import navFunction from '../../utils/navbar/navFunction';
+import getUserId from '../../utils/getters/getUserId';
 
 class EventMore {
   constructor(params) {
@@ -17,21 +16,9 @@ class EventMore {
 
   async init() {
     this.response = await getById('event', this.params);
-    const sessionId = Cookies.get('PHP_SESSID');
+    this.userId = await getUserId();
 
-    if (!sessionId) {
-      this.userId = null;
-      return;
-    }
-
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/auth/${sessionId}`);
-      this.userId = response.data.user_id;
-    } catch (e) {
-      this.userId = null;
-    }
-
-    if (this.userId !== this.response?.author_id) {
+    if (this.userId !== this.response.author_id) {
       window.location.href = '/my-events';
     } else {
       this.run();

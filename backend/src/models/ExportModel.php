@@ -52,9 +52,14 @@ class ExportModel extends SqlConnect
     fclose($output);
 
     // Capture the CSV content and ensure no extra content => There was a extra null row at the end
-    $csvContent = trim(ob_get_clean());
+    $csvContent = ob_get_clean();
+
+    // Delete extra blank lines
+    $csvContent = trim($csvContent);
+
     return $csvContent;
   }
+
 
 
   private function generatePDF($event)

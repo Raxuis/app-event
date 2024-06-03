@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import flatpickr from 'flatpickr';
 import { multipleSelect } from 'multiple-select-vanilla';
 import isURL from 'validator/lib/isURL';
@@ -10,6 +9,7 @@ import renderToastr from '../../utils/toastr/renderToastr';
 import getById from '../../utils/getters/getById';
 import navFunction from '../../utils/navbar/navFunction';
 import getAll from '../../utils/getters/getAll';
+import getUserId from '../../utils/getters/getUserId';
 
 class Event {
   constructor(params) {
@@ -20,19 +20,8 @@ class Event {
 
   async init() {
     this.response = await getById('event', this.params);
-    const sessionId = Cookies.get('PHP_SESSID');
+    this.userId = await getUserId();
 
-    if (!sessionId) {
-      this.userId = null;
-      return;
-    }
-
-    try {
-      const response = await axios.get(`http://localhost:${process.env.BACKEND_PORT}/auth/${sessionId}`);
-      this.userId = response.data.user_id;
-    } catch (e) {
-      this.userId = null;
-    }
     if (this.userId !== this.response.author_id) {
       window.location.href = '/my-events';
     }

@@ -2,11 +2,18 @@ import viewRow from './eventMoreTable/eventMoreTableRow';
 import viewRowCustom from '../customField/customFieldTableRow';
 
 export default (event) => {
-  let eventSize = event.size;
+  const {
+    event_id: eventId,
+    event_name: eventName,
+    description: eventDescription,
+    size: eventSize,
+    guests
+  } = event;
+  let eventSizeEditable = eventSize;
   const eventGuests = event.guests;
   eventGuests.forEach((guest) => {
     if (guest.guest_status === 'confirmed') {
-      eventSize -= 1;
+      eventSizeEditable -= 1;
     }
   });
   return (`
@@ -16,11 +23,11 @@ export default (event) => {
       <div class="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
         <div class="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
           <h3 class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
-            <span class="mr-3 font-semibold text-dark">Event n°${event.event_id} infos</span>
-            <span class="mt-1 font-medium text-secondary-dark text-lg/normal">${event.event_name} | ${event.description}</span>
+            <span class="mr-3 font-semibold text-dark">Event n°${eventId} infos</span>
+            <span class="mt-1 font-medium text-secondary-dark text-lg/normal">${eventName} | ${eventDescription}</span>
           </h3>
           <h3 class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
-            <span class="mr-3 font-semibold text-dark">${eventSize} ${eventSize <= 1 ? 'place left' : 'places left'} </span>
+            <span class="mr-3 font-semibold text-dark">${eventSizeEditable} ${eventSizeEditable <= 1 ? 'place left' : 'places left'} </span>
           </h3>
         </div>
         <div class="flex-auto block py-8 pt-6 px-9">
@@ -35,7 +42,7 @@ export default (event) => {
                 </tr>
               </thead>
               <tbody>
-                ${viewRow(event.guests, event)}
+                ${viewRow(guests, event)}
                 ${viewRowCustom(event.custom_fields)}
               </tbody>
             </table>

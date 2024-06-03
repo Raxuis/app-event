@@ -25,7 +25,6 @@ class Export extends Controller
       echo "Invalid parameters";
       return;
     }
-
     try {
       $fileContent = $this->export->exportToCSVPDF($eventId, $format);
       if ($format === 'csv') {

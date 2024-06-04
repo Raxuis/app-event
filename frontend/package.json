@@ -51,6 +51,7 @@
     "flatpickr": "^4.6.13",
     "js-cookie": "^3.0.5",
     "multiple-select-vanilla": "^3.2.1",
+    "shareon": "^2.5.0",
     "tailwindcss": "^3.4.3",
     "toastr": "^2.1.4",
     "validator": "^13.12.0"

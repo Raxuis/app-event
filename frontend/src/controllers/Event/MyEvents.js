@@ -1,5 +1,5 @@
-// MyEvents.js
 import axios from 'axios';
+import { init } from 'shareon';
 import viewNav from '../../views/components/nav';
 import viewEvents from '../../views/myEvents/events';
 import EventMore from './EventMore';
@@ -61,10 +61,19 @@ class MyEvents {
       const elements = await getAll('events', this.userId);
       if (Array.isArray(elements) && elements.length > 0) {
         this.renderAllEvents(elements);
+        this.socialLinksFunction();
       } else {
         this.renderNoEvents();
       }
     }
+  }
+
+  socialLinksFunction() {
+    init();
+    const copyUrl = document.querySelector('.copy-url');
+    copyUrl.addEventListener('click', () => {
+      renderToastr('success', 'URL Copied', 'URL copied to clipboard');
+    });
   }
 
   // 👇 Mapping guests from events

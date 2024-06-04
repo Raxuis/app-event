@@ -156,19 +156,17 @@ class EventModel extends SqlConnect
   {
     $stmt = $this->db->prepare(
       "SELECT e.id AS event_id, e.name AS event_name, e.image, e.type, e.created_at, e.time, e.place, e.description, e.size, 
-            e.user_id AS author_id, e.group_id,
-            u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
-            gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.id AS guest_id, g.name as group_name,
-            us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email,
-            er.id AS resource_id
-        FROM events AS e
-        INNER JOIN users AS u ON e.user_id = u.id
-        LEFT JOIN groups AS g ON e.group_id = g.id
-        LEFT JOIN group_users AS gu ON gu.group_id = g.id
-        LEFT JOIN users AS us ON gu.user_id = us.id
-        LEFT JOIN event_resources AS er ON er.event_id = e.id
-        WHERE e.user_id = :user_id
-        ORDER BY e.time ASC"
+      e.user_id AS author_id, e.group_id,
+      u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
+      gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.id AS guest_id, g.name as group_name,
+      us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email
+  FROM events AS e
+  LEFT JOIN users AS u ON e.user_id = u.id
+  LEFT JOIN groups AS g ON e.group_id = g.id
+  LEFT JOIN group_users AS gu ON gu.group_id = g.id
+  LEFT JOIN users AS us ON gu.user_id = us.id
+  WHERE e.user_id =:user_id OR gu.user_id =:user_id
+  ORDER BY e.time ASC"
     );
 
     $stmt->execute(["user_id" => $userId]);
@@ -288,7 +286,7 @@ class EventModel extends SqlConnect
         $events[$row['event_id']]['guests'][] = $this->extractGuestData($row);
       }
 
-      if ($row['resource_id'] !== null && !isset($events[$row['event_id']]['event_resources'][$row['resource_id']])) {
+      if (isset($row['resource_id']) && $row['resource_id'] !== null && !isset($events[$row['event_id']]['event_resources'][$row['resource_id']])) {
         $events[$row['event_id']]['event_resources'][] = ['resource_id' => $row['resource_id']];
       }
     }

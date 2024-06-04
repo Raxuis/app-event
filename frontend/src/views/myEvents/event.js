@@ -84,7 +84,7 @@ export default (event, userId, specificGuests = null) => {
                 <div class="px-4 py-3">
                   <p class="text-sm leading-5">Share to Social Medias</p>
                 </div>
-                <div class="py-1 shareon" data-url=${`https://localhost:${process.env.FRONTEND_PORT}/my-events/${event.event_id}`}>
+                <div class="py-1 shareon" data-url=${`http://localhost:${process.env.FRONTEND_PORT}/my-events?eventId=${event.event_id}`}>
                   <button tabindex="1" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left twitter" role="menuitem" data-hashtags=${`useful,awesome,brilliant,${event.type}`}>Twitter / X</button>
                   <span role="menuitem" tabindex="-1" class="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 cursor-not-allowed opacity-50" aria-disabled="true">TikTok (soon)</span>
                   <button tabindex="2" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left whatsapp" role="menuitem" data-text="Join my event!">WhatsApp</button>

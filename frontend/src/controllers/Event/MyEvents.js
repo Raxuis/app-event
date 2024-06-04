@@ -11,6 +11,7 @@ import EventCheckResources from '../EventResource/EventCheckResources';
 import navFunction from '../../utils/navbar/navFunction';
 import getAll from '../../utils/getters/getAll';
 import getUserId from '../../utils/getters/getUserId';
+import Event from './Event';
 
 class MyEvents {
   constructor() {
@@ -34,6 +35,9 @@ class MyEvents {
       } else if (action === 'edit-resources') {
         this.navigateToEditResources(eventId, resourceId, false);
       }
+      if (eventId) {
+        this.navigateToEvent(eventId, false);
+      }
     });
   }
 
@@ -56,6 +60,8 @@ class MyEvents {
         this.navigateToEditResources(eventId, resourceId);
       } else if (action === 'check-resources') {
         this.navigateToCheckResources(eventId);
+      } else {
+        this.navigateToEvent(eventId);
       }
     } else {
       const elements = await getAll('events', this.userId);
@@ -249,6 +255,13 @@ class MyEvents {
       window.history.pushState({ eventId, resourceId }, '', `?action=edit-resources&eventId=${eventId}&resourceId=${resourceId}`);
     }
     new EventEditResources();
+  }
+
+  navigateToEvent(eventId, pushState = true) {
+    if (pushState) {
+      window.history.pushState({ eventId }, '', `?eventId=${eventId}`);
+    }
+    new Event(eventId);
   }
 }
 

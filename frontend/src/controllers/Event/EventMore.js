@@ -18,7 +18,7 @@ class EventMore {
     this.response = await getById('event', this.params);
     this.userId = await getUserId();
     this.response.guests.forEach((guest) => {
-      if (!guest.guest_id === this.userId) {
+      if (guest.guest_id !== this.userId) {
         window.location.href = '/my-events';
       } else {
         this.run();

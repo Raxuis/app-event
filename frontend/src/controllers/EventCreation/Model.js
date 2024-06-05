@@ -19,7 +19,7 @@ const Model = class {
   }
 
   async initialize() {
-    this.userId = getUserId();
+    this.userId = await getUserId();
     const users = await getAll('users');
     if (users) {
       this.populateUserSelect(users);
@@ -65,7 +65,6 @@ const Model = class {
         text: user.email,
         value: user.id
       }));
-
     this.ms1 = multipleSelect('#select1', {
       name: 'my-select',
       single: false,

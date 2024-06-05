@@ -30,7 +30,7 @@ export default () => (`
       </div>
       <div class="flex flex-col space-y-2 pt-2">
       <label for="guests" class="text-gray-600">Guests</label>
-      <select id="select1" name="user-ids" class="w-full border border-gray-300 p-1 rounded-md outline-[#333] flex justify-center"  data-test="select1"></select>
+      <select id="select2" name="user-ids" class="w-full border border-gray-300 p-1 rounded-md outline-[#333] flex justify-center"  data-test="select2"></select>
       </div>
       <div class="flex flex-col space-y-2 pt-2">
         <label for="quantity-input" class="text-gray-600">Places number</label>

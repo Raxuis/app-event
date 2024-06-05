@@ -75,6 +75,7 @@ class AllModelsController {
       const response = await this.formSubmit(form);
       if (response === true) {
         dialog.classList.remove('opacity-100');
+        nav.classList.remove('opacity-0');
         setTimeout(() => {
           dialog.classList.remove('flex');
           dialog.classList.add('hidden');
@@ -130,7 +131,7 @@ class AllModelsController {
         value: user.id
       }));
 
-    this.ms1 = multipleSelect('#select1', {
+    this.ms1 = multipleSelect('#select2', {
       name: 'my-select',
       single: false,
       useSelectOptionLabelToHtml: true,

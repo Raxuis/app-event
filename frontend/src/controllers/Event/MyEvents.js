@@ -76,9 +76,11 @@ class MyEvents {
 
   socialLinksFunction() {
     init();
-    const copyUrl = document.querySelector('.copy-url');
-    copyUrl.addEventListener('click', () => {
-      renderToastr('success', 'URL Copied', 'URL copied to clipboard');
+    const copyUrl = document.querySelectorAll('.copy-url');
+    copyUrl.forEach((urlLink) => {
+      urlLink.addEventListener('click', () => {
+        renderToastr('success', 'URL Copied', 'URL copied to clipboard');
+      });
     });
   }
 

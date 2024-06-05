@@ -7,19 +7,6 @@ use stdClass;
 
 class ModelModel extends SqlConnect
 {
-  public function add(array $data): void
-  {
-    $query = "INSERT INTO models (name, avatar) VALUES (:name, :avatar)";
-
-    $req = $this->db->prepare($query);
-    $req->execute($data);
-  }
-  public function delete(int $id): void
-  {
-    $req = $this->db->prepare("DELETE FROM models WHERE id = :id");
-    $req->execute(["id" => $id]);
-  }
-
   public function get(int $id)
   {
     $req = $this->db->prepare("SELECT * FROM models WHERE id = :id");

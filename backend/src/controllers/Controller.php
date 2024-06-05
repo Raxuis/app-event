@@ -65,4 +65,28 @@ class Controller
 
     return;
   }
+  protected function sanitizeInput($data)
+  {
+    $sanitizedData = [];
+    foreach ($data as $key => $value) {
+      if (is_string($value)) {
+        $sanitizedData[$key] = htmlspecialchars(strip_tags($value), ENT_QUOTES, 'UTF-8');
+      } else {
+        $sanitizedData[$key] = $value;
+      }
+    }
+    return $sanitizedData;
+  }
+
+  protected function sanitizeOutput($data)
+  {
+    if (is_array($data)) {
+      foreach ($data as $key => $value) {
+        $data[$key] = $this->sanitizeOutput($value);
+      }
+    } else if (is_string($data)) {
+      $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+    }
+    return $data;
+  }
 }

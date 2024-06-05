@@ -17,10 +17,11 @@ class Models extends Controller
 
   public function postModels()
   {
+    $body = $this->sanitizeInput($this->body);
+    $this->models->add($body);
 
-    $this->models->add($this->body);
-
-    return $this->models->getLast();
+    $lastModel = $this->models->getLast();
+    return $this->sanitizeOutput($lastModel);
   }
 
   public function deleteModels()
@@ -30,6 +31,7 @@ class Models extends Controller
 
   public function getModels()
   {
-    return $this->models->getAll();
+    $models = $this->models->getAll();
+    return $this->sanitizeInput($models);
   }
 }

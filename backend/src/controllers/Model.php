@@ -17,10 +17,11 @@ class Model extends Controller
 
   public function postModel()
   {
+    $body = $this->sanitizeInput($this->body);
+    $this->model->add($body);
 
-    $this->model->add($this->body);
-
-    return $this->model->getLast();
+    $lastModel = $this->sanitizeOutput($this->model->getLast());
+    return $lastModel;
   }
 
   public function deleteModel()
@@ -30,13 +31,11 @@ class Model extends Controller
 
   public function getModel()
   {
-    return $this->model->get(intval($this->params['id']));
+    return $this->sanitizeOutput($this->model->get(intval($this->params['id'])));
   }
   public function putModel()
   {
-
-    $this->model->update($this->body);
-
-    return $this->model->getLast();
+    $body = $this->sanitizeInput($this->body);
+    $this->model->update($body);
   }
 }

@@ -17,6 +17,7 @@ class Form extends Controller
 
   public function getForm()
   {
-    return $this->form->get();
+    $forms = $this->form->get();
+    return $this->sanitizeOutput($forms);
   }
 }

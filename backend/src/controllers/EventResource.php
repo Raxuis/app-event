@@ -16,7 +16,8 @@ class EventResource extends Controller
 
   public function getEventResource()
   {
-    return $this->event_resource->get(intval($this->params['id']));
+    $resource = $this->event_resource->get(intval($this->params['id']));
+    return $this->sanitizeOutput($resource);
   }
 
   public function postEventResource()

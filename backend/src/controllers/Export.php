@@ -16,7 +16,7 @@ class Export extends Controller
 
   protected function postExport()
   {
-    $body = (array) json_decode(file_get_contents('php://input'));
+    $body = $this->sanitizeInput($this->body);
     $eventId = $body['event_id'] ?? null;
     $format = $body['format'] ?? null;
 

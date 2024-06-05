@@ -17,9 +17,9 @@ class Users extends Controller
 
   public function postUsers()
   {
-    $this->users->add($this->body);
-
-    return $this->users->getLast();
+    $body = $this->sanitizeInput($this->body);
+    $this->users->add($body);
+    return $this->sanitizeOutput($this->users->getLast());
   }
 
   public function deleteUsers()
@@ -29,6 +29,6 @@ class Users extends Controller
 
   public function getUsers()
   {
-    return $this->users->getAll();
+    return $this->sanitizeOutput($this->users->getAll());
   }
 }

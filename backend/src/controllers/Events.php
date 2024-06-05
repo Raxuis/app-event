@@ -17,6 +17,7 @@ class Events extends Controller
 
   protected function getEvents()
   {
-    return $this->events->getAll();
+    $vents = $this->events->getAll();
+    return $this->sanitizeOutput($vents);
   }
 }

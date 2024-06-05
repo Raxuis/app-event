@@ -16,16 +16,17 @@ class UserEvents extends Controller
   }
   public function getUserEvents()
   {
-    return $this->event->getUserEvents(intval($this->params['user_id']));
+    $userEvents = $this->event->getUserEvents(intval($this->params['user_id']));
+    return $this->sanitizeOutput($userEvents);
   }
 
   public function postUserEvents()
   {
-    $body = (array) json_decode(file_get_contents('php://input'));
-
+    $body = $this->sanitizeInput($this->body);
     $this->event->add($body);
 
-    return $this->event->getLast();
+    $lastUserEvent = $this->sanitizeOutput($this->event->getLast());
+    return $lastUserEvent;
   }
 
   public function deleteUserEvents()
@@ -34,9 +35,7 @@ class UserEvents extends Controller
   }
   public function putUserEvents()
   {
-
-    $this->event->update($this->body);
-
-    return $this->event->getLast();
+    $body = $this->sanitizeInput($this->body);
+    $this->event->update($body);
   }
 }

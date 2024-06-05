@@ -63,13 +63,15 @@ export default (event, userId, specificGuests = null) => {
       </div>
       <div class="bg-white flex flex-col flex-1 justify-between">
         <div class="flex items-center justify-between px-4 pt-4">
+        <div class="flex gap-2">
           ${userId !== event.author_id ? `
-            <div class="flex gap-2">
+            <div class="flex gap-2 items-center">
               ${renderGuestStatus()}
             </div>
           ` : ''}
           <div class="bg-yellow-200 text-yellow-700 py-1.5 px-6 rounded-full hover:bg-yellow-300 duration-300 cursor-default">
             <p tabindex="0" class="focus:outline-none text-xs">By ${userId === event.author_id ? 'Yourself' : `${event.author_lastname[0]}.${event.author_firstname}`}</p>
+          </div>
           </div>
           <div class="relative inline-block text-left dropdown">
             <span class="rounded-md shadow-sm">

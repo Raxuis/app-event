@@ -97,7 +97,7 @@ export default (event, userId, specificGuests = null) => {
           </div>        
         </div>
         <div class="p-4 flex flex-col flex-1">
-          <div class="flex items-center">
+          <div class="flex items-center flex-wrap">
             <h2 tabindex="0" class="flex-1 focus:outline-none text-lg font-semibold">${event.event_name}</h2>
             <p tabindex="0" class="focus:outline-none text-xs text-gray-600">${timeString}</p>
           </div>

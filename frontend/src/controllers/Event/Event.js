@@ -40,7 +40,7 @@ class Event {
       readMoreButton.addEventListener('click', () => this.navigateToEventDetail(this.response.event_id));
     }
     if (editButton) {
-      editButton.addEventListener('click', () => this.navigateToEventDetail(this.response.event_id));
+      editButton.addEventListener('click', () => this.navigateToEventEdit(this.response.event_id));
     }
   }
 

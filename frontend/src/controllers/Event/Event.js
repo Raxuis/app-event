@@ -17,13 +17,20 @@ class Event {
     this.params = getParams();
     this.response = await getById('event', this.params.eventId);
     this.userId = await getUserId();
+
+    let userExists = false;
+
     this.response.guests.forEach((guest) => {
-      if (!guest.guest_id === this.userId) {
-        window.location.href = '/my-events';
+      if (guest.guest_id === this.userId) {
+        userExists = true;
       }
     });
 
-    this.run();
+    if (userExists) {
+      this.run();
+    } else {
+      window.location.href = '/my-events';
+    }
   }
 
   attachEventListeners() {

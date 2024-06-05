@@ -17,13 +17,20 @@ class EventMore {
   async init() {
     this.response = await getById('event', this.params);
     this.userId = await getUserId();
+
+    let userExists = false;
+
     this.response.guests.forEach((guest) => {
-      if (guest.guest_id !== this.userId) {
-        window.location.href = '/my-events';
-      } else {
-        this.run();
+      if (guest.guest_id === this.userId) {
+        userExists = true;
       }
     });
+
+    if (userExists) {
+      this.run();
+    } else {
+      window.location.href = '/my-events';
+    }
   }
 
   async render() {

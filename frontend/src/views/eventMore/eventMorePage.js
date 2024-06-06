@@ -39,7 +39,7 @@ export default (event, userId) => {
                   <lord-icon class="size-6" src="https://cdn.lordicon.com/wyqtxzeh.json" trigger="hover"></lord-icon>
                 </a>` : `
                 <h3 class="flex items-center m-2 ml-0 font-medium text-lg/tight text-black cursor-default gap-2">
-                  You have no resource allocate resources first.
+                  You have no resource, please allocate one first.
                   <lord-icon src="https://cdn.lordicon.com/nkfxhqqr.json" trigger="hover" state="morph-destroyed" class="size-8 sm:size-6"></lord-icon>
                 </h3>`}
             </div>

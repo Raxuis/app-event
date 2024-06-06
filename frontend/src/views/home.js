@@ -77,7 +77,7 @@ export default (isLogged) => (`
       <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8 w-full p-6">
       <div
           class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
-          <img src=${safety} loading="lazy" alt="Safe Events" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+          <img src=${safety} loading="lazy" alt="Safe Events" class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
 
           <div
               class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
@@ -87,7 +87,7 @@ export default (isLogged) => (`
       </div>
       <div
           class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
-          <img src=${eventsModels} loading="lazy" alt="Event Models" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+          <img src=${eventsModels} loading="lazy" alt="Event Models" class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
 
           <div
               class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
@@ -97,7 +97,7 @@ export default (isLogged) => (`
       </div>
       <div
           class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
-          <img src=${peopleInvitations} loading="lazy" alt="People Invitations" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+          <img src=${peopleInvitations} loading="lazy" alt="People Invitations" class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
 
           <div
               class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
@@ -107,7 +107,7 @@ export default (isLogged) => (`
       </div>
       <div
           class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
-          <img src=${eventsEdits} loading="lazy" alt="Events Edits" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+          <img src=${eventsEdits} loading="lazy" alt="Events Edits" class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
 
           <div
               class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">

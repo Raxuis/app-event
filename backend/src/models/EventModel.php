@@ -253,14 +253,12 @@ class EventModel extends SqlConnect
                 e.user_id AS author_id, e.group_id,
                 u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
                 gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.id AS guest_id,
-                us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email,
-                er.id AS resource_id
+                us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email, g.name AS group_name
             FROM events AS e
             INNER JOIN users AS u ON e.user_id = u.id
             LEFT JOIN groups AS g ON e.group_id = g.id
             LEFT JOIN group_users AS gu ON gu.group_id = g.id
             LEFT JOIN users AS us ON gu.user_id = us.id
-            LEFT JOIN event_resources AS er ON er.event_id = e.id
             ORDER BY e.time ASC"
     );
 

@@ -14,11 +14,12 @@ export default (event, userId, specificGuests = null) => {
     author_id: authorId,
     author_firstname: authorFirstname,
     author_lastname: authorLastName,
-    custom_fields: customFields
+    custom_fields: customFields,
+    created_at: createdAt
   } = event;
 
   const currentDate = new Date();
-  const eventTimeDate = new Date(event.created_at);
+  const eventTimeDate = new Date(createdAt);
 
   const timeDifference = currentDate - eventTimeDate;
   const hoursElapsed = Math.floor(timeDifference / (1000 * 60 * 60));
@@ -39,13 +40,13 @@ export default (event, userId, specificGuests = null) => {
 
   const renderGuestStatus = () => {
     if (specificGuests !== null) {
-      return specificGuests.map((ele) => {
-        if (ele.guest_status === 'registered') {
+      return specificGuests.map((guest) => {
+        if (guest.guest_status === 'registered') {
           return `
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="accept-${eventId} cursor-pointer size-6 lucide lucide-circle"><circle cx="12" cy="12" r="10"/></svg>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cancel-${eventId} cursor-pointer size-6 lucide lucide-ban"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>
           `;
-        } if (ele.guest_status === 'canceled') {
+        } if (guest.guest_status === 'canceled') {
           return '<span class="text-center align-baseline inline-flex py-1.5 px-6 rounded-full mr-auto items-center font-semibold text-[.95rem] leading-none text-danger bg-danger-light">Canceled</span>';
         }
         return `
@@ -69,7 +70,7 @@ export default (event, userId, specificGuests = null) => {
           </button>
         ` : ''}
         <img alt="${eventName}" src="${eventImage || gradient}" tabindex="0" class="focus:outline-none w-full h-full object-cover" />
-        <button class="export-pdf-${event.event_id} cursor-pointer absolute right-1 bottom-1 inline-flex items-center p-2 text-white bg-blue-chill-700 hover:bg-danger duration-300 text-sm font-medium rounded-md">
+        <button class="export-pdf-${eventId} cursor-pointer absolute right-1 bottom-1 inline-flex items-center p-2 text-white bg-blue-chill-700 hover:bg-danger duration-300 text-sm font-medium rounded-md">
           <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-pdf"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" /><path d="M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6" /><path d="M17 18h2" /><path d="M20 15h-3v6" /><path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1z" /></svg>
         </button>
         <button class="export-csv-${eventId} cursor-pointer absolute left-1 bottom-1 inline-flex items-center p-2 text-white bg-blue-chill-700 hover:bg-danger duration-300 text-sm font-medium rounded-md">

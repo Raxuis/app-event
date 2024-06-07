@@ -22,11 +22,11 @@ class EventResource extends Controller
 
   public function postEventResource()
   {
-    $body = (array) json_decode(file_get_contents('php://input'), true);
+    $body = $this->sanitizeInput((array) json_decode(file_get_contents('php://input'), true));
 
     try {
       $this->event_resource->allocateEventResource($body);
-      $resource = $this->event_resource->getLast();
+      $resource = $this->sanitizeOutput($this->event_resource->getLast());
 
       if ($resource) {
         http_response_code(200); // OK
@@ -48,7 +48,7 @@ class EventResource extends Controller
 
   public function putEventResource()
   {
-    $body = (array) json_decode(file_get_contents('php://input'), true);
+    $body = $this->sanitizeInput((array) json_decode(file_get_contents('php://input'), true));
 
     try {
       $result = $this->event_resource->update($body);

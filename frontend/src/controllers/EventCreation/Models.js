@@ -49,10 +49,14 @@ class AllModelsController {
     const submitBtn = document.querySelector('.submit-dialog');
     const form = document.querySelector('.form-dialog');
     const nav = document.querySelector('.nav');
+    let populated = false;
     activationBtn.addEventListener('click', async () => {
       const users = await getAll('users');
       if (users) {
-        this.populateUserSelect(users);
+        if (!populated) {
+          this.populateUserSelect(users);
+          populated = true;
+        }
         dialog.classList.remove('hidden');
         dialog.classList.add('flex');
         setTimeout(() => {

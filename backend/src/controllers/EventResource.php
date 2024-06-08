@@ -34,10 +34,10 @@ class EventResource extends Controller
       } else {
         http_response_code(500);
         echo json_encode(['message' => 'Failed to retrieve the last event resource.']);
+
       }
     } catch (Exception $e) {
-      http_response_code(400);
-      echo json_encode(['message' => $e->getMessage()]);
+      $this->respond(500, ['message' => 'Internal Error' . $e->getMessage()]);
     }
   }
 
@@ -60,8 +60,7 @@ class EventResource extends Controller
         echo json_encode(['message' => 'Failed to update the resource.']);
       }
     } catch (Exception $e) {
-      http_response_code(400);
-      echo json_encode(['message' => $e->getMessage()]);
+      $this->respond(500, ['message' => 'Internal Error' . $e->getMessage()]);
     }
   }
 }

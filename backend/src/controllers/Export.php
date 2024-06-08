@@ -36,8 +36,7 @@ class Export extends Controller
       }
       echo $fileContent;
     } catch (\Exception $e) {
-      http_response_code(500);
-      echo $e->getMessage();
+      $this->respond(500, ['error' => 'Error exporting: ' . $e->getMessage()]);
     }
   }
 }

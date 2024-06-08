@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ModelModel;
+use Exception;
 
 class Model extends Controller
 {
@@ -15,27 +16,17 @@ class Model extends Controller
     parent::__construct($params);
   }
 
-  public function postModel()
-  {
-    $body = $this->sanitizeInput($this->body);
-    $this->model->add($body);
-
-    $lastModel = $this->sanitizeOutput($this->model->getLast());
-    return $lastModel;
-  }
-
-  public function deleteModel()
-  {
-    $this->model->delete(intval($this->params['id']));
-  }
-
   public function getModel()
   {
-    return $this->sanitizeOutput($this->model->get(intval($this->params['id'])));
-  }
-  public function putModel()
-  {
-    $body = $this->sanitizeInput($this->body);
-    $this->model->update($body);
+    try {
+      $model = $this->sanitizeOutput($this->model->get(intval($this->params['id'])));
+      if (empty((array) $model)) {
+        $this->respond(404, ['error' => 'Model not found']);
+      } else {
+        $this->respond(200, $model);
+      }
+    } catch (Exception $e) {
+      $this->respond(500, ['error' => 'Error fetching model: ' . $e->getMessage()]);
+    }
   }
 }

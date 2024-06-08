@@ -24,7 +24,7 @@ class Users extends Controller
 
   public function deleteUsers()
   {
-    return $this->users->delete(intval($this->params['id']));
+    $this->users->delete(intval($this->params['id']));
   }
 
   public function getUsers()

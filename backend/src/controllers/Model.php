@@ -26,7 +26,7 @@ class Model extends Controller
 
   public function deleteModel()
   {
-    return $this->model->delete(intval($this->params['id']));
+    $this->model->delete(intval($this->params['id']));
   }
 
   public function getModel()

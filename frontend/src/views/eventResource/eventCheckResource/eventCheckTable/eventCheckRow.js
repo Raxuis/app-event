@@ -1,7 +1,8 @@
+/* eslint-disable no-nested-ternary */
 import viewColumn from './eventCheckCol';
 
 export default (resources) => `
   ${resources.length > 1
     ? resources.map((resource) => viewColumn(resource)).join('')
-    : viewColumn(resources[0])}
+    : resources.length > 0 ? viewColumn(resources[0]) : ''}
       `;

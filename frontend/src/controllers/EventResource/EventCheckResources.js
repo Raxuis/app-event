@@ -22,7 +22,9 @@ class EventCheckResources {
       this.userId = await getUserId();
 
       this.eventInfos = await getById('event', this.params.eventId);
-      await this.checkEventResourcesLength();
+      if (await this.checkEventResourcesLength() !== true) {
+        goBack('more', this.params.eventId);
+      }
       if (this.userId !== this.eventInfos.author_id) {
         window.location.href = '/my-events';
       } else {
@@ -36,8 +38,9 @@ class EventCheckResources {
   async checkEventResourcesLength() {
     this.response = await getAll('resources', this.params.eventId);
     if (!this.response || Object.keys(this.response).length < 1) {
-      goBack('more', this.params.eventId);
+      return false;
     }
+    return true;
   }
 
   attachEventListeners() {

@@ -1,6 +1,9 @@
 export default (resources) => {
+  if (Object.keys(resources).length === 0) {
+    return null;
+  }
   let totalCost = 0;
-  if (resources.length <= 1) {
+  if (resources.length === 1) {
     const { resource_cost: cost, resource_quantity: quantity } = resources[0];
     totalCost = cost * quantity;
   } else {

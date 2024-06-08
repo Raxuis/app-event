@@ -19,7 +19,6 @@ class EventCheckResources {
 
   async init() {
     try {
-      this.response = await getAll('resources', this.params.eventId);
       this.userId = await getUserId();
 
       this.eventInfos = await getById('event', this.params.eventId);
@@ -34,14 +33,9 @@ class EventCheckResources {
     }
   }
 
-  async checkEventResourcesLength(rowResource = null) {
-    if (rowResource) {
-      rowResource.remove();
-      const resources = await getAll('resources', this.params.eventId);
-      if (!resources || Object.keys(resources).length < 1) {
-        goBack('more', this.params.eventId);
-      }
-    } else if (!this.response || Object.keys(this.response).length < 1) {
+  async checkEventResourcesLength() {
+    this.response = await getAll('resources', this.params.eventId);
+    if (!this.response || Object.keys(this.response).length < 1) {
       goBack('more', this.params.eventId);
     }
   }
@@ -94,14 +88,15 @@ class EventCheckResources {
     }
   }
 
-  async deleteEventResource(resourceId, rowResource) {
+  async deleteEventResource(resourceId) {
     try {
       await axios.delete(`http://localhost:${process.env.BACKEND_PORT}/resource/${resourceId}`, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
-      this.checkEventResourcesLength(rowResource);
+
+      this.init();
       renderToastr('success', 'Success', 'Resource deleted successfully');
     } catch (error) {
       renderToastr('error', 'Error deleting resource:', error.message);

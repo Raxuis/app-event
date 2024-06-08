@@ -89,4 +89,11 @@ class Controller
     }
     return $data;
   }
+
+  protected function respond(int $statusCode, array $data)
+  {
+    header("HTTP/1.0 $statusCode");
+    echo json_encode($data);
+    exit;
+  }
 }

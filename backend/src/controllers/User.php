@@ -58,13 +58,6 @@ class User extends Controller
     }
   }
 
-  private function respond(int $statusCode, array $data)
-  {
-    header("HTTP/1.0 $statusCode");
-    echo json_encode($data);
-    exit;
-  }
-
   private function handleException(Exception $e)
   {
     $statusCode = $e->getCode() ? $e->getCode() : 500;

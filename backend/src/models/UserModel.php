@@ -10,7 +10,7 @@ class UserModel extends SqlConnect
     public function add(array $data): void
     {
         try {
-            session_start();
+            session_start(); // Start the session for sessions_id
 
             $verif_query = "SELECT * FROM users WHERE email = :email";
             $verif_req = $this->db->prepare($verif_query);
@@ -26,8 +26,8 @@ class UserModel extends SqlConnect
                 "firstname" => $data['firstname'],
                 "lastname" => $data['lastname'],
                 "email" => $data['email'],
-                "password" => password_hash($data['password'], PASSWORD_BCRYPT),
-                "session_id" => session_id()
+                "password" => password_hash($data['password'], PASSWORD_BCRYPT), // hashing password with PASSWORD_BCRYPT to make it 60 characters long
+                "session_id" => session_id() // Passing session_id to database to check during login authentification
             ]);
         } catch (Exception $e) {
             throw new Exception('Error creating user: ' . $e->getMessage(), 500);
@@ -44,7 +44,7 @@ class UserModel extends SqlConnect
         }
     }
 
-    public function get(int $id)
+    public function get(int $id): array|stdClass
     {
         try {
             $req = $this->db->prepare("SELECT * FROM users WHERE id = :id");
@@ -71,14 +71,14 @@ class UserModel extends SqlConnect
                 "email" => $data['email'],
                 "firstname" => $data['firstname'],
                 "lastname" => $data['lastname'],
-                "password" => password_hash($data['password'], PASSWORD_BCRYPT)
+                "password" => password_hash($data['password'], PASSWORD_BCRYPT) // hashing password with PASSWORD_BCRYPT to make it 60 characters long
             ]);
         } catch (Exception $e) {
             throw new Exception('Error updating user: ' . $e->getMessage(), 500);
         }
     }
 
-    public function getAll()
+    public function getAll(): array
     {
         try {
             $req = $this->db->prepare("SELECT * FROM users");
@@ -95,7 +95,7 @@ class UserModel extends SqlConnect
         }
     }
 
-    public function getLast()
+    public function getLast(): array|stdClass
     {
         try {
             $req = $this->db->prepare("SELECT * FROM users ORDER BY id DESC LIMIT 1");
@@ -133,7 +133,7 @@ class UserModel extends SqlConnect
         }
     }
 
-    public function getByEmail(array $data)
+    public function getByEmail(array $data): array|stdClass
     {
         try {
             $req = $this->db->prepare("SELECT * FROM users WHERE email = :email");
@@ -142,13 +142,13 @@ class UserModel extends SqlConnect
             if ($user) {
                 unset($user['password']);
             }
-            return $user;
+            return $user ?: new stdClass();
         } catch (Exception $e) {
             throw new Exception('Error fetching user by email: ' . $e->getMessage(), 500);
         }
     }
 
-    public function getBySessionId(string $session_id)
+    public function getBySessionId(string $session_id): array|stdClass
     {
         try {
             $req = $this->db->prepare("SELECT * FROM users WHERE session_id = :session_id");

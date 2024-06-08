@@ -7,7 +7,7 @@ use stdClass;
 
 class FormModel extends SqlConnect
 {
-  public function get()
+  public function get(): array|stdClass
   {
     $req = $this->db->prepare("SELECT * FROM models");
     $req->execute();

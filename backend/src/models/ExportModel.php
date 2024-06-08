@@ -39,15 +39,15 @@ class ExportModel extends SqlConnect
       ['Date Created', $event['created_at']],
       ['Description', $event['description']],
       ['Place', $event['place']],
-      ['Time', $event['time']],
+      ['Time', $event['time']]
     ];
 
     // Use output buffering to capture CSV output
     ob_start();
     $output = fopen('php://output', 'w');
-    foreach ($csvData as $row) {
+    for ($i = 0; $i <= count($csvData) - 1; $i++) {
       // Write each row to the CSV
-      fputcsv($output, $row);
+      fputcsv($output, $csvData[$i]);
     }
     fclose($output);
 

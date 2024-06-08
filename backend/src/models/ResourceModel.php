@@ -32,7 +32,7 @@ class ResourceModel extends SqlConnect
     }
   }
 
-  public function get(int $id)
+  public function get(int $id): array|stdClass
   {
     $req = $this->db->prepare(
       "SELECT r.id,r.cost, r.name, r.type, er.quantity, er.status
@@ -51,7 +51,7 @@ class ResourceModel extends SqlConnect
     $req->execute(["id" => $id]);
   }
 
-  public function getAll(int $event_id)
+  public function getAll(int $event_id): array|stdClass
   {
     $req = $this->db->prepare(
       "SELECT r.id as resource_id, er.id as event_resource_id, r.name as resource_name, r.type as resource_type, r.cost as resource_cost,
@@ -67,7 +67,7 @@ class ResourceModel extends SqlConnect
     return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
   }
 
-  public function update(array $data)
+  public function update(array $data): bool
   {
     $query = "UPDATE resources SET name = :name, cost = :cost, type = :type WHERE id = :id";
     $req = $this->db->prepare($query);
@@ -80,21 +80,21 @@ class ResourceModel extends SqlConnect
     return $req->rowCount() > 0;
   }
 
-  public function getLastResourceInserted()
+  public function getLastResourceInserted(): array|stdClass
   {
     $req = $this->db->prepare("SELECT * FROM resources ORDER BY id DESC LIMIT 1");
     $req->execute();
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }
 
-  public function getLast()
+  public function getLast(): array|stdClass
   {
     $req = $this->db->prepare("SELECT * FROM event_resources ORDER BY id DESC LIMIT 1");
     $req->execute();
     return $req->rowCount() > 0 ? $req->fetch(PDO::FETCH_ASSOC) : new stdClass();
   }
 
-  public function updateRessourceQuantity(array $data)
+  public function updateResourceQuantity(array $data): array
   {
     try {
       $queryGetQuantity = "SELECT * FROM event_resources WHERE id = :id";

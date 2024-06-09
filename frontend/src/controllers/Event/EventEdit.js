@@ -10,6 +10,7 @@ import getById from '../../utils/getters/getById';
 import navFunction from '../../utils/navbar/navFunction';
 import getAll from '../../utils/getters/getAll';
 import getUserId from '../../utils/getters/getUserId';
+import editQuantity from '../../utils/forms/quantity/editQuantity';
 
 class Event {
   constructor(params) {
@@ -102,15 +103,7 @@ class Event {
     const submitButton = document.querySelector('.submit-edit');
     const cancelButton = document.querySelector('.cancel-edit');
     const form = document.querySelector('.form-edit');
-    const numberInput = document.querySelector('.edit-quantity');
-
-    if (numberInput) {
-      numberInput.addEventListener('input', () => {
-        let { value } = numberInput;
-        value = value.replace(/[^0-9]/g, '');
-        numberInput.value = value;
-      });
-    }
+    editQuantity();
 
     if (cancelButton) {
       cancelButton.addEventListener('click', (e) => {

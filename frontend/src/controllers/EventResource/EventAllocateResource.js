@@ -6,6 +6,7 @@ import renderToastr from '../../utils/toastr/renderToastr';
 import navFunction from '../../utils/navbar/navFunction';
 import getById from '../../utils/getters/getById';
 import getUserId from '../../utils/getters/getUserId';
+import allocateResourceQuantity from '../../utils/forms/quantity/allocateResourceQuantity';
 
 class EventAllocateResources {
   constructor(params) {
@@ -45,17 +46,7 @@ class EventAllocateResources {
   attachEventListeners() {
     const form = document.querySelector('.form-allocate');
     const goBackButton = document.querySelector('.go-back-allocate');
-    const numberInput = document.querySelector('.quantity-input-allocate');
-    if (numberInput) {
-      numberInput.addEventListener('input', () => {
-        let { value } = numberInput;
-        value = value.replace(/[^0-9.]/g, '');
-        if (value.split('.').length > 2) {
-          value = value.replace(/\.+$/, '');
-        }
-        numberInput.value = value;
-      });
-    }
+    allocateResourceQuantity();
 
     if (goBackButton) {
       goBackButton.addEventListener('click', () => {

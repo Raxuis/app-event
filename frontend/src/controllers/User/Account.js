@@ -25,7 +25,7 @@ const Account = class {
     const userInfos = await getById('user', this.userId);
     this.el.innerHTML = `
     ${viewNav(this.userId)}
-      ${viewAccount(userInfos)}
+    ${viewAccount(userInfos)}
     `;
   }
 

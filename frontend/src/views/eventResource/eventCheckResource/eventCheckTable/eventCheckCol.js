@@ -25,7 +25,7 @@ export default (resource) => {
     <svg  xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-plus size-5 cursor-pointer increment-${eventResourceId}"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
   </td>
   <td class="text-center">
-    <span class="font-semibold text-light-inverse text-md/normal select-none">${resource.resource_status === 'available'
+    <span class="font-semibold text-light-inverse text-md/normal select-none">${status === 'available'
       ? `<span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-success bg-success-light rounded-lg select-none">${status}</span>` : `<span class="text-center align-baseline inline-flex px-4 py-3 mr-auto items-center font-semibold text-[.95rem] leading-none text-danger bg-danger-light rounded-lg select-none">${status}</span>`
     }</span>
   </td>

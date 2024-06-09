@@ -1,23 +1,29 @@
-export default (customField) => (`
+export default (customField) => {
+  const {
+    id,
+    field_name: customFieldName,
+    field_value: customFieldValue
+  } = customField;
+  return (`
 <div class="flex flex-col space-y-2 mt-2 border border-gray-300 px-4 py-3 rounded-md outline-[#333]">
     <div class="flex justify-between w-full">
         <div class="flex gap-10">
             <div class="flex flex-col">
                 <label class="text-sm mb-2 block">Custom Field Name</label>
                 <div class="relative flex items-center">
-                    <input name="name-${customField.id}"type="text" required class="name-${customField.id} w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter name" value="${customField.field_name}" />
+                    <input name="name-${id}"type="text" required class="name-${id} w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter name" value="${customFieldName}" />
                 </div>
             </div>
             <div class="flex flex-col">
                 <label class="text-sm mb-2 block">Custom Field Value</label>
                 <div class="relative flex items-center">
-                    <input name="value-${customField.id}" type="text" required class="value-${customField.id} w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter value" value="${customField.field_value}" />
+                    <input name="value-${id}" type="text" required class="value-${id} w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter value" value="${customFieldValue}" />
                 </div>
             </div>
         </div>
         <div>
             <a
-                class="remove-${customField.id} h-11 w-10 input-button cursor-pointer rounded-r-md bg-transparent"
+                class="remove-${id} h-11 w-10 input-button cursor-pointer rounded-r-md bg-transparent"
                 title="clear" data-clear
             >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mt-2 ml-1" viewBox="0 0 20 20" fill="#ef4444">
@@ -30,3 +36,4 @@ export default (customField) => (`
     </div>
 </div>
 `);
+};

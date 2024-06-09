@@ -1,6 +1,18 @@
 import viewCustomField from '../customField/customField';
 
-export default (eventInfos) => (`
+export default (eventInfos) => {
+  const {
+    event_name: eventName,
+    description: eventDescription,
+    size: eventSize,
+    custom_fields: customFields,
+    type: eventType,
+    place: eventPlace,
+    time: eventTime,
+    image: eventImage,
+    group_name: groupName
+  } = eventInfos;
+  return (`
 <div class="w-full h-full justify-center items-center duration-500">
   <form class="flex flex-col space-y-4 form-edit">
     <div>
@@ -8,27 +20,27 @@ export default (eventInfos) => (`
       <p class="text-gray-600 mb-4 max-sm:hidden">Fill in the form below to create your event</p>
       <div class="flex flex-col space-y-2">
         <label for="name" class="text-gray-600">Name</label>
-        <input type="text" name="name" id="name" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter name" value="${eventInfos.event_name}" />
+        <input type="text" name="name" id="name" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter name" value="${eventName}" />
       </div>
       <div class="flex flex-col space-y-2 mt-2">
         <label for="description" class="text-gray-600">Description</label>
-        <input type="text" name="description" id="description" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter description" value="${eventInfos.description}" />
+        <input type="text" name="description" id="description" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter description" value="${eventDescription}" />
       </div>
-      <div class="flex flex-col space-y-2 mt-2 ${eventInfos.type !== 'custom' ? 'hidden' : ''}">
+      <div class="flex flex-col space-y-2 mt-2 ${eventType !== 'custom' ? 'hidden' : ''}">
         <label for="size" class="text-gray-600">Places number</label>
-        <input type="number" name="size" id="size" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter size" value="${eventInfos.size}"/>
+        <input type="number" name="size" id="size" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter size" value="${eventSize}"/>
       </div>
       <div class="flex flex-col space-y-2 mt-2">
         <label for="place" class="text-gray-600">Place</label>
-        <input type="text" name="place" id="place" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter place" value="${eventInfos.place}" />
+        <input type="text" name="place" id="place" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter place" value="${eventPlace}" />
       </div>
       <div class="flex flex-col space-y-2 mt-2">
         <label for="image-url" class="text-gray-600">Image url (optional)</label>
-        <input type="url" name="image-url" id="image-url" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter image url" value="${eventInfos.image ? eventInfos.image : ''}" />
+        <input type="url" name="image-url" id="image-url" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter image url" value="${eventImage || ''}" />
       </div>
       <div class="flex flex-col space-y-2 mt-2">
         <label for="group-name" class="text-gray-600">Group Name</label>
-        <input type="text" name="group-name" id="group-name" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter group name" value="${eventInfos.group_name}" />
+        <input type="text" name="group-name" id="group-name" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter group name" value="${groupName}" />
       </div>
       <div class="flex flex-col space-y-2 mt-2">
         <label for="guests" class="text-gray-600">Guests</label>
@@ -36,7 +48,7 @@ export default (eventInfos) => (`
       </div>
       <div
         x-data
-        x-init="flatpickr($refs.datetimewidget, {wrap: true, enableTime: true, dateFormat: 'M j, Y h:i K', minDate:${Date.now()}, defaultDate: new Date('${eventInfos.time}')});"
+        x-init="flatpickr($refs.datetimewidget, {wrap: true, enableTime: true, dateFormat: 'M j, Y h:i K', minDate:${Date.now()}, defaultDate: new Date('${eventTime}')});"
         x-ref="datetimewidget"
         class="flatpickr container mx-auto col-span-6 sm:col-span-6 mt-5"
       >
@@ -66,7 +78,7 @@ export default (eventInfos) => (`
       <div class="custom-field-btn select-none cursor-pointer text-gray-700 flex justify-center bg-clip-border border-2 border-electric-violet-600 border-dotted rounded-md bg-slate-400 bg-opacity-15 hover:bg-violet-300 hover:bg-opacity-30 duration-300 mt-2 p-2 w-full">
         <p class="flex justify-center items-center">Add a custom field (2 maximum)</p>
       </div>
-      <div class="custom-field-edit">${eventInfos.custom_fields ? eventInfos.custom_fields.map((custom_field) => viewCustomField(custom_field)).join('') : ''}</div>
+      <div class="custom-field-edit">${customFields ? customFields.map((custom_field) => viewCustomField(custom_field)).join('') : ''}</div>
       <p class="error-text-edit text-red-500 text-md pt-2"></p>
     </div>
     <div class="flex flex-col space-y-2 pb-8">
@@ -78,3 +90,4 @@ export default (eventInfos) => (`
   </form>
 </div>
 `);
+};

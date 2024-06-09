@@ -13,52 +13,59 @@ const Login = class {
   }
 
   eventListeners() {
-    document.addEventListener('DOMContentLoaded', () => {
-      const password = document.querySelector('.password-login');
-      const passwordToggler = document.querySelector('.password-toggler-login');
-      passwordToggler.addEventListener('click', () => {
-        if (password.type === 'password') {
-          password.type = 'text';
-        } else {
-          password.type = 'password';
-        }
-      });
-    });
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.querySelector('.login-form');
-      const loginButton = document.querySelector('.login-button');
-      const errorMessage = document.querySelector('.error-message');
+    const password = document.querySelector('.password-login');
+    const passwordToggler = document.querySelector('.password-toggler-login');
 
-      loginButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-        if (formData.get('password') && formData.get('email')) {
-          axios.post(`http://localhost:${process.env.BACKEND_PORT}/auth`, {
-            email: formData.get('email'),
-            password: formData.get('password')
-          }, {
-            headers: {
-              'Content-Type': 'application/json'
+    passwordToggler.addEventListener('click', () => {
+      if (password.type === 'password') {
+        password.type = 'text';
+      } else {
+        password.type = 'password';
+      }
+    });
+
+    const form = document.querySelector('.login-form');
+    const loginButton = document.querySelector('.login-button');
+    const errorMessage = document.querySelector('.error-message');
+
+    const formSubmit = (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const emailValue = formData.get('email');
+      const passwordValue = formData.get('password');
+      if (emailValue && passwordValue) {
+        axios.post(`http://localhost:${process.env.BACKEND_PORT}/auth`, {
+          email: emailValue,
+          password: passwordValue
+        }, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then((response) => {
+            const { data } = response;
+            if (data.PHP_SESSID) {
+              Cookies.set('PHP_SESSID', data.PHP_SESSID, { expires: 1 });
+              window.location.href = '/';
             }
           })
-            .then((response) => {
-              const { data } = response;
-              if (data.PHP_SESSID) {
-                Cookies.set('PHP_SESSID', data.PHP_SESSID, { expires: 1 });
-                window.location.href = '/';
-              }
-            })
-            .catch((error) => {
-              if (error.response && error.response.status === 401) {
-                errorMessage.innerHTML = 'Unauthorized access. Please login again.';
-              } else {
-                errorMessage.innerHTML = error.response ? error.response.data.message : 'An error occurred';
-              }
-            });
-        } else {
-          errorMessage.innerHTML = 'Email and password are required';
-        }
-      });
+          .catch((error) => {
+            if (error.response && error.response.status === 401) {
+              errorMessage.innerHTML = 'Unauthorized access. Please login again.';
+            } else {
+              errorMessage.innerHTML = error.response ? error.response.data.message : 'An error occurred';
+            }
+          });
+      } else {
+        errorMessage.innerHTML = 'Email and password are required';
+      }
+    };
+
+    loginButton.addEventListener('click', formSubmit);
+    form.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        formSubmit(e);
+      }
     });
   }
 

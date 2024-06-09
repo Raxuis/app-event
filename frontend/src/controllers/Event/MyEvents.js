@@ -24,6 +24,7 @@ class MyEvents {
       const eventId = event.state?.eventId;
       const resourceId = event.state?.resourceId;
 
+      // Handling different actions based on URL parameters
       if (action === 'more') {
         this.navigateToEventDetail(eventId, false);
       } else if (action === 'edit') {
@@ -41,6 +42,7 @@ class MyEvents {
     });
   }
 
+  // Initializing method to set up the initial state
   async initialize() {
     const urlParams = new URLSearchParams(window.location.search);
     const action = urlParams.get('action');
@@ -226,6 +228,7 @@ class MyEvents {
 
   navigateToEventDetail(eventId, pushState = true) {
     if (pushState) {
+      // Updating the browser history state and URL with eventId
       window.history.pushState({ eventId }, '', `?action=more&eventId=${eventId}`);
     }
     new EventMore(eventId);
@@ -254,6 +257,7 @@ class MyEvents {
 
   navigateToEditResources(eventId, resourceId, pushState = true) {
     if (pushState) {
+      // Update the browser history state and URL with eventId and resourceId to fill the form
       window.history.pushState({ eventId, resourceId }, '', `?action=edit-resources&eventId=${eventId}&resourceId=${resourceId}`);
     }
     new EventEditResources();

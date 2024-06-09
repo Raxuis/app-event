@@ -29,24 +29,28 @@ const Register = class {
     function handleSubmit(e) {
       e.preventDefault();
       const formData = new FormData(elForm);
-      if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length >= 8 && formData.get('password-confirmation').length >= 8 && formData.get('firstname') && formData.get('lastname')) {
-        axios.post(`http://localhost:${process.env.BACKEND_PORT}/user/register`, {
-          firstname: formData.get('firstname'),
-          lastname: formData.get('lastname'),
-          email: formData.get('email'),
-          password: formData.get('password')
-        }, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-          .then(() => {
-            window.location.href = '/';
-            renderToastr('success', 'Success', 'Your account has been created!');
+      if (formData.get('email')) {
+        if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length >= 8 && formData.get('password-confirmation').length >= 8 && formData.get('firstname') && formData.get('lastname')) {
+          axios.post(`http://localhost:${process.env.BACKEND_PORT}/user/register`, {
+            firstname: formData.get('firstname'),
+            lastname: formData.get('lastname'),
+            email: formData.get('email'),
+            password: formData.get('password')
+          }, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
           })
-          .catch(() => {
-            this.errorInfos();
-          });
+            .then(() => {
+              window.location.href = '/';
+              renderToastr('success', 'Success', 'Your account has been created!');
+            })
+            .catch(() => {
+              this.errorInfos('An account already exists with this email. Try log in!');
+            });
+        }
+      } else {
+        this.errorInfos('Email must be provided!');
       }
     }
 
@@ -88,8 +92,8 @@ const Register = class {
     });
   }
 
-  errorInfos() {
-    document.querySelector('.error-message').innerHTML = 'An account already exists with this email. Try log in!';
+  errorInfos(text) {
+    document.querySelector('.error-message').innerHTML = text;
   }
 
   render() {

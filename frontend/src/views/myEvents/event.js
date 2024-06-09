@@ -63,7 +63,7 @@ export default (event, userId, specificGuests = null) => {
       <div class="relative w-full h-44">
         ${userId === authorId ? `
           <button class="delete-${eventId} cursor-pointer absolute right-1 top-1 inline-flex items-center px-4 py-2 text-danger bg-danger-light hover:bg-danger hover:text-white duration-300 text-sm font-medium rounded-md">
-            <svg xmlns="http://www.w3.org/2000/svg" class="size-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-5 mr-2 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
             Delete
@@ -102,7 +102,7 @@ export default (event, userId, specificGuests = null) => {
                 <div class="px-4 py-3">
                   <p class="text-sm leading-5">Share to Social Medias</p>
                 </div>
-                <div class="py-1 shareon" data-url=${`http://localhost:${process.env.FRONTEND_PORT}/my-events?eventId=${eventId}`}>
+                <div class="py-1 shareon" data-url=${`http://127.0.0.1:${process.env.FRONTEND_PORT}/my-events?eventId=${eventId}`}>
                   <button tabindex="1" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left twitter" role="menuitem" data-hashtags=${`useful,awesome,brilliant,${eventType}`}>Twitter / X</button>
                   <span role="menuitem" tabindex="-1" class="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 cursor-not-allowed opacity-50" aria-disabled="true">TikTok (soon)</span>
                   <button tabindex="2" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left whatsapp" role="menuitem" data-text="Join my event!">WhatsApp</button>

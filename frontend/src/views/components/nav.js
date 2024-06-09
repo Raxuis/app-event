@@ -7,9 +7,9 @@ export default (userId) => (`
 
     <div class="flex space-x-4">
       <div>
-        <a href="/" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
+        <a href="/" class="flex items-center py-5 px-2">
         <img class="h-6 w-6 mr-1" src=${favicon}>
-          <span class="font-bold">App-Event</span>
+          <span class="font-bold text-gray-700 hover:text-electric-violet-900 duration-300">App-Event</span>
         </a>
       </div>
       ${userId !== null ? `

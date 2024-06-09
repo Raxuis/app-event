@@ -39,23 +39,24 @@
 
 ## :dart: About
 
-Describe your project
+App-Event is a SaaS-like event planing platform that allows you to create events, invite people to them and export datas about them.
 
 ## :sparkles: Features
 
-:heavy_check_mark: Feature 1;\
-:heavy_check_mark: Feature 2;\
-:heavy_check_mark: Feature 3;
+:heavy_check_mark: Create your event\
+:heavy_check_mark: Edit your event\
+:heavy_check_mark: Add custom fields to your event\
+:heavy_check_mark: Export your event infos to PDF or CSV\
+:heavy_check_mark: Declare available to this event or not\
 
 ## :rocket: Technologies
 
 The following tools were used in this project:
 
-- [Expo](https://expo.io/)
-- [Node.js](https://nodejs.org/en/)
-- [React](https://pt-br.reactjs.org/)
-- [React Native](https://reactnative.dev/)
-- [TypeScript](https://app-event.typescriptlang.org/)
+- [JavaScript](https://developer.mozilla.org/fr/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [PHP](https://www.php.net/)
+- [MySQL](https://www.mysql.com/fr/)
 
 ## :white_check_mark: Requirements
 
@@ -77,6 +78,16 @@ $ npm install
 $ touch frontend/.env
 
 # Fill it with your frontend and backend ports by following the .env.example
+
+# Start your Nginx server and PHP server
+
+# 👇 For MacOS
+$ brew services start php@8.3 && brew services start nginx
+
+# 👇 For Windows
+$ sudo systemctl start php@8.3 && sudo systemctl start nginx
+
+# Start your MAMP / XAMP / LAMP server
 
 # Run the project
 $ npm start

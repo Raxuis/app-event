@@ -28,7 +28,7 @@ export default (eventInfos) => {
       </div>
       <div class="flex flex-col space-y-2 mt-2 ${eventType !== 'custom' ? 'hidden' : ''}">
         <label for="size" class="text-gray-600">Places number</label>
-        <input type="number" name="size" id="size" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter size" value="${eventSize}"/>
+        <input type="text" name="size" id="size" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333] edit-quantity" placeholder="Enter size" value="${eventSize}"/>
       </div>
       <div class="flex flex-col space-y-2 mt-2">
         <label for="place" class="text-gray-600">Place</label>

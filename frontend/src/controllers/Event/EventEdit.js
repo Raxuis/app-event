@@ -102,6 +102,15 @@ class Event {
     const submitButton = document.querySelector('.submit-edit');
     const cancelButton = document.querySelector('.cancel-edit');
     const form = document.querySelector('.form-edit');
+    const numberInput = document.querySelector('.edit-quantity');
+
+    if (numberInput) {
+      numberInput.addEventListener('input', () => {
+        let { value } = numberInput;
+        value = value.replace(/[^0-9]/g, '');
+        numberInput.value = value;
+      });
+    }
 
     if (cancelButton) {
       cancelButton.addEventListener('click', (e) => {

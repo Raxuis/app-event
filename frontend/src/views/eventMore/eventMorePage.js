@@ -49,7 +49,7 @@ export default (event, userId) => {
   };
 
   return (`
-    <div class="flex flex-wrap -mx-3 mb-5 w-full">
+    <div class="flex flex-wrap -mx-3 mb-5 w-full *:cursor-default">
       <div class="w-full px-3 mb-6 mx-auto">
         <div class="relative flex-[1_auto] flex flex-col break-words min-w-0 bg-clip-border rounded-[.95rem] bg-white m-5">
           <div class="relative flex flex-col min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">

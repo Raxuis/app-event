@@ -8,6 +8,8 @@ import Models from './controllers/EventCreation/Models';
 import Account from './controllers/User/Account';
 import './index.css';
 
+// Private routes require to be connected
+// LogInRoute Routes require to not be connected
 const routes = [
   {
     url: '/',

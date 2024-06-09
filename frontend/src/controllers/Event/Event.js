@@ -47,7 +47,7 @@ class Event {
   render() {
     return `
     ${viewNav(this.userId)}
-    <div class="container mx-auto h-screen px-6 py-2 sm:p-6 sm:mt-4">
+    <div class="w-screen flex items-center justify-center px-6 py-2 sm:p-6 sm:mt-4">
     ${viewEvent(this.response, this.userId)}
     </div>`;
   }

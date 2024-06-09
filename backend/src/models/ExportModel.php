@@ -9,7 +9,7 @@ class ExportModel extends SqlConnect
   public function exportToCSVPDF($eventId, $format)
   {
     $stmt = $this->db->prepare(
-      "SELECT e.name as event_name, e.created_at as created_at, e.place as place, e.time as time,e.description as description, u.firstname as author_firstname, u.lastname as author_lastname
+      "SELECT e.name as event_name, e.created_at as created_at, e.place as place, e.time as time,e.description as description, u.firstname as author_firstname, u.lastname as author_lastname, e.image as image_url
       FROM events as e
       INNER JOIN users as u ON e.user_id = u.id
       LEFT JOIN custom_fields AS cf ON cf.event_id = e.id
@@ -64,7 +64,11 @@ class ExportModel extends SqlConnect
 
   private function generatePDF($event)
   {
+    // Check if the image URL is present and set the image HTML accordingly
+    $imageHtml = !empty($event['image_url']) ? "<img src=\"{$event['image_url']}\" style=\"width:100%;\"/>" : "";
+
     $html = "
+        $imageHtml
         <h1>{$event['event_name']}</h1>
         <p><strong>Author:</strong> {$event['author_firstname']} {$event['author_lastname']}</p>
         <p><strong>Date Created:</strong> {$event['created_at']}</p>
@@ -72,6 +76,7 @@ class ExportModel extends SqlConnect
         <p><strong>Place:</strong> {$event['place']}</p>
         <p><strong>Time:</strong> {$event['time']}</p>
         ";
+
     $options = new \Dompdf\Options();
     $options->set('isHtml5ParserEnabled', true);
     $options->set('isRemoteEnabled', true);

@@ -9,7 +9,7 @@ class ExportModel extends SqlConnect
   public function exportToCSVPDF($eventId, $format)
   {
     $stmt = $this->db->prepare(
-      "SELECT e.name as event_name, e.created_at as created_at, e.place as place, e.time as time,e.description as description, u.firstname as author_firstname, u.lastname as author_lastname, e.image as image_url
+      "SELECT e.name as event_name, e.created_at as created_at, e.place as place, e.time as time, e.description as description, u.firstname as author_firstname, u.lastname as author_lastname, e.image as image_url
       FROM events as e
       INNER JOIN users as u ON e.user_id = u.id
       LEFT JOIN custom_fields AS cf ON cf.event_id = e.id
@@ -60,21 +60,40 @@ class ExportModel extends SqlConnect
     return $csvContent;
   }
 
-
-
   private function generatePDF($event)
   {
-    // Check if the image URL is present and set the image HTML accordingly
     $imageHtml = !empty($event['image_url']) ? "<img src=\"{$event['image_url']}\" style=\"width:100%;\"/>" : "";
 
+    // Defining HTML content with UTF-8 encoding and a font that supports emojis
     $html = "
-        $imageHtml
-        <h1>{$event['event_name']}</h1>
-        <p><strong>Author:</strong> {$event['author_firstname']} {$event['author_lastname']}</p>
-        <p><strong>Date Created:</strong> {$event['created_at']}</p>
-        <p><strong>Description:</strong> {$event['description']}</p>
-        <p><strong>Place:</strong> {$event['place']}</p>
-        <p><strong>Time:</strong> {$event['time']}</p>
+        <html>
+        <head>
+            <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+            <style>
+                @font-face {
+                    font-family: 'DejaVu Sans';
+                    font-style: normal;
+                    font-weight: normal;
+                    src: url('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/fonts/DejaVuSans.ttf') format('truetype');
+                }
+                body {
+                    font-family: 'DejaVu Sans', sans-serif;
+                }
+                img {
+                    width: 100%;
+                }
+            </style>
+        </head>
+        <body>
+            $imageHtml
+            <h1>{$event['event_name']}</h1>
+            <p><strong>Author:</strong> {$event['author_firstname']} {$event['author_lastname']}</p>
+            <p><strong>Date Created:</strong> {$event['created_at']}</p>
+            <p><strong>Description:</strong> {$event['description']}</p>
+            <p><strong>Place:</strong> {$event['place']}</p>
+            <p><strong>Time:</strong> {$event['time']}</p>
+        </body>
+        </html>
         ";
 
     $options = new \Dompdf\Options();

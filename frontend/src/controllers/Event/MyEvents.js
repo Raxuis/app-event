@@ -12,17 +12,16 @@ import navFunction from '../../utils/navbar/navFunction';
 import getAll from '../../utils/getters/getAll';
 import getUserId from '../../utils/getters/getUserId';
 import Event from './Event';
+import getParams from '../../utils/getters/getParams';
 
 class MyEvents {
   constructor() {
     this.el = document.querySelector('#root');
     this.initialize();
     // 👇 This is to prevent issues when going back to the previous page
-    window.addEventListener('popstate', (event) => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const action = urlParams.get('action');
-      const eventId = event.state?.eventId;
-      const resourceId = event.state?.resourceId;
+    window.addEventListener('popstate', () => {
+      const { eventId, resourceId } = getParams();
+      const action = new URLSearchParams(window.location.search).get('action');
 
       // Handling different actions based on URL parameters
       if (action === 'more') {
@@ -36,6 +35,7 @@ class MyEvents {
       } else if (action === 'edit-resources') {
         this.navigateToEditResources(eventId, resourceId, false);
       }
+
       if (eventId) {
         this.navigateToEvent(eventId, false);
       }
@@ -44,10 +44,8 @@ class MyEvents {
 
   // Initializing method to set up the initial state
   async initialize() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const action = urlParams.get('action');
-    const eventId = urlParams.get('eventId');
-    const resourceId = urlParams.get('resourceId');
+    const { eventId, resourceId } = getParams();
+    const action = new URLSearchParams(window.location.search).get('action');
 
     this.userId = await getUserId();
 
@@ -142,6 +140,7 @@ class MyEvents {
     try {
       const exportDatas = {
         event_id: eventId,
+        // 👇 Format is either CSV or PDF
         format
       };
       const response = await axios.post(`http://localhost:${process.env.BACKEND_PORT}/export`, exportDatas, {
@@ -155,6 +154,7 @@ class MyEvents {
         const blob = new Blob([response.data], {
           type: format === 'csv' ? 'text/csv;charset=utf-8;' : 'application/pdf'
         });
+        // Creating an url to make the documents download
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
@@ -174,6 +174,7 @@ class MyEvents {
         user_id: this.userId,
         group_id: groupId,
         event_id: eventId,
+        // 👇 Either registered, canceled or accepted
         status
       };
       const response = await axios.put(`http://localhost:${process.env.BACKEND_PORT}/userinteraction`, eventData, {
@@ -196,6 +197,7 @@ class MyEvents {
           'Content-Type': 'application/json'
         }
       });
+      // Removing the event card from the DOM
       cardEvent.remove();
       return true;
     } catch (error) {

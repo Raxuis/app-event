@@ -9,18 +9,18 @@ class Controller
   protected array $body;
   protected string $className;
 
-  public function __construct($params)
+  public function __construct(array $params)
   {
     $this->className = $this->getCallerClassName();
     $this->params = $params;
     $this->reqMethod = strtolower($_SERVER['REQUEST_METHOD']);
-    $this->body = (array) json_decode(file_get_contents('php://input'));
+    $this->body = (array) json_decode(file_get_contents('php://input'), true);
 
     $this->header();
     $this->ifMethodExist();
   }
 
-  protected function getCallerClassName()
+  protected function getCallerClassName(): string
   {
     $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2);
 
@@ -34,7 +34,7 @@ class Controller
     return 'Unknown';
   }
 
-  protected function header()
+  protected function header(): void
   {
     header('Access-Control-Allow-Origin: *');
     header("Access-Control-Allow-Headers: Content-Type");
@@ -47,7 +47,7 @@ class Controller
     }
   }
 
-  protected function ifMethodExist()
+  protected function ifMethodExist(): void
   {
     $method = $this->reqMethod . '' . $this->className;
 
@@ -65,7 +65,8 @@ class Controller
 
     return;
   }
-  protected function sanitizeInput($data)
+
+  protected function sanitizeInput(array $data): array
   {
     $sanitizedData = [];
     foreach ($data as $key => $value) {
@@ -90,7 +91,7 @@ class Controller
     return $data;
   }
 
-  protected function respond(int $statusCode, array $data)
+  protected function respond(int $statusCode, array $data): void
   {
     header("HTTP/1.0 $statusCode");
     echo json_encode($data);

@@ -14,7 +14,7 @@ class UserEvents extends Controller
 
     parent::__construct($params);
   }
-  public function getUserEvents()
+  protected function getUserEvents()
   {
     $userEvents = $this->event->getUserEvents(intval($this->params['user_id']));
     return $this->sanitizeOutput($userEvents);

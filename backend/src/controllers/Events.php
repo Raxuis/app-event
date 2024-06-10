@@ -15,7 +15,7 @@ class Events extends Controller
     parent::__construct($params);
   }
 
-  protected function getEvents()
+  public function getEvents()
   {
     $vents = $this->events->getAll();
     return $this->sanitizeOutput($vents);

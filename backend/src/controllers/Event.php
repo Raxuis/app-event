@@ -14,26 +14,26 @@ class Event extends Controller
     parent::__construct($params);
   }
 
-  public function postEvent()
+  protected function postEvent(): array
   {
     $body = $this->sanitizeInput($this->body);
-    $this->event->add($body);
+    return $this->event->add($body);
   }
 
-  public function putEvent()
+  protected function putEvent(): void
   {
     $eventId = intval($this->params['id']);
     $body = $this->sanitizeInput($this->body);
-    $result = $this->event->update($eventId, $body);
+    $this->event->update($eventId, $body);
   }
 
-  public function deleteEvent()
+  protected function deleteEvent(): void
   {
     $eventId = intval($this->params['id']);
     $this->event->delete($eventId);
   }
 
-  public function getEvent()
+  public function getEvent(): array
   {
     $eventId = intval($this->params['id']);
     return $this->event->get($eventId);

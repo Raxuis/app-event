@@ -14,7 +14,7 @@ class User extends Controller
     parent::__construct($params);
   }
 
-  public function postUser()
+  protected function postUser()
   {
     try {
       $body = (array) $this->sanitizeInput($this->body);
@@ -25,17 +25,17 @@ class User extends Controller
     }
   }
 
-  public function deleteUser()
+  protected function deleteUser()
   {
-      $this->user->delete(intval($this->params['id']));
+    $this->user->delete(intval($this->params['id']));
   }
 
   public function getUser()
   {
-      return $this->sanitizeOutput($this->user->get(intval($this->params['id'])));
+    return $this->sanitizeOutput($this->user->get(intval($this->params['id'])));
   }
 
-  public function putUser()
+  protected function putUser()
   {
     try {
       $body = $this->sanitizeInput($this->body);

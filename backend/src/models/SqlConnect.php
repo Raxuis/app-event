@@ -31,7 +31,7 @@ class SqlConnect
     $this->db->setAttribute(PDO::ATTR_PERSISTENT, false);
   }
 
-  public function transformDataInDot($data): array
+  protected function transformDataInDot($data): array
   {
     $dataFormatted = [];
 

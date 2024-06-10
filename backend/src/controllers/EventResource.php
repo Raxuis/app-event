@@ -20,7 +20,7 @@ class EventResource extends Controller
     return $this->sanitizeOutput($resource);
   }
 
-  public function postEventResource()
+  protected function postEventResource()
   {
     $body = $this->sanitizeInput((array) json_decode(file_get_contents('php://input'), true));
 
@@ -41,12 +41,12 @@ class EventResource extends Controller
     }
   }
 
-  public function deleteEventResource()
+  protected function deleteEventResource()
   {
     return $this->event_resource->delete(intval($this->params['id']));
   }
 
-  public function putEventResource()
+  protected function putEventResource()
   {
     $body = $this->sanitizeInput((array) json_decode(file_get_contents('php://input'), true));
 

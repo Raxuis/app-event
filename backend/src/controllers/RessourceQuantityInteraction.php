@@ -15,7 +15,7 @@ class RessourceQuantityInteraction extends Controller
 
     parent::__construct($params);
   }
-  public function putRessourceQuantityInteraction()
+  protected function putRessourceQuantityInteraction()
   {
     try {
       $result = $this->event_resource->updateRessourceQuantity($this->body);

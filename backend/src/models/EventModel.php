@@ -21,6 +21,7 @@ class EventModel extends SqlConnect
     }
   }
 
+  // Passing array &$data => The data for the event, passed by reference to modify the original array.
   private function handleGroupCreation(array &$data): array
   {
     // Checking if the number of guests is bigger than the number of places
@@ -40,6 +41,7 @@ class EventModel extends SqlConnect
     $groupStmt->execute(['group_name' => $data['group_name']]);
     $data['group_id'] = $this->getLastGroupId()['id'];
   }
+
   private function addUsersToGroup(array $data): void
   {
     foreach ($data['user_ids'] as $userId) {
@@ -415,7 +417,7 @@ class EventModel extends SqlConnect
       ]);
     }
   }
-  protected function getGroupIdByEventId(int $eventId): int
+  private function getGroupIdByEventId(int $eventId): int
   {
     $req = $this->db->prepare("SELECT group_id FROM events WHERE id = :event_id");
     $req->execute(['event_id' => $eventId]);

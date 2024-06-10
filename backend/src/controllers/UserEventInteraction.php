@@ -15,7 +15,7 @@ class UserEventInteraction extends Controller
 
     parent::__construct($params);
   }
-  public function putUserEventInteraction()
+  protected function putUserEventInteraction()
   {
     try {
       $sanitizedData = $this->sanitizeInput($this->body);

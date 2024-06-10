@@ -15,7 +15,7 @@ class Auth extends Controller
         parent::__construct($params);
     }
 
-    public function postAuth()
+    protected function postAuth()
     {
         return $this->user->userVerification($this->body);
     }

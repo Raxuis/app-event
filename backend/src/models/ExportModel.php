@@ -6,7 +6,7 @@ use PDO;
 
 class ExportModel extends SqlConnect
 {
-  public function exportToCSVPDF($eventId, $format)
+  public function exportToCSVPDF(int $eventId, string $format)
   {
     $stmt = $this->db->prepare(
       "SELECT e.name as event_name, e.created_at as created_at, e.place as place, e.time as time, e.description as description, u.firstname as author_firstname, u.lastname as author_lastname, e.image as image_url
@@ -15,7 +15,7 @@ class ExportModel extends SqlConnect
       LEFT JOIN custom_fields AS cf ON cf.event_id = e.id
       WHERE e.id = :eventId"
     );
-    $stmt->execute(['eventId' => $eventId]);
+    $stmt->execute(['eventId' => (int) $eventId]);
     $event = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$event) {
@@ -31,38 +31,38 @@ class ExportModel extends SqlConnect
     }
   }
 
-  private function generateCSV($event)
+  private function generateCSV(array $event): string
   {
     $csvData = [
-      ['Event Name', $event['event_name']],
-      ['Author', $event['author_firstname'] . ' ' . $event['author_lastname']],
-      ['Date Created', $event['created_at']],
-      ['Description', $event['description']],
-      ['Place', $event['place']],
-      ['Time', $event['time']]
+      ['Event Name', (string) $event['event_name']],
+      ['Author', (string) $event['author_firstname'] . ' ' . (string) $event['author_lastname']],
+      ['Date Created', (string) $event['created_at']],
+      ['Description', (string) $event['description']],
+      ['Place', (string) $event['place']],
+      ['Time', (string) $event['time']]
     ];
 
     // Use output buffering to capture CSV output
     ob_start();
     $output = fopen('php://output', 'w');
-    for ($i = 0; $i <= count($csvData) - 1; $i++) {
+
+    foreach ($csvData as $row) {
       // Write each row to the CSV
-      fputcsv($output, $csvData[$i]);
+      fputcsv($output, $row);
     }
+
     fclose($output);
 
-    // Capture the CSV content and ensure no extra content => There was a extra null row at the end
+    // Capture the CSV content
     $csvContent = ob_get_clean();
 
-    // Delete extra blank lines
-    $csvContent = trim($csvContent);
-
-    return $csvContent;
+    // Trim to remove any extra whitespace or blank lines
+    return trim($csvContent);
   }
 
-  private function generatePDF($event)
+  private function generatePDF(array $event)
   {
-    $imageHtml = !empty($event['image_url']) ? "<img src=\"{$event['image_url']}\" style=\"width:100%;\"/>" : "";
+    (string) $imageHtml = !empty($event['image_url']) ? "<img src=\"{$event['image_url']}\" style=\"width:100%;\"/>" : "";
 
     // Defining HTML content with UTF-8 encoding and a font that supports emojis
     $html = "

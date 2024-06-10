@@ -88,6 +88,7 @@ const Model = class {
     if (requiredFields.every((field) => formData.get(field)) && this.ms1.getSelects().length > 0) {
       try {
         const inputDate = new Date(formData.get('time'));
+        // Formatting the date to correspond to the database timestamp format
         const formattedDate = `${inputDate.getFullYear()}-${String(inputDate.getMonth() + 1).padStart(2, '0')}-${String(inputDate.getDate()).padStart(2, '0')} ${String(inputDate.getHours()).padStart(2, '0')}:${String(inputDate.getMinutes()).padStart(2, '0')}:${String(inputDate.getSeconds()).padStart(2, '0')}`;
 
         const selectedUserIds = this.ms1.getSelects();
@@ -107,6 +108,7 @@ const Model = class {
           model_id: response.id
         };
         if (imageUrl) {
+          // Verifying thanks to the library validator
           if (isURL(imageUrl)) {
             eventData.image = imageUrl;
           } else {

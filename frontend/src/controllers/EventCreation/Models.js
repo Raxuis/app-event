@@ -49,6 +49,8 @@ class AllModelsController {
     const submitBtn = document.querySelector('.submit-dialog');
     const form = document.querySelector('.form-dialog');
     const nav = document.querySelector('.nav');
+    // Using variable populated to check whether or not
+    // the dialog select is already populated to avoid issues
     let populated = false;
     activationBtn.addEventListener('click', async () => {
       const users = await getAll('users');

@@ -38,7 +38,9 @@ class Event {
         .map((user) => ({
           text: user.email,
           value: user.id,
+          // Select the guests
           selected: selectedUserIds.includes(user.id),
+          // 👇 If the user logged id is the same as the guest id making sure it's present
           guest_status: this.response.guests.find((guest) => guest.guest_id === user.id)?.guest_status || 'registered'
         }));
 
@@ -61,6 +63,7 @@ class Event {
     flatpickr('#datepicker', {
       defaultDate: date,
       locale: {
+        // To make week start at Monday
         firstDayOfWeek: 1
       }
     });
@@ -124,6 +127,7 @@ class Event {
           const fieldName = field.querySelector('input[name^="name-"]').value;
           const fieldValue = field.querySelector('input[name^="value-"]').value;
           if (fieldName && fieldValue) {
+            // Adding custom fields if present
             customFieldsArray.push({ name: fieldName, value: fieldValue });
           }
         });

@@ -79,7 +79,7 @@ export default (event, userId, specificGuests = null) => {
       </div>
       <div class="bg-white flex flex-col flex-1 justify-between">
         <div class="flex items-center justify-between px-4 pt-4">
-        <div class="flex gap-4">
+        <div class="flex gap-x-2 flex-wrap">
           ${userId !== authorId ? `
             <div class="flex gap-2 items-center">
               ${renderGuestStatus()}

@@ -51,7 +51,7 @@ export default () => (`
               </div>
             </div>
               <div class="!mt-10">
-                <button type="submit" class="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white duration-300 bg-[#333] hover:bg-black focus:outline-none">
+                <button type="submit" class="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white duration-300 bg-[#333] hover:bg-black-900 focus:outline-none">
                   Register
                 </button>
               <div class="error-message w-full text-red-500 pt-2"></div>

@@ -141,7 +141,7 @@ export default (isLogged) => (`
   <footer>
     <div class="container mx-auto max-sm:px-8">
       <div class="w-full flex flex-col md:flex-row py-6">
-        <div class="flex-1 mb-6 text-black">
+        <div class="flex-1 mb-6 text-black-900">
           <a href="/">
           <img src=${logo} class="h-8 fill-current inline"/>
           </a>

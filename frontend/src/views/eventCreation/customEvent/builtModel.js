@@ -6,7 +6,7 @@ export default () => (`
     </svg>
   </p>
 </div>
-<div class="dialog fixed left-0 top-0 bg-black backdrop-blur w-screen h-screen justify-center items-center opacity-0 hidden transition-opacity duration-500">
+<div class="dialog fixed left-0 top-0 bg-black-900 bg-opacity-50 w-screen h-screen justify-center items-center opacity-0 hidden transition-opacity duration-500">
   <div class="bg-white rounded shadow-md p-8 w-full sm:w-3/4 md:w-1/2 lg:w-[35%] xl:w-1/4 max-sm:mx-2 flex overflow-hidden flex-col">
     <form class="flex flex-col space-y-4 form-dialog">
       <div>

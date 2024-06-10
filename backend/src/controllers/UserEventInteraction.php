@@ -21,8 +21,7 @@ class UserEventInteraction extends Controller
       $sanitizedData = $this->sanitizeInput($this->body);
 
       $result = $this->event->userEventInteraction($sanitizedData);
-      $sanitizedOutput = $this->sanitizeOutput($result);
-      return $this->respond(200, $sanitizedOutput);
+      return $this->sanitizeOutput($result);
     } catch (Exception $e) {
       $this->respond(500, ['error' => 'An error occurred while processing the request.' . $e->getMessage()]);
     }

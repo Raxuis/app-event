@@ -35,12 +35,7 @@ class RessourceQuantityInteraction extends Controller
         ]);
       }
     } catch (Exception $e) {
-      header('Content-Type: application/json');
-      header('HTTP/1.1 500 Internal Server Error');
-      echo json_encode([
-        'status' => 'error',
-        'message' => 'Error updating resource quantity: ' . $e->getMessage()
-      ]);
+      $this->respond(500, ['message' => 'Internal Error' . $e->getMessage()]);
     }
   }
 }

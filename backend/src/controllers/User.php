@@ -19,31 +19,20 @@ class User extends Controller
     try {
       $body = (array) $this->sanitizeInput($this->body);
       $this->user->add($body);
-      $lastUser = $this->user->getLast();
-      return $this->respond(201, $this->sanitizeOutput($lastUser));
+      return $this->sanitizeOutput($this->user->getLast());
     } catch (Exception $e) {
-      return $this->handleException($e);
+      $this->respond(500, ['message' => 'Error posting user: ' . $e->getMessage()]);
     }
   }
 
   public function deleteUser()
   {
-    try {
       $this->user->delete(intval($this->params['id']));
-      return $this->respond(200, ['success' => 'User deleted successfully']);
-    } catch (Exception $e) {
-      return $this->handleException($e);
-    }
   }
 
   public function getUser()
   {
-    try {
-      $user = $this->user->get(intval($this->params['id']));
-      return $this->respond(200, $this->sanitizeOutput($user));
-    } catch (Exception $e) {
-      return $this->handleException($e);
-    }
+      return $this->sanitizeOutput($this->user->get(intval($this->params['id'])));
   }
 
   public function putUser()
@@ -54,14 +43,7 @@ class User extends Controller
       $updatedUser = $this->user->get($this->body['id']);
       return $this->respond(200, $this->sanitizeOutput($updatedUser));
     } catch (Exception $e) {
-      return $this->handleException($e);
+      $this->respond(500, ['message' => 'Error updating user: ' . $e->getMessage()]);
     }
-  }
-
-  private function handleException(Exception $e)
-  {
-    $statusCode = $e->getCode() ? $e->getCode() : 500;
-    $message = $e->getMessage() ? $e->getMessage() : 'An error occurred';
-    return $this->respond($statusCode, ['error' => $message]);
   }
 }

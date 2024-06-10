@@ -20,12 +20,4 @@ class EventResources extends Controller
   {
     return $this->event_resources->getAll(intval($this->params['event_id']));
   }
-
-  public function postEventResources()
-  {
-    $body = $this->sanitizeInput((array) json_decode(file_get_contents('php://input')));
-    $this->event_resources->add($body);
-
-    return $this->event_resources->getLast();
-  }
 }

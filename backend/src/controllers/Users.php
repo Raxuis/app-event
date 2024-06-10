@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use Exception;
 
 class Users extends Controller
 {
@@ -17,9 +18,13 @@ class Users extends Controller
 
   public function postUsers()
   {
+  try {
     $body = $this->sanitizeInput($this->body);
     $this->users->add($body);
     return $this->sanitizeOutput($this->users->getLast());
+    } catch (Exception $e) {
+      $this->respond(500, ['error' => 'An error occurred while processing the request.' . $e->getMessage()]);
+    }
   }
 
   public function deleteUsers()

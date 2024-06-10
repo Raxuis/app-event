@@ -209,7 +209,7 @@ class MyEvents {
   async renderAllEvents(elements) {
     const html = `
     ${viewNav(this.userId)}
-      <div class="max-w-6xl mx-auto px-4">
+      <div class="max-w-6xl mx-auto px-2">
         ${viewEvents(elements, this.userId, this.verifSpecificGuests(elements))}
       </div>
     `;

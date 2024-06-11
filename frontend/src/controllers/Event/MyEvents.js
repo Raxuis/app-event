@@ -140,21 +140,21 @@ class MyEvents {
     try {
       const exportDatas = {
         event_id: eventId,
-        // 👇 Format is either CSV or PDF
         format
       };
+
       const response = await axios.post(`http://localhost:${process.env.BACKEND_PORT}/export`, exportDatas, {
         headers: {
           'Content-Type': 'application/json'
         },
-        responseType: 'blob' // This is important to correctly handle binary data => PDF was blank before adding it
+        responseType: 'blob' // Important for handling binary data
       });
 
       if (response.status === 200) {
         const blob = new Blob([response.data], {
           type: format === 'csv' ? 'text/csv;charset=utf-8;' : 'application/pdf'
         });
-        // Creating an url to make the documents download
+
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
@@ -164,7 +164,7 @@ class MyEvents {
         link.remove();
       }
     } catch (error) {
-      renderToastr('error', 'Error exporting event:', error);
+      renderToastr('error', 'Error exporting event:', error.message || error);
     }
   }
 

@@ -10,7 +10,7 @@ class UserModel extends SqlConnect
     public function add(array $data): void
     {
         try {
-            session_start(); // Start the session for sessions_id
+            session_start(); // Start the session for session_id
 
             $verif_query = "SELECT * FROM users WHERE email = :email";
             $verif_req = $this->db->prepare($verif_query);
@@ -126,7 +126,7 @@ class UserModel extends SqlConnect
             return [
                 'code' => '200',
                 'message' => 'Session OK',
-                'PHP_SESSID' => $user['session_id'],
+                'PHP_SESSID' => $user['session_id']
             ];
         } catch (Exception $e) {
             throw new Exception('Error verifying user: ' . $e->getMessage(), 500);

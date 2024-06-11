@@ -27,14 +27,16 @@ class Export extends Controller
     }
     try {
       $fileContent = $this->export->exportToCSVPDF($eventId, $format);
+
       if ($format === 'csv') {
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment; filename="event-' . $eventId . '.csv"');
+        echo $fileContent;
       } elseif ($format === 'pdf') {
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="event-' . $eventId . '.pdf"');
+        echo $fileContent;
       }
-      echo $fileContent;
     } catch (\Exception $e) {
       $this->respond(500, ['error' => 'Error exporting: ' . $e->getMessage()]);
     }

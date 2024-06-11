@@ -31,34 +31,32 @@ class ExportModel extends SqlConnect
     }
   }
 
+  // Still an issue with null value at the end of the file
   private function generateCSV(array $event): string
   {
     $csvData = [
-      ['Event Name', (string) $event['event_name']],
-      ['Author', (string) $event['author_firstname'] . ' ' . (string) $event['author_lastname']],
-      ['Date Created', (string) $event['created_at']],
-      ['Description', (string) $event['description']],
-      ['Place', (string) $event['place']],
-      ['Time', (string) $event['time']]
+      ['Event Name', $event['event_name']],
+      ['Author', $event['author_firstname'] . ' ' . $event['author_lastname']],
+      ['Date Created', $event['created_at']],
+      ['Description', $event['description']],
+      ['Place', $event['place']],
+      ['Time', $event['time']]
     ];
 
-    // Use output buffering to capture CSV output
-    ob_start();
+    ob_start(); // Start output buffering
     $output = fopen('php://output', 'w');
 
     foreach ($csvData as $row) {
-      // Write each row to the CSV
       fputcsv($output, $row);
     }
 
-    fclose($output);
+    fclose($output); // Closing the output stream
 
-    // Capture the CSV content
-    $csvContent = ob_get_clean();
+    $csvContent = ob_get_clean(); // Getting the buffered content and clean the buffer
 
-    // Trim to remove any extra whitespace or blank lines
-    return trim($csvContent);
+    return rtrim($csvContent, "\n"); // Using rtrim to remove trailing newline characters
   }
+
 
   private function generatePDF(array $event)
   {

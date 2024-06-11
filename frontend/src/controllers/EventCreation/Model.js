@@ -9,6 +9,7 @@ import navFunction from '../../utils/navbar/navFunction';
 import getAll from '../../utils/getters/getAll';
 import getById from '../../utils/getters/getById';
 import getUserId from '../../utils/getters/getUserId';
+import redirectionWithTimeouts from '../../utils/navigation/redirectionWithTimeouts';
 
 const Model = class {
   constructor(params) {
@@ -35,10 +36,7 @@ const Model = class {
       e.preventDefault();
       const response = await this.formSubmit(form);
       if (response === true) {
-        const url = new URL(window.location);
-        url.searchParams.delete('modelId');
-        window.history.replaceState({}, '', url);
-        this.run();
+        redirectionWithTimeouts('models', 3000);
       }
     };
 

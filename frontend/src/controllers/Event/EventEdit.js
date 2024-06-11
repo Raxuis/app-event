@@ -11,6 +11,7 @@ import navFunction from '../../utils/navbar/navFunction';
 import getAll from '../../utils/getters/getAll';
 import getUserId from '../../utils/getters/getUserId';
 import editQuantity from '../../utils/forms/quantity/editQuantity';
+import redirectionWithTimeouts from '../../utils/navigation/redirectionWithTimeouts';
 
 class Event {
   constructor(params) {
@@ -183,6 +184,7 @@ class Event {
             });
             if (response.status === 201) {
               renderToastr('success', 'Success', 'Event updated!');
+              redirectionWithTimeouts('my-events', 3000);
             } else {
               renderToastr('error', 'Error', 'An error occurred.');
             }

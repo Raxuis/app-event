@@ -29,19 +29,18 @@ export default (event, userId) => {
           <div class="p-6 flex flex-col">
             <h3 class="flex items-center m-2 ml-0 font-medium text-2xl/tight text-black-900 gap-2">Resources</h3>
             <div class="w-full flex justify-between max-sm:flex-col max-sm:space-y-2">
-              <a class="allocate-resources inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-electric-violet-200 h-9 px-4 py-2 gap-2 duration-300">
+              <a class="allocate-resources inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-electric-violet-200 h-9 px-4 py-2 gap-2 duration-300 cursor-pointer">
                 Allocate resource
                 <lord-icon class="size-5" src="https://cdn.lordicon.com/iawrhwdo.json" trigger="hover" state="morph-coins"></lord-icon>
               </a>
               ${eventResources.length > 0 ? `
-                <a class="check-resources inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-electric-violet-200 h-9 px-4 py-2 gap-2 duration-300">
+                <a class="check-resources inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-electric-violet-200 h-9 px-4 py-2 gap-2 duration-300 cursor-pointer">
                   Check resources
                   <lord-icon class="size-5" src="https://cdn.lordicon.com/wyqtxzeh.json" trigger="hover"></lord-icon>
                 </a>` : `
-                <h3 class="flex items-center m-2 ml-0 font-medium text-lg/tight text-black-900 cursor-default gap-2">
+                <button disabled class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-electric-violet-200 h-9 px-4 py-2 duration-300">
                   You have no resource, please allocate one first.
-                  <lord-icon src="https://cdn.lordicon.com/nkfxhqqr.json" trigger="hover" state="morph-destroyed" class="size-8 sm:size-6"></lord-icon>
-                </h3>`}
+                </button>`}
             </div>
           </div>
         </div>

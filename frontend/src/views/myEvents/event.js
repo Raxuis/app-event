@@ -47,7 +47,7 @@ export default (event, userId, specificGuests = null) => {
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cancel-${eventId} cursor-pointer size-6 lucide lucide-ban"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>
           `;
         } if (guest.guest_status === 'canceled') {
-          return '<span class="text-center align-baseline inline-flex py-1.5 px-6 rounded-full mr-auto items-center font-semibold text-[.95rem] leading-none text-danger bg-danger-light">Canceled</span>';
+          return '<span class="text-center align-baseline inline-flex items-center text-[.95rem] leading-none text-danger pr-3">Canceled</span>';
         }
         return `
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="decline-${eventId} cursor-pointer size-6 lucide lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>

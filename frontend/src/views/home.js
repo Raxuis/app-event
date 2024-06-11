@@ -1,7 +1,7 @@
 import logo from '../assets/logo.png';
 import eventSvg from '../assets/events.svg';
 import worldSvg from '../assets/world.svg';
-import eventsEdits from '../assets/homepage-bento/events-edits.webp';
+import eventResources from '../assets/homepage-bento/event-resources.webp';
 import eventsModels from '../assets/homepage-bento/events-models.webp';
 import peopleInvitations from '../assets/homepage-bento/people-invitations.webp';
 import safety from '../assets/homepage-bento/safety.webp';
@@ -83,7 +83,7 @@ export default (isLogged) => (`
               class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
           </div>
 
-          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Safe Events</span>
+          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Safe Events Planner</span>
       </div>
       <div
           class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
@@ -93,7 +93,7 @@ export default (isLogged) => (`
               class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
           </div>
 
-          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Events Models</span>
+          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Homemade Event Models</span>
       </div>
       <div
           class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
@@ -103,17 +103,17 @@ export default (isLogged) => (`
               class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
           </div>
 
-          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">People Invitations</span>
+          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Eased Guest Invitations</span>
       </div>
       <div
           class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
-          <img src=${eventsEdits} loading="lazy" alt="Events Edits" class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
+          <img src=${eventResources} loading="lazy" alt="Events Resources Management" class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
 
           <div
               class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
           </div>
 
-          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Events Edits</span>
+          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Eased Resources Management</span>
       </div>
   </div>
     </div>

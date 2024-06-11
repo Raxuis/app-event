@@ -11,7 +11,7 @@ import navFunction from '../../utils/navbar/navFunction';
 import getAll from '../../utils/getters/getAll';
 import getUserId from '../../utils/getters/getUserId';
 import editQuantity from '../../utils/forms/quantity/editQuantity';
-import redirectionWithTimeouts from '../../utils/navigation/redirectionWithTimeouts';
+import redirectionWithTimeout from '../../utils/navigation/redirectionWithTimeout';
 
 class Event {
   constructor(params) {
@@ -36,14 +36,15 @@ class Event {
       const selectedUserIds = this.response.guests.map((guest) => guest.guest_id);
       const userOptions = users
         .filter((user) => user.id !== this.userId)
-        .map((user) => ({
-          text: user.email,
-          value: user.id,
-          // Select the guests
-          selected: selectedUserIds.includes(user.id),
-          // 👇 If the user logged id is the same as the guest id making sure it's present
-          guest_status: this.response.guests.find((guest) => guest.guest_id === user.id)?.guest_status || 'registered'
-        }));
+        .map((user) => (
+          {
+            text: user.email,
+            value: user.id,
+            // Select the guests
+            selected: selectedUserIds.includes(user.id),
+            // 👇 If the user logged id is the same as the guest id, I'm making sure it's present
+            guest_status: this.response.guests.find((guest) => guest.guest_id === user.id)?.guest_status || 'registered'
+          }));
 
       this.ms1 = multipleSelect('#select1', {
         name: 'my-select',
@@ -93,7 +94,8 @@ class Event {
     }
 
     this.response.custom_fields.forEach((custom_field) => {
-      this.attachRemoveEventListener(`.remove-${custom_field.id}`);
+      const customFieldId = custom_field.id;
+      this.attachRemoveEventListener(`.remove-${customFieldId}`);
     });
   }
 
@@ -124,6 +126,7 @@ class Event {
         const customFieldsContainer = document.querySelector('.custom-field-edit');
         const customFieldsArray = [];
 
+        // Adding custom fields if present in the form
         customFieldsContainer.querySelectorAll('.flex.flex-col.space-y-2.mt-2').forEach((field) => {
           const fieldName = field.querySelector('input[name^="name-"]').value;
           const fieldValue = field.querySelector('input[name^="value-"]').value;
@@ -184,7 +187,7 @@ class Event {
             });
             if (response.status === 201) {
               renderToastr('success', 'Success', 'Event updated!');
-              redirectionWithTimeouts('my-events', 3000);
+              redirectionWithTimeout('my-events', 3000);
             } else {
               renderToastr('error', 'Error', 'An error occurred.');
             }

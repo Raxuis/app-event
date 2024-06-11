@@ -88,8 +88,9 @@ class MyEvents {
   verifSpecificGuests(elements) {
     const specificGuestsMap = {};
     elements.forEach((event) => {
-      if (event.author_id !== this.userId && Array.isArray(event.guests)) {
-        specificGuestsMap[event.event_id] = event.guests.filter(
+      const { author_id: authorId, guests, event_id: eventId } = event;
+      if (authorId !== this.userId && Array.isArray(guests)) {
+        specificGuestsMap[eventId] = guests.filter(
           (guest) => guest.guest_id === this.userId
         );
       }
@@ -99,39 +100,40 @@ class MyEvents {
 
   attachEventListeners(events) {
     events.forEach((event) => {
-      const deleteButton = document.querySelector(`.delete-${event.event_id}`);
-      const cardEvent = document.querySelector(`.card-${event.event_id}`);
-      const readMoreButton = document.querySelector(`.read-more-${event.event_id}`);
-      const editButton = document.querySelector(`.edit-${event.event_id}`);
-      const acceptButton = document.querySelector(`.accept-${event.event_id}`);
-      const declineButton = document.querySelector(`.decline-${event.event_id}`);
-      const cancelButton = document.querySelector(`.cancel-${event.event_id}`);
-      const exportCSVButton = document.querySelector(`.export-csv-${event.event_id}`);
-      const exportPDFButton = document.querySelector(`.export-pdf-${event.event_id}`);
+      const { event_id: eventId, group_id: groupId } = event;
+      const deleteButton = document.querySelector(`.delete-${eventId}`);
+      const cardEvent = document.querySelector(`.card-${eventId}`);
+      const readMoreButton = document.querySelector(`.read-more-${eventId}`);
+      const editButton = document.querySelector(`.edit-${eventId}`);
+      const acceptButton = document.querySelector(`.accept-${eventId}`);
+      const declineButton = document.querySelector(`.decline-${eventId}`);
+      const cancelButton = document.querySelector(`.cancel-${eventId}`);
+      const exportCSVButton = document.querySelector(`.export-csv-${eventId}`);
+      const exportPDFButton = document.querySelector(`.export-pdf-${eventId}`);
 
       if (deleteButton) {
-        deleteButton.addEventListener('click', () => this.deleteEvent(event.event_id, cardEvent));
+        deleteButton.addEventListener('click', () => this.deleteEvent(eventId, cardEvent));
       }
       if (readMoreButton) {
-        readMoreButton.addEventListener('click', () => this.navigateToEventDetail(event.event_id));
+        readMoreButton.addEventListener('click', () => this.navigateToEventDetail(eventId));
       }
       if (editButton) {
-        editButton.addEventListener('click', () => this.navigateToEventEdit(event.event_id));
+        editButton.addEventListener('click', () => this.navigateToEventEdit(eventId));
       }
       if (acceptButton) {
-        acceptButton.addEventListener('click', () => this.userInteraction(event.event_id, event.group_id, 'accepted'));
+        acceptButton.addEventListener('click', () => this.userInteraction(eventId, groupId, 'accepted'));
       }
       if (declineButton) {
-        declineButton.addEventListener('click', () => this.userInteraction(event.event_id, event.group_id, 'registered'));
+        declineButton.addEventListener('click', () => this.userInteraction(eventId, groupId, 'registered'));
       }
       if (cancelButton) {
-        cancelButton.addEventListener('click', () => this.userInteraction(event.event_id, event.group_id, 'canceled'));
+        cancelButton.addEventListener('click', () => this.userInteraction(eventId, groupId, 'canceled'));
       }
       if (exportCSVButton) {
-        exportCSVButton.addEventListener('click', () => this.exportEvent(event.event_id, 'csv'));
+        exportCSVButton.addEventListener('click', () => this.exportEvent(eventId, 'csv'));
       }
       if (exportPDFButton) {
-        exportPDFButton.addEventListener('click', () => this.exportEvent(event.event_id, 'pdf'));
+        exportPDFButton.addEventListener('click', () => this.exportEvent(eventId, 'pdf'));
       }
     });
   }
@@ -197,7 +199,7 @@ class MyEvents {
           'Content-Type': 'application/json'
         }
       });
-      // Removing the event card from the DOM
+      // 👇 Removing the event card from the DOM
       cardEvent.remove();
       return true;
     } catch (error) {
@@ -206,6 +208,7 @@ class MyEvents {
     }
   }
 
+  // Rendering if events
   async renderAllEvents(elements) {
     const html = `
     ${viewNav(this.userId)}
@@ -218,6 +221,7 @@ class MyEvents {
     this.attachEventListeners(elements);
   }
 
+  // Rendering if no events
   renderNoEvents() {
     const html = `
     ${viewNav(this.userId)}
@@ -228,6 +232,7 @@ class MyEvents {
     this.el.innerHTML = html;
   }
 
+  //  Navigating to different pages ⤵️
   navigateToEventDetail(eventId, pushState = true) {
     if (pushState) {
       // Updating the browser history state and URL with eventId

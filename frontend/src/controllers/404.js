@@ -9,7 +9,7 @@ const PageNotFound = class {
 
   render() {
     return `
-       ${view404()}
+      ${view404()}
     `;
   }
 

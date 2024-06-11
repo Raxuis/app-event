@@ -34,13 +34,17 @@ class Event {
   }
 
   attachEventListeners() {
-    const readMoreButton = document.querySelector(`.read-more-${this.params.eventId}`);
-    const editButton = document.querySelector(`.edit-${this.params.eventId}`);
+    const responseEventId = this.response.event_id;
+    const paramsEventId = this.params.eventId;
+
+    const readMoreButton = document.querySelector(`.read-more-${paramsEventId}`);
+    const editButton = document.querySelector(`.edit-${paramsEventId}`);
+
     if (readMoreButton) {
-      readMoreButton.addEventListener('click', () => this.navigateToEventDetail(this.response.event_id));
+      readMoreButton.addEventListener('click', () => this.navigateToEventDetail(responseEventId));
     }
     if (editButton) {
-      editButton.addEventListener('click', () => this.navigateToEventEdit(this.response.event_id));
+      editButton.addEventListener('click', () => this.navigateToEventEdit(responseEventId));
     }
   }
 

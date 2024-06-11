@@ -9,7 +9,7 @@ import navFunction from '../../utils/navbar/navFunction';
 import getAll from '../../utils/getters/getAll';
 import getById from '../../utils/getters/getById';
 import getUserId from '../../utils/getters/getUserId';
-import redirectionWithTimeouts from '../../utils/navigation/redirectionWithTimeouts';
+import redirectionWithTimeout from '../../utils/navigation/redirectionWithTimeout';
 
 const Model = class {
   constructor(params) {
@@ -36,7 +36,7 @@ const Model = class {
       e.preventDefault();
       const response = await this.formSubmit(form);
       if (response === true) {
-        redirectionWithTimeouts('models', 3000);
+        redirectionWithTimeout('models', 3000);
       }
     };
 
@@ -80,6 +80,7 @@ const Model = class {
 
   async formSubmit(elForm) {
     const errorText = document.querySelector('.error-text-model');
+    // Using formData to access form values easily
     const formData = new FormData(elForm);
 
     const requiredFields = ['name', 'description', 'place', 'time', 'group-name'];

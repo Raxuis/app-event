@@ -1,6 +1,8 @@
 import editResourceSvg from '../../../assets/resources/edit-resource.svg';
 
-export default (ressource) => (`
+export default (ressource) => {
+  const { name, cost } = ressource;
+  return (`
 <div class="text-[#333] flex max-w-sm:flex-col items-center justify-center">
       <div class="sm:min-h-screen max-sm:mt-10 flex flex-col items-center justify-center px-4">
         <div class="grid md:grid-cols-2 items-center gap-4 max-w-7xl w-full">
@@ -12,7 +14,7 @@ export default (ressource) => (`
           </div>
           <div class="flex flex-col space-y-2">
             <label for="name" class="text-gray-600">Name<span class="text-red-500 pl-3 email-account-span"></span></label>
-            <input type="text" name="name" id="name" class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333] resource-name" placeholder="Enter name"value="${ressource.name}"/>
+            <input type="text" name="name" id="name" class="w-full text-sm border border-gray-300 px-4 py-3 rounded-md outline-[#333] resource-name" placeholder="Enter name"value="${name}"/>
           </div>
           <div class="flex max-sm:flex-col max-sm:space-y-6 justify-between gap-x-5">
           <div class="flex flex-col w-full sm:w-1/2">
@@ -24,13 +26,14 @@ export default (ressource) => (`
           <div class="flex flex-col w-full sm:w-1/2">
             <label class="text-sm mb-2 block" for="cost">Cost</label>
             <div class="relative flex items-center justify-center">
-              <input name="cost" type="text" required class="quantity-input-edit-resource text-sm w-full border border-gray-300 px-2 py-1.5 rounded-md outline-[#333]" placeholder="Enter cost" value="${ressource.cost}" />
+              <input name="cost" type="text" required class="quantity-input-edit-resource text-sm w-full border border-gray-300 px-2 py-1.5 rounded-md outline-[#333]" placeholder="Enter cost" 
+              value="${cost}" />
             </div>
             </div>
           </div>
           <div class="!mt-4 space-y-4">
           <a class="go-back-edit-resource cursor-pointer w-fit font-medium text-electric-violet-600 underline-offset-2 hover:underline focus:underline focus:outline-none">
-           Go back
+          Go back
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2.5" aria-hidden="true" class="inline size-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>
@@ -48,3 +51,4 @@ export default (ressource) => (`
       </div>
     </div>
 `);
+};

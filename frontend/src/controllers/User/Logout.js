@@ -8,6 +8,7 @@ const Logout = class {
   }
 
   logOutUser() {
+    // Removing the session_id from cookies
     Cookies.remove('PHP_SESSID');
     window.location.href = '/';
   }

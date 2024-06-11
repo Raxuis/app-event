@@ -1,3 +1,5 @@
+import loginSvg from '../../assets/account/login.svg';
+
 export default () => (`
 <div class="text-[#333] flex max-w-sm:flex-col items-center justify-center">
       <div class="min-h-screen flex flex-col items-center justify-center py-6 px-4">
@@ -37,7 +39,7 @@ export default () => (`
             </form>
           </div>
           <div class="lg:h-[400px] md:h-[300px] max-md:mt-10">
-            <img src="https://readymadeui.com/login-image.webp" class="w-full h-full object-cover" alt="Dining Experience" />
+            <img src="${loginSvg}" class="w-full h-full object-cover" alt="Dining Experience" />
           </div>
         </div>
       </div>

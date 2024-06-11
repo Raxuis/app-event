@@ -2,7 +2,7 @@ import regiserSvg from '../../assets/account/register.svg';
 
 export default () => (`
 <div class="text-[#333] flex max-w-sm:flex-col items-center justify-center">
-      <div class="min-h-screen flex flex-col items-center justify-center py-6 px-4">
+      <div class="min-h-screen flex flex-col items-center justify-center sm:justify-start py-6 px-4">
         <div class="grid md:grid-cols-2 items-center gap-4 max-w-7xl w-full">
           <div class="border border-gray-300 rounded-md p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] max-md:mx-auto">
             <form class="space-y-6 register-form" method="POST">
@@ -61,7 +61,7 @@ export default () => (`
               <p class="text-sm !mt-10 text-center">Already have an account? <a href="/login" class="text-blue-600 hover:underline ml-1 whitespace-nowrap">Login here</a></p>
             </form>
           </div>
-          <div class="lg:h-[400px] md:h-[300px] max-md:mt-10">
+          <div class="lg:h-[400px] md:h-[300px] max-sm:hidden">
             <img src="${regiserSvg}" class="w-full h-full object-cover" alt="Dining Experience" />
           </div>
         </div>

@@ -23,17 +23,16 @@ class MyEvents {
       const { eventId, resourceId } = getParams();
       const action = new URLSearchParams(window.location.search).get('action');
 
-      // Handling different actions based on URL parameters
-      if (action === 'more') {
-        this.navigateToEventDetail(eventId, false);
-      } else if (action === 'edit') {
-        this.navigateToEventEdit(eventId, false);
-      } else if (action === 'allocate-resources') {
-        this.navigateToAllocateResources(eventId, false);
-      } else if (action === 'check-resources') {
-        this.navigateToCheckResources(eventId, false);
-      } else if (action === 'edit-resources') {
-        this.navigateToEditResources(eventId, resourceId, false);
+      const actionMap = {
+        more: () => this.navigateToEventDetail(eventId, false),
+        edit: () => this.navigateToEventEdit(eventId, false),
+        'allocate-resources': () => this.navigateToAllocateResources(eventId, false),
+        'check-resources': () => this.navigateToCheckResources(eventId, false),
+        'edit-resources': () => this.navigateToEditResources(eventId, resourceId, false)
+      };
+
+      if (action && actionMap[action]) {
+        actionMap[action]();
       }
 
       if (eventId) {
@@ -50,16 +49,16 @@ class MyEvents {
     this.userId = await getUserId();
 
     if (eventId) {
-      if (action === 'more') {
-        this.navigateToEventDetail(eventId);
-      } else if (action === 'edit') {
-        this.navigateToEventEdit(eventId);
-      } else if (action === 'allocate-resources') {
-        this.navigateToAllocateResources(eventId);
-      } else if (action === 'edit-resources') {
-        this.navigateToEditResources(eventId, resourceId);
-      } else if (action === 'check-resources') {
-        this.navigateToCheckResources(eventId);
+      const actionMap = {
+        more: () => this.navigateToEventDetail(eventId),
+        edit: () => this.navigateToEventEdit(eventId),
+        'allocate-resources': () => this.navigateToAllocateResources(eventId),
+        'edit-resources': () => this.navigateToEditResources(eventId, resourceId),
+        'check-resources': () => this.navigateToCheckResources(eventId)
+      };
+
+      if (action && actionMap[action]) {
+        actionMap[action]();
       } else {
         this.navigateToEvent(eventId);
       }
@@ -99,42 +98,28 @@ class MyEvents {
   }
 
   attachEventListeners(events) {
+    const actionMap = {
+      delete: (eventId, cardEvent) => this.deleteEvent(eventId, cardEvent),
+      'read-more': (eventId) => this.navigateToEventDetail(eventId),
+      edit: (eventId) => this.navigateToEventEdit(eventId),
+      accept: (eventId, groupId) => this.userInteraction(eventId, groupId, 'accepted'),
+      decline: (eventId, groupId) => this.userInteraction(eventId, groupId, 'registered'),
+      cancel: (eventId, groupId) => this.userInteraction(eventId, groupId, 'canceled'),
+      'export-csv': (eventId) => this.exportEvent(eventId, 'csv'),
+      'export-pdf': (eventId) => this.exportEvent(eventId, 'pdf')
+    };
+
     events.forEach((event) => {
       const { event_id: eventId, group_id: groupId } = event;
-      const deleteButton = document.querySelector(`.delete-${eventId}`);
       const cardEvent = document.querySelector(`.card-${eventId}`);
-      const readMoreButton = document.querySelector(`.read-more-${eventId}`);
-      const editButton = document.querySelector(`.edit-${eventId}`);
-      const acceptButton = document.querySelector(`.accept-${eventId}`);
-      const declineButton = document.querySelector(`.decline-${eventId}`);
-      const cancelButton = document.querySelector(`.cancel-${eventId}`);
-      const exportCSVButton = document.querySelector(`.export-csv-${eventId}`);
-      const exportPDFButton = document.querySelector(`.export-pdf-${eventId}`);
+      const prefixes = ['delete', 'card', 'read-more', 'edit', 'accept', 'decline', 'cancel', 'export-csv', 'export-pdf'];
 
-      if (deleteButton) {
-        deleteButton.addEventListener('click', () => this.deleteEvent(eventId, cardEvent));
-      }
-      if (readMoreButton) {
-        readMoreButton.addEventListener('click', () => this.navigateToEventDetail(eventId));
-      }
-      if (editButton) {
-        editButton.addEventListener('click', () => this.navigateToEventEdit(eventId));
-      }
-      if (acceptButton) {
-        acceptButton.addEventListener('click', () => this.userInteraction(eventId, groupId, 'accepted'));
-      }
-      if (declineButton) {
-        declineButton.addEventListener('click', () => this.userInteraction(eventId, groupId, 'registered'));
-      }
-      if (cancelButton) {
-        cancelButton.addEventListener('click', () => this.userInteraction(eventId, groupId, 'canceled'));
-      }
-      if (exportCSVButton) {
-        exportCSVButton.addEventListener('click', () => this.exportEvent(eventId, 'csv'));
-      }
-      if (exportPDFButton) {
-        exportPDFButton.addEventListener('click', () => this.exportEvent(eventId, 'pdf'));
-      }
+      prefixes.forEach((prefix) => {
+        const element = document.querySelector(`.${prefix}-${eventId}`);
+        if (element && actionMap[prefix]) {
+          element.addEventListener('click', () => actionMap[prefix](eventId, groupId, cardEvent));
+        }
+      });
     });
   }
 

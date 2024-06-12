@@ -18,7 +18,6 @@ class MyEvents {
   constructor() {
     this.el = document.querySelector('#root');
     this.initialize();
-    // 👇 This is to prevent issues when going back to the previous page
     window.addEventListener('popstate', () => {
       const { eventId, resourceId } = getParams();
       const action = new URLSearchParams(window.location.search).get('action');
@@ -41,7 +40,6 @@ class MyEvents {
     });
   }
 
-  // Initializing method to set up the initial state
   async initialize() {
     const { eventId, resourceId } = getParams();
     const action = new URLSearchParams(window.location.search).get('action');
@@ -83,7 +81,6 @@ class MyEvents {
     });
   }
 
-  // 👇 Mapping guests from events
   verifSpecificGuests(elements) {
     const specificGuestsMap = {};
     elements.forEach((event) => {
@@ -110,14 +107,14 @@ class MyEvents {
     };
 
     events.forEach((event) => {
-      const { event_id: eventId, group_id: groupId } = event;
+      const { event_id: eventId } = event;
       const cardEvent = document.querySelector(`.card-${eventId}`);
       const prefixes = ['delete', 'card', 'read-more', 'edit', 'accept', 'decline', 'cancel', 'export-csv', 'export-pdf'];
 
       prefixes.forEach((prefix) => {
         const element = document.querySelector(`.${prefix}-${eventId}`);
         if (element && actionMap[prefix]) {
-          element.addEventListener('click', () => actionMap[prefix](eventId, groupId, cardEvent));
+          element.addEventListener('click', () => actionMap[prefix](eventId, cardEvent));
         }
       });
     });
@@ -184,8 +181,11 @@ class MyEvents {
           'Content-Type': 'application/json'
         }
       });
-      // 👇 Removing the event card from the DOM
-      cardEvent.remove();
+      if (cardEvent) {
+        // 👇 Removing the event card from the DOM
+        cardEvent.remove();
+        renderToastr('success', 'Deleted', `Deleted event n°${eventId}`);
+      }
       return true;
     } catch (error) {
       renderToastr('error', 'Error deleting event:', error);

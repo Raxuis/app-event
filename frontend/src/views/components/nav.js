@@ -22,7 +22,7 @@ export default (userId) => (`
     <div class="hidden md:flex items-center space-x-1">
     ${userId === null ? `
       <a href="/login" class="py-5 px-3">Login</a>
-      <a href="/register" class="py-2 px-3 bg-electric-violet-600 hover:opacity-80 text-white rounded transition duration-300">Register</a>
+      <a href="/register" class="bg-electric-violet-600 text-white items-center text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow hover:bg-electric-violet-500 h-9 px-4 py-2 hidden max-w-52 overflow-hidden whitespace-pre md:flex group relative w-full justify-center gap-2 rounded-md transition-all duration-300 ease-out hover:ring-2 hover:ring-electric-violet-500 hover:ring-offset-1">Register</a>
       ` : `
     <a href="/logout" class="py-5 px-3 text-gray-700 hover:text-gray-900 mr-2">Log Out</a>
       <lord-icon onclick="window.location.href='/account'" src="https://cdn.lordicon.com/bgebyztw.json" trigger="hover" stroke="bold" state="hover-looking-around" colors="primary:#000,secondary:#000" class="size-6 cursor-pointer"></lord-icon>`}

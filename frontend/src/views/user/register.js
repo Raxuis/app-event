@@ -1,4 +1,4 @@
-import regiserSvg from '../../assets/account/register.svg';
+import registerSvg from '../../assets/account/register.svg';
 
 export default () => (`
 <div class="text-[#333] flex max-w-sm:flex-col items-center justify-center">
@@ -62,7 +62,7 @@ export default () => (`
             </form>
           </div>
           <div class="lg:h-[400px] md:h-[300px] max-sm:hidden">
-            <img src="${regiserSvg}" class="w-full h-full object-cover" alt="Dining Experience" />
+            <img src="${registerSvg}" class="w-full h-full object-cover" alt="Dining Experience" />
           </div>
         </div>
       </div>

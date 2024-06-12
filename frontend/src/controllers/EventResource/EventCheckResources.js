@@ -37,10 +37,7 @@ class EventCheckResources {
 
   async checkEventResourcesLength() {
     this.response = await getAll('resources', this.params.eventId);
-    if (!this.response || Object.keys(this.response).length < 1) {
-      return false;
-    }
-    return true;
+    return this.response && Object.keys(this.response).length > 0;
   }
 
   attachEventListeners() {
@@ -52,35 +49,31 @@ class EventCheckResources {
 
   resourcesEventListeners(resources) {
     const resourceArray = Array.isArray(resources) ? resources : [resources];
-    resourceArray.forEach((resource) => {
-      const deleteButton = document.querySelector(`.delete-${resource.resource_id}`);
-      const editButton = document.querySelector(`.edit-${resource.resource_id}`);
-      const rowResource = document.querySelector(`.row-${resource.event_resource_id}`);
-      const incrementQuantityButton = document.querySelector(`.increment-${resource.event_resource_id}`);
-      const decrementQuantityButton = document.querySelector(`.decrement-${resource.event_resource_id}`);
 
-      if (deleteButton) {
-        deleteButton.addEventListener('click', () => this.deleteEventResource(resource.resource_id, rowResource));
-      }
-      if (editButton) {
-        editButton.addEventListener('click', () => this.editEventResource(resource.event_id, resource.resource_id));
-      }
-      if (incrementQuantityButton) {
-        incrementQuantityButton.addEventListener('click', () => this.incrementDecrementQuantity(resource.event_resource_id, 'plus'));
-      }
-      if (decrementQuantityButton) {
-        decrementQuantityButton.addEventListener('click', () => this.incrementDecrementQuantity(resource.event_resource_id, 'minus'));
-      }
+    resourceArray.forEach((resource) => {
+      const events = {
+        [`delete-${resource.resource_id}`]: () => this.deleteEventResource(resource.resource_id),
+        [`edit-${resource.resource_id}`]: () => this.editEventResource(resource.event_id, resource.resource_id),
+        [`increment-${resource.event_resource_id}`]: () => this.incrementDecrementQuantity(resource.event_resource_id, 'plus'),
+        [`decrement-${resource.event_resource_id}`]: () => this.incrementDecrementQuantity(resource.event_resource_id, 'minus')
+      };
+
+      Object.entries(events).forEach(([selector, handler]) => {
+        const element = document.querySelector(`.${selector}`);
+        if (element) {
+          element.addEventListener('click', handler);
+        }
+      });
     });
   }
 
   async incrementDecrementQuantity(resource, action) {
-    const datas = {
+    const data = {
       event_resource_id: resource,
       action
     };
     try {
-      const response = await axios.put(`http://localhost:${process.env.BACKEND_PORT}/resourcequantityinteraction`, datas);
+      const response = await axios.put(`http://localhost:${process.env.BACKEND_PORT}/resourcequantityinteraction`, data);
       if (response.status === 200) {
         this.init();
       } else if (response.status === 400) {
@@ -117,7 +110,7 @@ class EventCheckResources {
     return `
     ${viewNav(this.userId)}
     <div class="container mx-auto h-screen p-6 mt-4">
-    <div class="flex flex-wrap gap-4 max-sm:hidden">
+      <div class="flex flex-wrap gap-4 max-sm:hidden">
         <div class="flex-shrink-0">
           <button type="button" class="flex items-center justify-center px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto hover:bg-gray-100 go-back-check">
             <svg class="w-5 h-5 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

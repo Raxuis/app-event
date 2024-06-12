@@ -84,7 +84,9 @@ class MyEvents {
   verifSpecificGuests(elements) {
     const specificGuestsMap = {};
     elements.forEach((event) => {
-      const { author_id: authorId, guests, event_id: eventId } = event;
+      const {
+        author_id: authorId, guests, event_id: eventId
+      } = event;
       if (authorId !== this.userId && Array.isArray(guests)) {
         specificGuestsMap[eventId] = guests.filter(
           (guest) => guest.guest_id === this.userId
@@ -107,14 +109,18 @@ class MyEvents {
     };
 
     events.forEach((event) => {
-      const { event_id: eventId } = event;
+      const { event_id: eventId, group_id: groupId } = event;
       const cardEvent = document.querySelector(`.card-${eventId}`);
-      const prefixes = ['delete', 'card', 'read-more', 'edit', 'accept', 'decline', 'cancel', 'export-csv', 'export-pdf'];
+      const prefixes = ['delete', 'read-more', 'edit', 'accept', 'decline', 'cancel', 'export-csv', 'export-pdf'];
 
       prefixes.forEach((prefix) => {
         const element = document.querySelector(`.${prefix}-${eventId}`);
-        if (element && actionMap[prefix]) {
-          element.addEventListener('click', () => actionMap[prefix](eventId, cardEvent));
+        if (element) {
+          if (prefix === 'accept' || prefix === 'decline' || prefix === 'cancel') {
+            element.addEventListener('click', () => actionMap[prefix](eventId, groupId));
+          } else {
+            element.addEventListener('click', () => actionMap[prefix](eventId, cardEvent));
+          }
         }
       });
     });

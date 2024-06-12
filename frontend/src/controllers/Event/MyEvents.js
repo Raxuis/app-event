@@ -192,7 +192,7 @@ class MyEvents {
       if (cardEvent) {
         // 👇 Removing the event card from the DOM
         cardEvent.remove();
-        renderToastr('success', 'Deleted', `Deleted event n°${eventId}`);
+        renderToastr('success', 'Success', 'Event deleted successfully');
       }
       return true;
     } catch (error) {

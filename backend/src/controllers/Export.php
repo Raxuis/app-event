@@ -32,10 +32,12 @@ class Export extends Controller
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment; filename="event-' . $eventId . '.csv"');
         echo $fileContent;
+        exit; // Ensuring the script stops after outputting the CSV => To avoid null values at the end of the file
       } elseif ($format === 'pdf') {
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="event-' . $eventId . '.pdf"');
         echo $fileContent;
+        exit;
       }
     } catch (\Exception $e) {
       $this->respond(500, ['error' => 'Error exporting: ' . $e->getMessage()]);

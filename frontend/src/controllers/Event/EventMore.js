@@ -18,13 +18,8 @@ class EventMore {
     this.response = await getById('event', this.params);
     this.userId = await getUserId();
 
-    let userExists = false;
-
-    this.response.guests.forEach((guest) => {
-      if (guest.guest_id === this.userId) {
-        userExists = true;
-      }
-    });
+    // Array.prototype.some() function returns true when at least one value respects the condition
+    const userExists = this.response.guests.some((guest) => guest.guest_id === this.userId);
 
     if (userExists) {
       this.run();
@@ -37,7 +32,7 @@ class EventMore {
     return `
     ${viewNav(this.userId)}
     <div class="container mx-auto h-screen p-6 mt-4">
-    <div class="flex flex-wrap gap-4 max-sm:hidden">
+      <div class="flex flex-wrap gap-4 max-sm:hidden">
         <div class="flex-shrink-0">
           <button type="button" onclick="window.location.href='/my-events'" class="flex items-center justify-center px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto hover:bg-gray-100">
             <svg class="w-5 h-5 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -73,19 +68,18 @@ class EventMore {
   }
 
   attachEventListeners() {
-    const allocateButton = document.querySelector('.allocate-resources');
-    const checkButton = document.querySelector('.check-resources');
-    const editButton = document.querySelector('.edit-resources');
+    const actions = {
+      'allocate-resources': () => this.allocateResources(this.params),
+      'check-resources': () => this.checkResources(this.params),
+      'edit-resources': () => this.editResources(this.params)
+    };
 
-    if (allocateButton) {
-      allocateButton.addEventListener('click', () => this.allocateResources(this.params));
-    }
-    if (checkButton) {
-      checkButton.addEventListener('click', () => this.checkResources(this.params));
-    }
-    if (editButton) {
-      editButton.addEventListener('click', () => this.editResources(this.params));
-    }
+    Object.keys(actions).forEach((action) => {
+      const element = document.querySelector(`.${action}`);
+      if (element) {
+        element.addEventListener('click', actions[action]);
+      }
+    });
   }
 
   allocateResources(eventId, pushState = true) {

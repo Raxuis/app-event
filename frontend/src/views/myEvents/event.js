@@ -59,7 +59,7 @@ export default (event, userId, specificGuests = null) => {
   };
 
   return `
-    <div tabindex="0" class="*:cursor-default focus:outline-none mx-2 w-full sm:w-80 lg:w-72 xl:w-80 mb-8 flex flex-col shadow-md relative mt-16 card-${eventId}">
+    <div tabindex="0" class="*:cursor-default focus:outline-none mx-2 w-full sm:w-80 lg:w-72 xl:w-80 mb-8 flex flex-col shadow-md relative card-${eventId}">
       <div class="relative w-full h-44">
         ${userId === authorId ? `
           <button class="delete-${eventId} cursor-pointer absolute right-1 top-1 inline-flex items-center px-4 py-2 text-danger bg-danger-light hover:bg-danger hover:text-white duration-300 text-sm font-medium rounded-md">

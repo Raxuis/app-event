@@ -116,6 +116,8 @@ class MyEvents {
       prefixes.forEach((prefix) => {
         const element = document.querySelector(`.${prefix}-${eventId}`);
         if (element) {
+          // Checking if prefix is corresponding to a user interaction
+          // to pass groupId as a parameter instead of cardEvent
           if (prefix === 'accept' || prefix === 'decline' || prefix === 'cancel') {
             element.addEventListener('click', () => actionMap[prefix](eventId, groupId));
           } else {
@@ -173,7 +175,7 @@ class MyEvents {
         }
       });
       if (response.status === 200) {
-        this.initialize();
+        this.initialize(); // Initializing the class to display the user interaction
       }
     } catch (error) {
       renderToastr('error', 'Error updating event:', error);

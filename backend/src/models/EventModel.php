@@ -25,6 +25,7 @@ class EventModel extends SqlConnect
   private function handleGroupCreation(array &$data): array
   {
     // Checking if the number of guests is bigger than the number of places
+    // If so returning HTTP response 400
     if (count($data['user_ids']) > $data['size']) {
       header('HTTP/1.0 400 Too many Users');
       return ['code' => '400', 'message' => 'Too many users'];
@@ -48,7 +49,7 @@ class EventModel extends SqlConnect
       $groupUserStmt = $this->db->prepare(
         "INSERT INTO group_users (group_id, user_id, status) VALUES (:group_id, :user_id, :status)"
       );
-      $status = ($data['user_id'] === $userId) ? 'confirmed' : 'registered';
+      $status = ($data['user_id'] === $userId) ? 'confirmed' : 'registered'; // Making the event admin already confirmed
       $groupUserStmt->execute([
         'group_id' => $data['group_id'],
         'user_id' => $userId,
@@ -74,6 +75,7 @@ class EventModel extends SqlConnect
       $columns[] = 'group_id';
       $values[] = ':group_id';
     }
+    // INSERT INTO SQL query using %s to fill it with values
     $query = sprintf(
       "INSERT INTO events (%s) VALUES (%s)",
       implode(", ", $columns),
@@ -163,13 +165,13 @@ class EventModel extends SqlConnect
       u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
       gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.id AS guest_id, g.name as group_name,
       us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email
-  FROM events AS e
-  LEFT JOIN users AS u ON e.user_id = u.id
-  LEFT JOIN groups AS g ON e.group_id = g.id
-  LEFT JOIN group_users AS gu ON gu.group_id = g.id
-  LEFT JOIN users AS us ON gu.user_id = us.id
-  WHERE e.user_id =:user_id OR gu.user_id =:user_id
-  ORDER BY e.time ASC"
+      FROM events AS e
+      LEFT JOIN users AS u ON e.user_id = u.id
+      LEFT JOIN groups AS g ON e.group_id = g.id
+      LEFT JOIN group_users AS gu ON gu.group_id = g.id
+      LEFT JOIN users AS us ON gu.user_id = us.id
+      WHERE e.user_id =:user_id OR gu.user_id =:user_id
+      ORDER BY e.time ASC"
     );
 
     $stmt->execute(["user_id" => $userId]);
@@ -253,17 +255,17 @@ class EventModel extends SqlConnect
   public function getAll(): array|stdClass
   {
     $stmt = $this->db->prepare(
-      "SELECT e.id AS event_id, e.name AS event_name, e.image, e.type, e.created_at, e.time, e.place, e.description, e.size, 
-                e.user_id AS author_id, e.group_id,
-                u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
-                gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.id AS guest_id,
-                us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email, g.name AS group_name
-            FROM events AS e
-            INNER JOIN users AS u ON e.user_id = u.id
-            LEFT JOIN groups AS g ON e.group_id = g.id
-            LEFT JOIN group_users AS gu ON gu.group_id = g.id
-            LEFT JOIN users AS us ON gu.user_id = us.id
-            ORDER BY e.time ASC"
+      "SELECT e.id AS event_id, e.name AS event_name, e.image, e.type, e.created_at, e.time, e.place, 
+      e.description, e.size, e.user_id AS author_id, e.group_id,
+      u.firstname AS author_firstname, u.lastname AS author_lastname, u.email AS author_email,
+      gu.status AS guest_status, gu.registered_at, gu.confirmed_at, gu.canceled_at, us.id AS guest_id,
+      us.firstname AS guest_firstname, us.lastname AS guest_lastname, us.email AS guest_email, g.name AS group_name
+      FROM events AS e
+      INNER JOIN users AS u ON e.user_id = u.id
+      LEFT JOIN groups AS g ON e.group_id = g.id
+      LEFT JOIN group_users AS gu ON gu.group_id = g.id
+      LEFT JOIN users AS us ON gu.user_id = us.id
+      ORDER BY e.time ASC"
     );
 
     $stmt->execute();
@@ -373,11 +375,14 @@ class EventModel extends SqlConnect
 
     // Bind parameters using bindEventParams
     $this->bindEventParams($stmt, $requiredDatas);
+
+    // Binding parameter image if set to avoid conflicts with add function
     if (isset($data['image'])) {
       $stmt->bindValue(':image', $data['image']);
     } else {
       $stmt->bindValue(':image', null);
     }
+
     $stmt->bindValue(':id', $id);
     $stmt->execute();
   }

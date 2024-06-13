@@ -123,7 +123,7 @@ class EventModel extends SqlConnect
     $stmt->execute(["id" => $id]);
   }
 
-  public function get(int $id): array|stdClass
+  public function get(int $id): array
   {
     $stmt = $this->db->prepare(
       "SELECT e.id AS event_id, e.name AS event_name, e.image, e.type, e.created_at, e.time, e.place, e.description, e.size, 
@@ -170,10 +170,10 @@ class EventModel extends SqlConnect
   }
 
 
-  private function processEventResults(array $results): array|stdClass
+  private function processEventResults(array $results): array
   {
     if (empty($results)) {
-      return new stdClass();
+      return [];
     }
 
     $event = $this->initializeEventArray($results[0]);

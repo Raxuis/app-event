@@ -19,10 +19,14 @@ class EventMore {
     this.userId = await getUserId();
 
     // Array.prototype.some() function returns true when at least one value respects the condition
-    const userExists = this.response.guests.some((guest) => guest.guest_id === this.userId);
+    if (Object.keys(this.response).length > 0) {
+      const userExists = this.response.guests.some((guest) => guest.guest_id === this.userId);
 
-    if (userExists) {
-      this.run();
+      if (userExists) {
+        this.run();
+      } else {
+        window.location.href = '/my-events';
+      }
     } else {
       window.location.href = '/my-events';
     }

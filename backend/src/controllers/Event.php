@@ -33,9 +33,13 @@ class Event extends Controller
     $this->event->delete($eventId);
   }
 
-  public function getEvent(): array
+  public function getEvent(): array|string
   {
     $eventId = intval($this->params['id']);
-    return $this->event->get($eventId);
+    $res = $this->event->get($eventId);
+    if ($res !== '') {
+      return $this->sanitizeOutput($res);
+    }
+    return '';
   }
 }

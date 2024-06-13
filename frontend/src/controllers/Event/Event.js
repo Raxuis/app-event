@@ -19,15 +19,18 @@ class Event {
     this.userId = await getUserId();
 
     let userExists = false;
+    if (Object.keys(this.response).length > 0) {
+      this.response.guests.forEach((guest) => {
+        if (guest.guest_id === this.userId) {
+          userExists = true;
+        }
+      });
 
-    this.response.guests.forEach((guest) => {
-      if (guest.guest_id === this.userId) {
-        userExists = true;
+      if (userExists) {
+        this.run();
+      } else {
+        window.location.href = '/my-events';
       }
-    });
-
-    if (userExists) {
-      this.run();
     } else {
       window.location.href = '/my-events';
     }

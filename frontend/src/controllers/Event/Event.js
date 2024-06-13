@@ -40,18 +40,22 @@ class Event {
     const responseEventId = this.response.event_id;
     const paramsEventId = this.params.eventId;
 
-    const readMoreButton = document.querySelector(`.read-more-${paramsEventId}`);
-    const editButton = document.querySelector(`.edit-${paramsEventId}`);
+    const actions = {
+      'read-more': () => this.navigateToEventDetail(responseEventId),
+      edit: () => this.navigateToEventEdit(responseEventId)
+    };
 
-    if (readMoreButton) {
-      readMoreButton.addEventListener('click', () => this.navigateToEventDetail(responseEventId));
-    }
-    if (editButton) {
-      editButton.addEventListener('click', () => this.navigateToEventEdit(responseEventId));
-    }
+    Object.keys(actions).forEach((action) => {
+      const element = document.querySelector(`.${action}-${paramsEventId}`);
+      if (element) {
+        element.addEventListener('click', actions[action]);
+      }
+    });
   }
 
   render() {
+    console.log(this.response);
+    console.log(this.userId);
     return `
     ${viewNav(this.userId)}
     <div class="w-screen flex items-center justify-center px-6 py-2 sm:p-6 sm:mt-4">

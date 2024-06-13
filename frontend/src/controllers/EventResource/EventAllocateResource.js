@@ -7,6 +7,7 @@ import navFunction from '../../utils/navbar/navFunction';
 import getById from '../../utils/getters/getById';
 import getUserId from '../../utils/getters/getUserId';
 import allocateResourceQuantity from '../../utils/forms/quantity/allocateResourceQuantity';
+import goBack from '../../utils/navigation/goBack';
 
 class EventAllocateResources {
   constructor(params) {
@@ -50,7 +51,7 @@ class EventAllocateResources {
 
     if (goBackButton) {
       goBackButton.addEventListener('click', () => {
-        window.location.href = `/my-events?action=more&eventId=${this.response.event_id}`;
+        goBack('more', this.response.event_id);
       });
     }
     if (form) {

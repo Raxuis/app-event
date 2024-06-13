@@ -36,10 +36,6 @@ class Event extends Controller
   public function getEvent(): array|string
   {
     $eventId = intval($this->params['id']);
-    $res = $this->event->get($eventId);
-    if ($res !== '') {
-      return $this->sanitizeOutput($res);
-    }
-    return '';
+    return $this->sanitizeOutput($this->event->get($eventId));
   }
 }

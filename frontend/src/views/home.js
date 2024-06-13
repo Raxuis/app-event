@@ -1,10 +1,10 @@
 import logo from '../assets/logo.png';
-import eventSvg from '../assets/events.svg';
-import worldSvg from '../assets/world.svg';
-import eventResources from '../assets/homepage-bento/event-resources.webp';
-import eventsModels from '../assets/homepage-bento/events-models.webp';
-import peopleInvitations from '../assets/homepage-bento/people-invitations.webp';
-import safety from '../assets/homepage-bento/safety.webp';
+import eventSvg from '../assets/home/events.svg';
+import worldSvg from '../assets/home/world.svg';
+import eventResources from '../assets/home/homepage-bento/event-resources.webp';
+import eventsModels from '../assets/home/homepage-bento/events-models.webp';
+import peopleInvitations from '../assets/home/homepage-bento/people-invitations.webp';
+import safety from '../assets/home/homepage-bento/safety.webp';
 
 export default (isLogged) => (`
 <div class="container my-24 mx-auto md:px-6">

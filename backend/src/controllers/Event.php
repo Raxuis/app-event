@@ -16,11 +16,12 @@ class Event extends Controller
 
   protected function postEvent(): array
   {
+    // 👇 Sanitizing the resource is necessary because it can contain injections
     $body = $this->sanitizeInput($this->body);
     return $this->event->add($body);
   }
 
-  protected function putEvent(): void
+  protected function putEvent()
   {
     $eventId = intval($this->params['id']);
     $body = $this->sanitizeInput($this->body);

@@ -66,6 +66,7 @@ class Controller
     return;
   }
 
+  // A function to secure the value written by user using htmlspecialchars
   protected function sanitizeInput(array $data): array
   {
     $sanitizedData = [];
@@ -79,6 +80,7 @@ class Controller
     return $sanitizedData;
   }
 
+  // A function to secure the getter value using htmlspecialchars
   protected function sanitizeOutput($data)
   {
     if (is_array($data)) {
@@ -91,6 +93,8 @@ class Controller
     return $data;
   }
 
+  // A function to respond to the client with a status code and data => Useful for error handling
+  // Could be used for HTTP status codes 200 but did find it useful
   protected function respond(int $statusCode, array $data): void
   {
     header("HTTP/1.0 $statusCode");

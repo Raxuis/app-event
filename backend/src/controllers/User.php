@@ -41,7 +41,7 @@ class User extends Controller
       $body = $this->sanitizeInput($this->body);
       $this->user->update($body);
       $updatedUser = $this->user->get($this->body['id']);
-      return $this->respond(200, $this->sanitizeOutput($updatedUser));
+      return $this->sanitizeOutput($updatedUser);
     } catch (Exception $e) {
       $this->respond(500, ['message' => 'Error updating user: ' . $e->getMessage()]);
     }

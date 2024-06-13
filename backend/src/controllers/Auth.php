@@ -28,6 +28,7 @@ class Auth extends Controller
             return [
                 'code' => '200',
                 'message' => 'Session OK',
+                // Returning user id to use in pages
                 'user_id' => $userInfos['id'],
             ];
         }

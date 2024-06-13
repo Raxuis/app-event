@@ -21,7 +21,7 @@ class Export extends Controller
     $format = $body['format'] ?? null;
 
     if (!$eventId || !$format) {
-      http_response_code(400);
+      http_response_code(400); // Bad Request
       echo "Invalid parameters";
       return;
     }

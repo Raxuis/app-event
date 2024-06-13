@@ -32,7 +32,7 @@ class EventResource extends Controller
         http_response_code(200); // OK
         echo json_encode($resource);
       } else {
-        http_response_code(500);
+        http_response_code(500); // Server error
         echo json_encode(['message' => 'Failed to retrieve the last event resource.']);
 
       }
@@ -48,15 +48,14 @@ class EventResource extends Controller
 
   protected function putEventResource()
   {
-    $body = $this->sanitizeInput((array) json_decode(file_get_contents('php://input'), true));
 
     try {
-      $result = $this->event_resource->update($body);
+      $result = $this->event_resource->update($this->body);
       if ($result) {
         http_response_code(200); // OK
         echo json_encode(['message' => 'Resource updated successfully.']);
       } else {
-        http_response_code(500);
+        http_response_code(500); // Server error
         echo json_encode(['message' => 'Failed to update the resource.']);
       }
     } catch (Exception $e) {

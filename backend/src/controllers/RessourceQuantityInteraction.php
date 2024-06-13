@@ -20,6 +20,7 @@ class RessourceQuantityInteraction extends Controller
     try {
       $result = $this->event_resource->updateRessourceQuantity($this->body);
 
+      // Error handling
       header('Content-Type: application/json');
       if ($result['status'] === 'success') {
         header('HTTP/1.1 200 OK');

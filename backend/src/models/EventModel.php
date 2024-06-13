@@ -41,7 +41,7 @@ class EventModel extends SqlConnect
     $groupStmt->execute(['group_name' => $data['group_name']]);
     $data['group_id'] = $this->getLastGroupId()['id'];
   }
-
+  // Useful function to add users to a group when creating an event
   private function addUsersToGroup(array $data): void
   {
     foreach ($data['user_ids'] as $userId) {
@@ -90,7 +90,7 @@ class EventModel extends SqlConnect
     header('HTTP/1.0 201 Created');
     return ['code' => '201', 'message' => 'Event created'];
   }
-
+  // Using bindValue() to had conditions like if the user sent an image in a form
   private function bindEventParams($stmt, $data): void
   {
     $stmt->bindValue(':name', $data['name']);
@@ -98,9 +98,17 @@ class EventModel extends SqlConnect
     $stmt->bindValue(':size', $data['size']);
     $stmt->bindValue(':time', $data['time']);
     $stmt->bindValue(':place', $data['place']);
-    $stmt->bindValue(':user_id', $data['user_id']);
+
+    if (isset($data['user_id'])) {
+      $stmt->bindValue(':user_id', $data['user_id']);
+    }
+    if (isset($data['id'])) {
+      $stmt->bindValue(':id', $data['id']);
+    }
     if (isset($data['image'])) {
-      $stmt->bindValue(':image', $data['image']);
+      echo ($stmt->bindValue(':image', $data['image']));
+    } else {
+      echo ($stmt->bindValue(':image', null));
     }
     if (isset($data['model_id'])) {
       $stmt->bindValue(':model_id', $data['model_id']);
@@ -111,6 +119,7 @@ class EventModel extends SqlConnect
       $stmt->bindValue(':group_id', $data['group_id']);
     }
   }
+  // A function useful for eventCreations
   private function updateGroupEventId(int $groupId, int $eventId): void
   {
     $groupStmt = $this->db->prepare("UPDATE groups SET event_id = :event_id WHERE id = :id");
@@ -146,6 +155,8 @@ class EventModel extends SqlConnect
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $this->processEventResults($results);
   }
+  // A function to get the events from a user by their id
+  // It checks if their are in the guests or simply the author of the event
   public function getUserEvents(int $userId): array
   {
     $stmt = $this->db->prepare(
@@ -194,7 +205,7 @@ class EventModel extends SqlConnect
 
     return $event;
   }
-
+  // A function to fetch the event fields
   private function initializeEventArray(array $row): array
   {
     return [
@@ -218,6 +229,7 @@ class EventModel extends SqlConnect
     ];
   }
 
+  // A function to get a guest information
   private function extractGuestData(array $row): array
   {
     return [
@@ -231,7 +243,7 @@ class EventModel extends SqlConnect
       'guest_email' => $row['guest_email']
     ];
   }
-
+  // A function to get an event custom fields if present
   private function fetchCustomFields(int $eventId): array
   {
     $stmt = $this->db->prepare("SELECT field_name, field_value, id FROM custom_fields WHERE event_id = :event_id");
@@ -312,7 +324,7 @@ class EventModel extends SqlConnect
     try {
       // Step 1: Validate user IDs and size
       if (isset($data['user_ids']) && (count($data['user_ids']) > $data['size'])) {
-        header('HTTP/1.0 400 Too many Users');
+        header('HTTP/1.0 400 Too many Users'); // Bad Request
         return [
           'code' => '400',
           'message' => 'Too many users'
@@ -337,7 +349,7 @@ class EventModel extends SqlConnect
         $this->handleCustomFields($id, $data['custom_fields']);
       }
 
-      header('HTTP/1.0 201 Created');
+      header('HTTP/1.0 201 Created'); // Created
       return [
         'code' => '201',
         'message' => 'Event updated',
@@ -349,23 +361,22 @@ class EventModel extends SqlConnect
 
   private function updateEventDetails(int $id, array $data): void
   {
+    $requiredDatas = array(
+      'name' => $data['name'],
+      'description' => $data['description'],
+      'size' => $data['size'],
+      'time' => $data['time'],
+      'place' => $data['place']
+    );
+
     $query = "UPDATE events SET name = :name, description = :description, size = :size, time = :time, place = :place, image = :image WHERE id = :id";
+
     $stmt = $this->db->prepare($query);
 
-    // Bind parameters
-    $stmt->bindValue(':name', $data['name']);
-    $stmt->bindValue(':description', $data['description']);
-    $stmt->bindValue(':size', $data['size']);
-    $stmt->bindValue(':time', $data['time']);
-    $stmt->bindValue(':place', $data['place']);
+    // Bind parameters using bindEventParams
+    $this->bindEventParams($stmt, $requiredDatas);
+
     $stmt->bindValue(':id', $id);
-
-    if (isset($data['image'])) {
-      $stmt->bindValue(':image', $data['image']);
-    } else {
-      $stmt->bindValue(':image', null);
-    }
-
     $stmt->execute();
   }
 

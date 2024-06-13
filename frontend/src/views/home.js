@@ -133,7 +133,7 @@ export default (isLogged) => (`
   </button>` : `<h3 class="my-4 text-3xl text-gray-700 opacity-80 leading-tight">
   Create your first event!
 </h3>
-<button onclick="window.location.href='/models'" class="mx-auto lg:mx-0 bg-white text-gray-700 opacity-75 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+<button onclick="window.location.href='/event-creation'" class="mx-auto lg:mx-0 bg-white text-gray-700 opacity-75 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
   Create
 </button>`}
     

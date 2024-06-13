@@ -12,7 +12,7 @@ import incrementDecrementInput from '../../utils/forms/quantity/incrementDecreme
 import getAll from '../../utils/getters/getAll';
 import getUserId from '../../utils/getters/getUserId';
 
-class AllModelsController {
+class EventCreation {
   constructor() {
     this.el = document.querySelector('#root');
     this.initialize();
@@ -93,8 +93,13 @@ class AllModelsController {
   renderAllModels(models) {
     const html = `
     ${viewNav(this.userId)}
-      <div class="max-w-6xl mx-auto px-4 mb-16">
+      <div class="flex flex-col pt-8 max-w-6xl mx-auto px-4 mb-16">
         ${viewModels(models)}
+        <div class="relative flex py-8 px-6 items-center">
+          <div class="flex-grow border-t border-gray-400"></div>
+            <span class="flex-shrink mx-4 text-gray-400">OR</span>
+          <div class="flex-grow border-t border-gray-400"></div>
+        </div>
         ${viewBuiltModel()}
       </div>
     `;
@@ -204,4 +209,4 @@ class AllModelsController {
   }
 }
 
-export default AllModelsController;
+export default EventCreation;

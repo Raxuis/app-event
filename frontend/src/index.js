@@ -4,7 +4,7 @@ import Login from './controllers/User/Login';
 import Logout from './controllers/User/Logout';
 import Register from './controllers/User/Register';
 import MyEvents from './controllers/Event/MyEvents';
-import Models from './controllers/EventCreation/Models';
+import EventCreation from './controllers/EventCreation/EventCreation';
 import Account from './controllers/User/Account';
 import './index.css';
 
@@ -31,8 +31,8 @@ const routes = [
     private: true
   },
   {
-    url: '/models',
-    controller: Models,
+    url: '/event-creation',
+    controller: EventCreation,
     private: true
   },
   {

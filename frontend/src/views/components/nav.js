@@ -14,7 +14,7 @@ export default (userId) => (`
       </div>
       ${userId !== null ? `
       <div class="hidden md:flex items-center space-x-1">
-        <a href="/models" class="py-5 px-3 text-gray-700 hover:text-gray-900">Models</a>
+        <a href="/event-creation" class="py-5 px-3 text-gray-700 hover:text-gray-900">Create an Event</a>
         <a href="/my-events" class="py-5 px-3 text-gray-700 hover:text-gray-900">My Events</a>
       </div>
       ` : ''}
@@ -46,7 +46,7 @@ ${userId === null ? `
 <a href="/logout" class="block py-2 px-4 text-sm hover:bg-gray-200">Log Out</a>
 <a href="/account" class="block py-2 px-4 text-sm hover:bg-gray-200">My Account</a>
 `}
-  <a href="/models" class="block py-2 px-4 text-sm hover:bg-gray-200">Models</a>
+  <a href="/event-creation" class="block py-2 px-4 text-sm hover:bg-gray-200">Create an Event</a>
   <a href="/my-events" class="block py-2 px-4 text-sm hover:bg-gray-200">My Events</a>
 </div>
 </nav>

@@ -54,8 +54,6 @@ class Event {
   }
 
   render() {
-    console.log(this.response);
-    console.log(this.userId);
     return `
     ${viewNav(this.userId)}
     <div class="w-screen flex items-center justify-center px-6 py-2 sm:p-6 sm:mt-4">

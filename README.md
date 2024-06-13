@@ -43,11 +43,16 @@ App-Event is a SaaS-like event planing platform that allows you to create events
 
 ## :sparkles: Features
 
-:heavy_check_mark: Create your event\
+:heavy_check_mark: Create your event thanks to an event model\
+:heavy_check_mark: Create your own event\
 :heavy_check_mark: Edit your event\
-:heavy_check_mark: Add custom fields to your event\
+:heavy_check_mark: Add custom fields to you event like Price, Special Guests etc...\
+:heavy_check_mark: Edit your profile\
+:heavy_check_mark: Add resources to your event\
+:heavy_check_mark: Handle resources => Increment, Decrement Quantity and Edit Resources\
+:heavy_check_mark: Declare available to this event or not\
 :heavy_check_mark: Export your event infos to PDF or CSV\
-:heavy_check_mark: Declare available to this event or not
+:heavy_check_mark: Delete your event
 
 ## :rocket: Technologies
 

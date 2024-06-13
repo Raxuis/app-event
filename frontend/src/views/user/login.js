@@ -35,7 +35,7 @@ export default () => (`
                 </button>
               <div class="error-message w-full text-red-500 pt-2"></div>
               </div>
-              <p class="text-sm !mt-10 text-center">Don't have an account? <a href="/register" class="text-blue-600 hover:underline ml-1 whitespace-nowrap">Sign Up here</a></p>
+              <p class="text-sm !mt-10 text-center">Don't have an account? <a href="/register" class="text-blue-600 hover:underline ml-1 whitespace-nowrap" title="register">Sign Up here</a></p>
             </form>
           </div>
           <div class="lg:h-[400px] md:h-[300px] max-sm:h-[200px]">

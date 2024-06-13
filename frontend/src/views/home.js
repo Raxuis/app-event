@@ -150,13 +150,13 @@ export default (isLogged) => (`
           <p class="uppercase text-gray-500 md:mb-6">Social</p>
           <ul class="list-reset mb-6">
             <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-              <a href="https://www.instagram.com/ecole_coda/" target="_blank" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Instagram</a>
+              <a href="https://www.instagram.com/ecole_coda/" target="_blank" class="no-underline hover:underline text-gray-800 hover:text-pink-500" title="coda Instagram">Instagram</a>
             </li>
             <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-              <a href="https://www.linkedin.com/in/raphael-raclot/" target="_blank" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Linkedin</a>
+              <a href="https://www.linkedin.com/in/raphael-raclot/" target="_blank" class="no-underline hover:underline text-gray-800 hover:text-pink-500" title="Raphaël Raclot LinkedIn">Linkedin</a>
             </li>
             <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-              <a href="https://x.com/I_Haruki_I" target="_blank" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Twitter</a>
+              <a href="https://x.com/I_Haruki_I" target="_blank" class="no-underline hover:underline text-gray-800 hover:text-pink-500" title="Haruki Twitter">Twitter</a>
             </li>
           </ul>
         </div>
@@ -164,13 +164,13 @@ export default (isLogged) => (`
           <p class="uppercase text-gray-500 md:mb-6">Company</p>
           <ul class="list-reset mb-6">
             <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-              <a href="https://portfolio-raphael-raxuis.vercel.app/" target="_blank" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Official Blog</a>
+              <a href="https://portfolio-raphael-raxuis.vercel.app/" target="_blank" class="no-underline hover:underline text-gray-800 hover:text-pink-500" title="Raphaël | Raxuis Portfolio">Official Blog</a>
             </li>
             <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-              <a href="https://portfolio-raphael-raxuis.vercel.app/about" target="_blank" class="no-underline hover:underline text-gray-800 hover:text-pink-500">About Us</a>
+              <a href="https://portfolio-raphael-raxuis.vercel.app/about" target="_blank" class="no-underline hover:underline text-gray-800 hover:text-pink-500" title="Raphaël | Raxuis About Me">About Us</a>
             </li>
             <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-              <a href="https://portfolio-raphael-raxuis.vercel.app/contact" target="_blank" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Contact</a>
+              <a href="https://portfolio-raphael-raxuis.vercel.app/contact" target="_blank" class="no-underline hover:underline text-gray-800 hover:text-pink-500" title="Raphaël | Raxuis Contact">Contact</a>
             </li>
           </ul>
         </div>

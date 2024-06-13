@@ -32,7 +32,7 @@ export default (ressource) => {
             </div>
           </div>
           <div class="!mt-4 space-y-4">
-          <a class="go-back-edit-resource cursor-pointer w-fit font-medium text-electric-violet-600 underline-offset-2 hover:underline focus:underline focus:outline-none">
+          <a class="go-back-edit-resource cursor-pointer w-fit font-medium text-electric-violet-600 underline-offset-2 hover:underline focus:underline focus:outline-none" title="go back to check resources">
           Go back
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2.5" aria-hidden="true" class="inline size-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />

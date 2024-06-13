@@ -58,7 +58,7 @@ export default () => (`
                 </button>
               <div class="error-message w-full text-red-500 pt-2"></div>
               </div>
-              <p class="text-sm !mt-10 text-center">Already have an account? <a href="/login" class="text-blue-600 hover:underline ml-1 whitespace-nowrap">Login here</a></p>
+              <p class="text-sm !mt-10 text-center">Already have an account? <a href="/login" class="text-blue-600 hover:underline ml-1 whitespace-nowrap" title="login">Login here</a></p>
             </form>
           </div>
           <div class="lg:h-[400px] md:h-[300px] max-sm:hidden">

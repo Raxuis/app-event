@@ -72,8 +72,11 @@ Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) an
 ### Cloning, adding environment variables
 
 ```bash
-# Clone this project
-$ git clone https://github.com/Raxuis/app-event
+# Clone this project with GitHub
+$ git clone https://github.com/Raxuis/app-event.git
+
+# Clone this project with GitLab
+$ git clone https://gitlab.com/Raxuis/app-event.git
 
 # Access
 $ cd app-event

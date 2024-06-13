@@ -36,7 +36,7 @@ const Model = class {
       e.preventDefault();
       const response = await this.formSubmit(form);
       if (response === true) {
-        redirectionWithTimeout('models', 3000);
+        redirectionWithTimeout('event-creation', 3000);
       }
     };
 
@@ -114,13 +114,17 @@ const Model = class {
             eventData.image = '';
           }
         }
-        await axios.post(`http://localhost:${process.env.BACKEND_PORT}/event`, eventData, {
+        const apiResponse = await axios.post(`http://localhost:${process.env.BACKEND_PORT}/event`, eventData, {
           headers: {
             'Content-Type': 'application/json'
           }
         });
-        renderToastr('success', 'Success', 'Event created successfully!');
-        return true;
+        if (apiResponse.status === 201) {
+          renderToastr('success', 'Success', 'Event created successfully!');
+          return true;
+        }
+        renderToastr('error', 'Error', 'An error occurred');
+        return false;
       } catch (error) {
         renderToastr('error', 'Error', error.response.statusText);
         return false;

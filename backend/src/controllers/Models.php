@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\ModelModel;
-use Exception;
 
 class Models extends Controller
 {
@@ -16,6 +15,6 @@ class Models extends Controller
   }
   public function getModels()
   {
-      return $this->sanitizeOutput($this->models->getAll());
+    return $this->sanitizeOutput($this->models->getAll());
   }
 }

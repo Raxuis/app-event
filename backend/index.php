@@ -32,7 +32,6 @@ new Router([
   "userinteraction" => UserEventInteraction::class,
   "events" => Events::class,
   "events/:user_id" => UserEvents::class,
-  "form-infos" => Form::class,
   "resource/:id" => EventResource::class,
   "resource" => EventResource::class,
   "resourcequantityinteraction" => RessourceQuantityInteraction::class,

@@ -47,7 +47,7 @@ App-Event is a SaaS-like event planing platform that allows you to create events
 :heavy_check_mark: Edit your event\
 :heavy_check_mark: Add custom fields to your event\
 :heavy_check_mark: Export your event infos to PDF or CSV\
-:heavy_check_mark: Declare available to this event or not\
+:heavy_check_mark: Declare available to this event or not
 
 ## :rocket: Technologies
 
@@ -64,6 +64,8 @@ Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) an
 
 ## :checkered_flag: Starting
 
+### Cloning, adding environment variables
+
 ```bash
 # Clone this project
 $ git clone https://github.com/Raxuis/app-event
@@ -71,13 +73,38 @@ $ git clone https://github.com/Raxuis/app-event
 # Access
 $ cd app-event
 
-# Install dependencies
-$ npm install
-
 # Create a .env file
 $ touch frontend/.env
 
 # Fill it with your frontend and backend ports by following the .env.example
+```
+
+### Frontend Installation
+
+```bash
+# Go to backend folder
+$ cd frontend
+
+# Install dependencies
+$ npm install
+
+# Run the project
+$ npm start
+
+# The server will initialize in the <http://127.0.0.1:9090>
+```
+
+### Backend Installation
+
+```bash
+# Go to backend folder
+$ cd backend
+
+# Install dependencies
+$ composer install
+
+# Look for all the classes and files it needs to include again
+$ composer dump-autoload
 
 # Start your Nginx server and PHP server
 
@@ -89,10 +116,7 @@ $ sudo systemctl start php@8.3 && sudo systemctl start nginx
 
 # Start your MAMP / XAMP / LAMP server
 
-# Run the project
-$ npm start
-
-# The server will initialize in the <http://127.0.0.1:9090>
+# The server will initialize in the <http://127.0.0.1:8080>
 ```
 
 ## :memo: License

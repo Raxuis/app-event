@@ -41,9 +41,13 @@ class EventCheckResources {
   }
 
   attachEventListeners() {
-    const goBackButton = document.querySelector('.go-back-check');
+    const goBackButton = document.querySelectorAll('.go-back-check');
     if (goBackButton) {
-      goBackButton.addEventListener('click', () => goBack('more', this.params.eventId));
+      goBackButton.forEach(
+        ((backButton) => {
+          backButton.addEventListener('click', () => goBack('more', this.params.eventId));
+        })
+      );
     }
   }
 

@@ -81,7 +81,6 @@ class EventModel extends SqlConnect
     );
     $stmt = $this->db->prepare($query);
     $this->bindEventParams($stmt, $data);
-    print_r($data);
     $stmt->execute();
     $eventId = $this->getLastEventId()['id'];
     if (isset($data['group_id'])) {
@@ -117,7 +116,6 @@ class EventModel extends SqlConnect
     if (isset($data['group_id'])) {
       $stmt->bindValue(':group_id', $data['group_id']);
     }
-    print_r($stmt);
   }
   // A function useful for eventCreations
   private function updateGroupEventId(int $groupId, int $eventId): void

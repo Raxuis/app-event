@@ -62,7 +62,7 @@ export default () => (`
             </form>
           </div>
           <div class="lg:h-[400px] md:h-[300px] max-sm:hidden">
-            <img src="${registerSvg}" class="w-full h-full object-cover" alt="Dining Experience" />
+            <img src="${registerSvg}" class="w-full h-full object-cover" alt="a boy registering up" />
           </div>
         </div>
       </div>

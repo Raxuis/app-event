@@ -45,7 +45,7 @@ export default (ressource) => {
         </form>
           </div>
           <div class="lg:h-[400px] md:h-[300px] max-sm:mt-10 max-sm:hidden">
-            <img src="${editResourceSvg}" class="w-full h-full object-cover" alt="Dining Experience" />
+            <img src="${editResourceSvg}" class="w-full h-full object-cover" alt="a boy sitting on a chair close to his desktop" />
           </div>
         </div>
       </div>

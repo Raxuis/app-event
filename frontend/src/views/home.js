@@ -46,12 +46,12 @@ export default (isLogged) => (`
           </p>
         </div>
         <div class="w-full sm:w-1/2 p-6">
-        <img src=${eventSvg} class="w-full sm:h-64 mx-auto"/>
+        <img src=${eventSvg} class="w-full sm:h-64 mx-auto" alt="calendar with a girl"/>
         </div>
       </div>
       <div class="flex flex-wrap items-center justify-center flex-col-reverse sm:flex-row">
         <div class="w-full sm:w-1/2 p-6 mt-6">
-        <img src=${worldSvg} class="w-5/6 sm:h-64 mx-auto" />
+        <img src=${worldSvg} class="w-5/6 sm:h-64 mx-auto" alt="a planet with a girl next to"/>
         </div>
         <div class="w-full sm:w-1/2 p-6 mt-6">
           <div class="align-middle">
@@ -142,8 +142,8 @@ export default (isLogged) => (`
     <div class="container mx-auto max-sm:px-8">
       <div class="w-full flex flex-col md:flex-row py-6">
         <div class="flex-1 mb-6 text-black-900">
-          <a href="/">
-          <img src=${logo} class="h-8 fill-current inline"/>
+          <a href="/" title="homepage">
+          <img src=${logo} class="h-8 fill-current inline" alt="app-event logo"/>
           </a>
         </div>
         <div class="flex-1">

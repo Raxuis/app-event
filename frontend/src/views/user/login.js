@@ -39,7 +39,7 @@ export default () => (`
             </form>
           </div>
           <div class="lg:h-[400px] md:h-[300px] max-sm:h-[200px]">
-            <img src="${loginSvg}" class="w-full h-full object-contain" alt="Dining Experience" />
+            <img src="${loginSvg}" class="w-full h-full object-contain" alt="a girl login on her mobile phone" />
           </div>
         </div>
       </div>

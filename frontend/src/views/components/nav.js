@@ -8,7 +8,7 @@ export default (userId) => (`
     <div class="flex space-x-4">
       <div>
         <a href="/" class="flex items-center py-5 px-2 space-x-2">
-        <img class="size-6" src=${favicon}>
+        <img class="size-6" src=${favicon} alt="app-event favicon">
           <span class="font-bold text-gray-700 hover:text-electric-violet-900 duration-300">App-Event</span>
         </a>
       </div>

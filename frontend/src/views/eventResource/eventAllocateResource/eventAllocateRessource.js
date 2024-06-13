@@ -30,7 +30,7 @@ export default () => (`
           </div>
           <div class="!mt-4 space-y-4">
           <a class="go-back-allocate cursor-pointer w-fit font-medium text-electric-violet-600 underline-offset-2 hover:underline focus:underline focus:outline-none">
-           Go back
+            Go back
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2.5" aria-hidden="true" class="inline size-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>
@@ -42,7 +42,7 @@ export default () => (`
         </form>
           </div>
           <div class="lg:h-[400px] md:h-[300px] max-sm:mt-10 max-sm:hidden">
-            <img src="${resourcesSvg}" class="w-full h-full object-cover" alt="Dining Experience" />
+            <img src="${resourcesSvg}" class="w-full h-full object-cover" alt="a girl crafting a boy like a toy" />
           </div>
         </div>
       </div>

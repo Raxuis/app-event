@@ -43,11 +43,11 @@ ${userId === null ? `
 <a href="/login" class="block py-2 px-4 text-sm hover:bg-gray-200" title="login">Login</a>
 <a href="/register" class="block py-2 px-4 text-sm hover:bg-gray-200" title="register">Register</a>
 ` : `
+<a href="/event-creation" class="block py-2 px-4 text-sm hover:bg-gray-200" title="event creation">Create an Event</a>
+<a href="/my-events" class="block py-2 px-4 text-sm hover:bg-gray-200" title="my events">My Events</a>
 <a href="/logout" class="block py-2 px-4 text-sm hover:bg-gray-200" title="log out">Log Out</a>
 <a href="/account" class="block py-2 px-4 text-sm hover:bg-gray-200" title="my account">My Account</a>
 `}
-  <a href="/event-creation" class="block py-2 px-4 text-sm hover:bg-gray-200" title="event creation">Create an Event</a>
-  <a href="/my-events" class="block py-2 px-4 text-sm hover:bg-gray-200" title="my events">My Events</a>
 </div>
 </nav>
 `);

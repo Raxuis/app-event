@@ -21,12 +21,12 @@ export default () => (`
         <input type="url" name="image-url" id="image-url" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter image url" />
       </div>
       <div class="flex flex-col space-y-2 pt-2">
-      <label for="group-name" class="text-gray-600">Group Name</label>
-      <input type="text" name="group-name" id="group-name" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter group name" />
+        <label for="group-name" class="text-gray-600">Group Name</label>
+        <input type="text" name="group-name" id="group-name" class="w-full border border-gray-300 px-4 py-3 rounded-md outline-[#333]" placeholder="Enter group name" />
       </div>
       <div class="flex flex-col space-y-2 pt-2">
-      <label for="guests" class="text-gray-600">Guests</label>
-      <select id="select1" name="user-ids" class="w-full border border-gray-300 p-1 rounded-md outline-[#333] flex justify-center" data-test="select1"></select>
+        <label for="guests" class="text-gray-600">Guests</label>
+        <select id="select1" name="user-ids" class="w-full border border-gray-300 p-1 rounded-md outline-[#333] flex justify-center" data-test="select1"></select>
       </div>
         <div
         x-data
@@ -46,7 +46,6 @@ export default () => (`
                 class="border border-gray-300 h-11 block w-full px-4 py-3 rounded-l-md"
 
             >
-
             <a
                 class="h-11 w-10 input-button cursor-pointer rounded-r-md bg-transparent border-gray-300 border-t border-b border-r"
                 title="clear" data-clear

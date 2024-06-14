@@ -9,7 +9,6 @@ import safety from '../assets/home/homepage-bento/safety.webp';
 export default (isLogged) => (`
 <div class="container my-24 mx-auto md:px-6">
   <section class="mb-32">
-
     <div class="px-6 py-12 text-center md:px-12 lg:text-left">
       <div class="container mx-auto">
         <div class="grid items-center gap-12 lg:grid-cols-2">
@@ -46,12 +45,12 @@ export default (isLogged) => (`
           </p>
         </div>
         <div class="w-full sm:w-1/2 p-6">
-        <img src=${eventSvg} class="w-full sm:h-64 mx-auto" alt="calendar with a girl"/>
+          <img src=${eventSvg} class="w-full sm:h-64 mx-auto" alt="calendar with a girl"/>
         </div>
       </div>
       <div class="flex flex-wrap items-center justify-center flex-col-reverse sm:flex-row">
         <div class="w-full sm:w-1/2 p-6 mt-6">
-        <img src=${worldSvg} class="w-5/6 sm:h-64 mx-auto" alt="a planet with a girl next to"/>
+          <img src=${worldSvg} class="w-5/6 sm:h-64 mx-auto" alt="a planet with a girl next to"/>
         </div>
         <div class="w-full sm:w-1/2 p-6 mt-6">
           <div class="align-middle">
@@ -75,47 +74,26 @@ export default (isLogged) => (`
         <div class="h-1 mx-auto  bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-fuchsia-500 via-transparent to-purple-400 w-64 opacity-25 my-0 py-0 rounded-t"></div>
       </div>
       <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8 w-full p-6">
-      <div
-          class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
+        <div class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
           <img src=${safety} loading="lazy" alt="Safe Events" class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
-
-          <div
-              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
-          </div>
-
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
           <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Safe Events Planner</span>
+        </div>
+      <div class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
+        <img src=${eventsModels} loading="lazy" alt="Event Models" class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
+        <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Homemade Event Models</span>
       </div>
-      <div
-          class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
-          <img src=${eventsModels} loading="lazy" alt="Event Models" class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
-
-          <div
-              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
-          </div>
-
-          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Homemade Event Models</span>
+      <div class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
+        <img src=${peopleInvitations} loading="lazy" alt="People Invitations" class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
+        <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Eased Guest Invitations</span>
       </div>
-      <div
-          class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
-          <img src=${peopleInvitations} loading="lazy" alt="People Invitations" class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
-
-          <div
-              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
-          </div>
-
-          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Eased Guest Invitations</span>
+      <div class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
+        <img src=${eventResources} loading="lazy" alt="Events Resources Management" class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
+        <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Eased Resources Management</span>
       </div>
-      <div
-          class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
-          <img src=${eventResources} loading="lazy" alt="Events Resources Management" class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
-
-          <div
-              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
-          </div>
-
-          <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">Eased Resources Management</span>
-      </div>
-  </div>
     </div>
   </section>
   <section class="container mx-auto text-center pt-8 pb-6 mb-12">
@@ -125,25 +103,17 @@ export default (isLogged) => (`
     <div class="w-full mb-4">
       <div class="h-1 mx-auto bg-white w-1/6 opacity-25 my-0 py-0 rounded-t"></div>
     </div>
-    ${!isLogged ? `<h3 class="my-4 text-3xl text-gray-700 opacity-80 leading-tight">
-    Register and you're good to go!
-  </h3>
-  <button onclick="window.location.href='/register'" class="mx-auto lg:mx-0 bg-white text-gray-700 opacity-75 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-    Register
-  </button>` : `<h3 class="my-4 text-3xl text-gray-700 opacity-80 leading-tight">
-  Create your first event!
-</h3>
-<button onclick="window.location.href='/event-creation'" class="mx-auto lg:mx-0 bg-white text-gray-700 opacity-75 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-  Create
-</button>`}
-    
+    ${!isLogged ? `<h3 class="my-4 text-3xl text-gray-700 opacity-80 leading-tight">Register and you're good to go!</h3>
+    <button onclick="window.location.href='/register'" class="mx-auto lg:mx-0 bg-white text-gray-700 opacity-75 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">Register</button>`
+    : `<h3 class="my-4 text-3xl text-gray-700 opacity-80 leading-tight">Create your first event!</h3>
+    <button onclick="window.location.href='/event-creation'" class="mx-auto lg:mx-0 bg-white text-gray-700 opacity-75 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">Create</button>`}
   </section>
   <footer>
     <div class="container mx-auto max-sm:px-8">
       <div class="w-full flex flex-col md:flex-row py-6">
         <div class="flex-1 mb-6 text-black-900">
           <a href="/" title="homepage">
-          <img src=${logo} class="h-8 fill-current inline" alt="app-event logo"/>
+            <img src=${logo} class="h-8 fill-current inline" alt="app-event logo"/>
           </a>
         </div>
         <div class="flex-1">

@@ -67,7 +67,7 @@ export default (isLogged) => (`
   </section>
   <section class="bg-white border-b py-8">
     <div class="container mx-auto flex flex-wrap pt-4">
-      <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800">
+      <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-700 opacity-85">
         What we offer.
       </h2>
       <div class="w-full mb-4">

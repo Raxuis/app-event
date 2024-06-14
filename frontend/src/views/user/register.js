@@ -56,7 +56,7 @@ export default () => (`
             <button type="submit" class="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white duration-300 bg-[#333] hover:bg-black-900 focus:outline-none">
               Register
             </button>
-            <div class="error-message w-full text-red-500 pt-2"></div>
+            <div class="error-message-register w-full text-red-500 pt-2"></div>
           </div>
           <p class="text-sm !mt-10 text-center">Already have an account? <a href="/login" class="text-blue-600 hover:underline ml-1 whitespace-nowrap" title="login">Login here</a></p>
         </form>

@@ -16,13 +16,9 @@ class User extends Controller
 
   protected function postUser()
   {
-    try {
-      $body = (array) $this->sanitizeInput($this->body);
-      $this->user->add($body);
-      return $this->sanitizeOutput($this->user->getLast());
-    } catch (Exception $e) {
-      $this->respond(500, ['message' => 'Error posting user: ' . $e->getMessage()]);
-    }
+    $body = (array) $this->sanitizeInput($this->body);
+    $this->user->add($body);
+    return $this->sanitizeOutput($this->user->getLast());
   }
 
   protected function deleteUser()

@@ -33,7 +33,7 @@ export default () => (`
             <button type="button" class="w-full shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white duration-300 bg-[#333] hover:bg-black-900 focus:outline-none login-button">
               Log in
             </button>
-            <div class="error-message w-full text-red-500 pt-2"></div>
+            <div class="error-message-login w-full text-red-500 pt-2"></div>
           </div>
           <p class="text-sm !mt-10 text-center">Don't have an account? <a href="/register" class="text-blue-600 hover:underline ml-1 whitespace-nowrap" title="register">Sign Up here</a></p>
         </form>

@@ -26,7 +26,7 @@ const Login = class {
 
     const form = document.querySelector('.login-form');
     const loginButton = document.querySelector('.login-button');
-    const errorMessage = document.querySelector('.error-message');
+    const errorMessage = document.querySelector('.error-message-login');
 
     const formSubmit = (e) => {
       e.preventDefault();
@@ -47,6 +47,8 @@ const Login = class {
             if (data.PHP_SESSID) {
               Cookies.set('PHP_SESSID', data.PHP_SESSID, { expires: 1 });
               window.location.href = '/';
+            } else {
+              errorMessage.innerHTML = 'Unauthorized access. Please login again.';
             }
           })
           .catch((error) => {

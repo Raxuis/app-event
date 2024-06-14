@@ -26,7 +26,7 @@ const Register = class {
   }
 
   formSubmit(elForm) {
-    function handleSubmit(e) {
+    const handleSubmit = async (e) => {
       e.preventDefault();
       const formData = new FormData(elForm);
       if (formData.get('email')) {
@@ -41,18 +41,23 @@ const Register = class {
               'Content-Type': 'application/json'
             }
           })
-            .then(() => {
-              window.location.href = '/';
-              renderToastr('success', 'Success', 'Your account has been created!');
+            .then((res) => {
+              if (res.status === 200) {
+                renderToastr('success', 'Success', 'Your account has been created!');
+                window.location.href = '/';
+              } else {
+                renderToastr('error', 'Error', 'An error occurred, try again!');
+                window.location.href = '/';
+              }
             })
-            .catch(() => {
-              this.errorInfos('An account already exists with this email. Try log in!');
+            .catch((error) => {
+              this.errorInfos(error);
             });
         }
       } else {
         this.errorInfos('Email must be provided!');
       }
-    }
+    };
 
     elForm.addEventListener('submit', handleSubmit);
 
@@ -93,7 +98,7 @@ const Register = class {
   }
 
   errorInfos(text) {
-    document.querySelector('.error-message').innerHTML = text;
+    document.querySelector('.error-message-register').innerHTML = text;
   }
 
   render() {

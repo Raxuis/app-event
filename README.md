@@ -17,12 +17,6 @@
   <img alt="License" src="https://img.shields.io/github/license/Raxuis/app-event?color=56BEB8">
 </p>
 
-<!-- Status -->
-
-<h4 align="center">
-	🚧  app-event 🚀 Under construction...  🚧
-</h4>
-
 <hr>
 
 <p align="center">

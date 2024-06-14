@@ -4,6 +4,7 @@ import viewRegister from '../../views/user/register';
 import renderToastr from '../../utils/toastr/renderToastr';
 import navFunction from '../../utils/navbar/navFunction';
 import passwordVerif from '../../utils/forms/password/passwordVerify';
+import errorInfos from '../../utils/forms/errors/errorInfos';
 
 const Register = class {
   constructor(params) {
@@ -28,6 +29,7 @@ const Register = class {
   formSubmit(elForm) {
     const handleSubmit = async (e) => {
       e.preventDefault();
+      const elError = document.querySelector('.error-message-register');
       const formData = new FormData(elForm);
       if (formData.get('email')) {
         if (formData.get('password') === formData.get('password-confirmation') && formData.get('password').length >= 8 && formData.get('password-confirmation').length >= 8 && formData.get('firstname') && formData.get('lastname')) {
@@ -44,18 +46,16 @@ const Register = class {
             .then((res) => {
               if (res.status === 200) {
                 renderToastr('success', 'Success', 'Your account has been created!');
-                window.location.href = '/';
               } else {
                 renderToastr('error', 'Error', 'An error occurred, try again!');
-                window.location.href = '/';
               }
             })
             .catch((error) => {
-              this.errorInfos(error);
+              errorInfos(elError, error.response.data.message);
             });
         }
       } else {
-        this.errorInfos('Email must be provided!');
+        errorInfos(elError, 'Email must be provided!');
       }
     };
 
@@ -95,10 +95,6 @@ const Register = class {
       passwordVerif(elPassword, elConfirmationPassword);
       this.formSubmit(elForm);
     });
-  }
-
-  errorInfos(text) {
-    document.querySelector('.error-message-register').innerHTML = text;
   }
 
   render() {

@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 import viewNav from '../../views/components/nav';
 import viewLogin from '../../views/user/login';
 import navFunction from '../../utils/navbar/navFunction';
+import errorInfos from '../../utils/forms/errors/errorInfos';
 
 const Login = class {
   constructor(params) {
@@ -59,7 +60,7 @@ const Login = class {
             }
           });
       } else {
-        errorMessage.innerHTML = 'Email and password are required';
+        errorInfos(errorMessage, 'Email and password are required');
       }
     };
 

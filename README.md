@@ -124,7 +124,9 @@ $ sudo systemctl start php@8.3 && sudo systemctl start nginx
 
 # Start your MAMP / XAMP / LAMP server
 
-# The server will initialize in the <http://127.0.0.1:8080>
+# Upload on PHPMyAdmin the database app_event.sql which is in the database folder
+
+# The server will initialize on the port specified in the Nginx configuration file
 ```
 
 ## :memo: License

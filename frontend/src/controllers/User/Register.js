@@ -46,6 +46,7 @@ const Register = class {
             .then((res) => {
               if (res.status === 200) {
                 renderToastr('success', 'Success', 'Your account has been created!');
+                window.location.href = '/';
               } else {
                 renderToastr('error', 'Error', 'An error occurred, try again!');
               }

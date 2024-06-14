@@ -29,8 +29,8 @@ export default (eventInfos, resources) => (`
                 </tr>
               </thead>
               <tbody>
-              ${viewRow(resources)}
-              ${viewRowTotal(resources)}
+                ${viewRow(resources)}
+                ${viewRowTotal(resources)}
               </tbody>
             </table>
           </div>

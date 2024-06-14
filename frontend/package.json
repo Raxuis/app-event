@@ -10,11 +10,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/xzen769/env-webpack-vanilla.git"
+    "url": "https://gitlab.com/Raxuis/app-event"
   },
   "author": "",
   "license": "ISC",
-  "homepage": "https://gitlab.com/xzen769/env-webpack-vanilla/-/blob/main/README.md",
+  "homepage": "https://gitlab.com/Raxuis/app-event/-/blob/main/README.md",
   "devDependencies": {
     "@babel/core": "^7.24.5",
     "@babel/eslint-parser": "^7.22.15",

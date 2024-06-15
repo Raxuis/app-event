@@ -100,8 +100,12 @@ const Register = class {
 
   render() {
     return `
-        ${viewNav(this.userId)}
+    <div class="w-screen h-screen flex flex-col">
+      ${viewNav(this.userId)}
+      <div class="flex-grow flex items-center justify-center">
         ${viewRegister()}
+      </div>
+    </div>
     `;
   }
 

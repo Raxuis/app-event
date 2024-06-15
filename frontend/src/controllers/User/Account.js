@@ -25,8 +25,12 @@ const Account = class {
   async render() {
     const userInfos = await getById('user', this.userId);
     this.el.innerHTML = `
-    ${viewNav(this.userId)}
-    ${viewAccount(userInfos)}
+      <div class="w-screen h-screen flex flex-col">
+        ${viewNav(this.userId)}
+        <div class="flex-grow flex items-center justify-center">
+          ${viewAccount(userInfos)}
+        </div>
+      </div>
     `;
   }
 

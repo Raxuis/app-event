@@ -1,6 +1,6 @@
 export default (userInfos) => (`
 <div class="text-[#333] flex max-w-sm:flex-col items-center justify-center">
-  <div class="h-full flex flex-col items-center justify-center pt-6 sm:pt-20 px-4">
+  <div class="h-full flex flex-col items-center justify-center px-4">
     <div class="border border-gray-300 rounded-md p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] max-md:mx-auto">
       <form class="space-y-6 account-form">
         <div class="mb-10">

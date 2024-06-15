@@ -7,6 +7,7 @@ import navFunction from '../../utils/navbar/navFunction';
 import getUserId from '../../utils/getters/getUserId';
 import getById from '../../utils/getters/getById';
 import passwordVerif from '../../utils/forms/password/passwordVerify';
+import redirectionWithTimeout from '../../utils/navigation/redirectionWithTimeout';
 
 const Account = class {
   constructor(params) {
@@ -97,8 +98,8 @@ const Account = class {
             const { data } = response;
             if (data.session_id) {
               Cookies.set('PHP_SESSID', data.session_id, { expires: 1 });
-              window.location.href = '/';
               renderToastr('success', 'Success', 'Your account has been updated!');
+              redirectionWithTimeout('/', 3000);
             }
           })
           .catch((error) => {

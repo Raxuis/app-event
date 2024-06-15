@@ -1,7 +1,7 @@
 {
   "name": "app-event",
   "version": "1.0.0",
-  "description": "An app made by Raphaël",
+  "description": "An app made by Raphaël | Raxuis",
   "main": "index.js",
   "scripts": {
     "start": "npx webpack-dev-server --mode development",

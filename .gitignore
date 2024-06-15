@@ -1,13 +1,35 @@
-dist/
+# Node.js dependencies
 node_modules/
+
+# macOS system files
 .DS_Store
+
+# npm debug files
 npm-debug.log
+
+# Yarn files
 yarn-error.log
 yarn.lock
+
+# Package-lock file
 package-lock.json
+
+# IDE project files
 .idea
-id
-.env.local
 .vscode
-vendor
+
+# Various other files
+id
+
+# Composer dependencies
+vendor/
+
+# Environment configuration files
 .env
+.env.local
+
+# Dist files
+dist/
+
+# Composer lock file
+composer.lock

@@ -204,10 +204,13 @@ class Event {
 
   async render() {
     const responseToRender = {};
+    // Sanitizing the response
     Object.keys(this.response).forEach((key) => {
-      // Checking if this.response[key] is null or undefined
       if (this.response[key] === null || typeof this.response[key] === 'undefined') {
         responseToRender[key] = '';
+      } else if (key === 'custom_fields') {
+        // Ensuring custom_fields remains an array
+        responseToRender[key] = this.response[key];
       } else {
         responseToRender[key] = convertEntitiesHTML(this.response[key].toString());
       }

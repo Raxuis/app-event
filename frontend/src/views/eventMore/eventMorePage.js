@@ -1,5 +1,6 @@
 import viewRow from './eventMoreTable/eventMoreTableRow';
 import viewRowCustom from '../customField/customFieldTableRow';
+import convertEntitiesHTML from '../security/specialChars';
 
 export default (event, userId) => {
   const {
@@ -12,6 +13,10 @@ export default (event, userId) => {
     custom_fields: customFields,
     event_resources: eventResources
   } = event;
+
+  // Sanitizing event name and description using convertEntitiesHTML function
+  const sanitizedEventName = convertEntitiesHTML(eventName);
+  const sanitizedEventDescription = convertEntitiesHTML(eventDescription);
 
   let eventSizeEditable = eventSize;
   guests.forEach((guest) => {
@@ -55,7 +60,7 @@ export default (event, userId) => {
             <div class="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
               <h3 class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
                 <span class="mr-3 font-semibold text-dark">Event n°${eventId} infos</span>
-                <span class="mt-1 font-medium text-secondary-dark text-lg/normal">${eventName} | ${eventDescription}</span>
+                <span class="mt-1 font-medium text-secondary-dark text-lg/normal">${sanitizedEventName} | ${sanitizedEventDescription}</span>
               </h3>
               <h3 class="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
                 <span class="mr-3 font-semibold text-dark">${eventSizeEditable} ${eventSizeEditable <= 1 ? 'place left' : 'places left'}</span>

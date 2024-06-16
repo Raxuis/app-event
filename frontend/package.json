@@ -48,6 +48,7 @@
   "dependencies": {
     "axios": "^1.6.7",
     "flatpickr": "^4.6.13",
+    "he": "^1.2.0",
     "js-cookie": "^3.0.5",
     "multiple-select-vanilla": "^3.2.1",
     "shareon": "^2.5.0",

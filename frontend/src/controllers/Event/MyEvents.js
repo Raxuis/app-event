@@ -13,6 +13,7 @@ import getAll from '../../utils/getters/getAll';
 import getUserId from '../../utils/getters/getUserId';
 import Event from './Event';
 import getParams from '../../utils/getters/getParams';
+import convertEntitiesHTML from '../../views/security/specialChars';
 
 class MyEvents {
   constructor() {
@@ -203,10 +204,17 @@ class MyEvents {
 
   // Rendering if events
   async renderAllEvents(elements) {
+    const elementsToRender = elements.map((element) => ({
+      ...element,
+      event_name: convertEntitiesHTML(element.event_name),
+      description: convertEntitiesHTML(element.description),
+      image: convertEntitiesHTML(element.image),
+      place: convertEntitiesHTML(element.place)
+    }));
     const html = `
     ${viewNav(this.userId)}
       <div class="max-w-6xl mx-auto px-2">
-        ${viewEvents(elements, this.userId, this.verifSpecificGuests(elements))}
+        ${viewEvents(elementsToRender, this.userId, this.verifSpecificGuests(elements))}
       </div>
     `;
     this.el.innerHTML = html;

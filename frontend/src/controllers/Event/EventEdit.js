@@ -12,6 +12,7 @@ import getAll from '../../utils/getters/getAll';
 import getUserId from '../../utils/getters/getUserId';
 import editQuantity from '../../utils/forms/quantity/editQuantity';
 import redirectionWithTimeout from '../../utils/navigation/redirectionWithTimeout';
+import convertEntitiesHTML from '../../views/security/specialChars';
 
 class Event {
   constructor(params) {
@@ -202,6 +203,10 @@ class Event {
   }
 
   async render() {
+    const responseToRender = {};
+    Object.keys(this.response).forEach((key) => {
+      responseToRender[key] = convertEntitiesHTML(this.response[key].toString());
+    });
     return `
     ${viewNav(this.userId)}
     <div class="container mx-auto h-screen px-6 py-2 sm:p-6 sm:mt-4">
@@ -215,11 +220,11 @@ class Event {
           </button>
         </div>
         <div class="flex-grow order-2 max-sm:hidden">
-          <h1 class="text-4xl text-center font-bold">Edit event n°${this.response.event_id} : ${this.response.event_name}</h1>
+          <h1 class="text-4xl text-center font-bold">Edit event n°${responseToRender.event_id} : ${responseToRender.event_name}</h1>
         </div>
       </div>
       <div class="mx-auto flex flex-col items-center justify-center h-screen p-6">
-        ${viewEvent(this.response)}
+        ${viewEvent(responseToRender)}
       </div>
     </div>
     `;

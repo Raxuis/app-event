@@ -72,7 +72,12 @@ class Controller
     $sanitizedData = [];
     foreach ($data as $key => $value) {
       if (is_string($value)) {
-        $sanitizedData[$key] = htmlspecialchars(strip_tags($value), ENT_QUOTES, 'UTF-8');
+        // Decoding HTML entities in the value
+        $decodedValue = htmlspecialchars_decode($value);
+        // Sanitizing the decoded value
+        $sanitizedValue = htmlspecialchars($decodedValue, ENT_QUOTES, 'UTF-8');
+        // Replacing & with &amp; to prevent XSS attacks and to prevent issues with &amp; duplicates
+        $sanitizedData[$key] = preg_replace('/&(?!#\d+;)/', '&amp;', $sanitizedValue);
       } else {
         $sanitizedData[$key] = $value;
       }

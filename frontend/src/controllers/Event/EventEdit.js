@@ -205,7 +205,12 @@ class Event {
   async render() {
     const responseToRender = {};
     Object.keys(this.response).forEach((key) => {
-      responseToRender[key] = convertEntitiesHTML(this.response[key].toString());
+      // Checking if this.response[key] is null or undefined
+      if (this.response[key] === null || typeof this.response[key] === 'undefined') {
+        responseToRender[key] = '';
+      } else {
+        responseToRender[key] = convertEntitiesHTML(this.response[key].toString());
+      }
     });
     return `
     ${viewNav(this.userId)}

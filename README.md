@@ -38,7 +38,7 @@ App-Event is a SaaS-like event planing platform that allows you to create events
 ## :sparkles: Features
 
 🖍️ Create your event thanks to an event model\
-🖍️ Create your own event\
+✎ Create your own event\
 ✍️ Edit your event\
 ➕ Add custom fields to you event like Price, Special Guests etc...\
 👨 Edit your profile\

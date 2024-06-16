@@ -57,17 +57,19 @@ class Event {
   // Rendering the event with the sanitized event infos
   render() {
     // Extracting description and event_name from this.response
-    const { description, event_name: eventName } = this.response;
+    const { description, event_name: eventName, place } = this.response;
 
     // Sanitizing description and event_name using convertEntitiesHTML function
     const sanitizedDescription = convertEntitiesHTML(description);
     const sanitizedEventName = convertEntitiesHTML(eventName);
+    const sanitizedPlace = convertEntitiesHTML(place);
 
     // Creating a sanitized version of this.response with only description and event_name fields
     const sanitizedResponse = {
       ...this.response,
       description: sanitizedDescription,
-      event_name: sanitizedEventName
+      event_name: sanitizedEventName,
+      place: sanitizedPlace
     };
 
     return `

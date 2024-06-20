@@ -84,7 +84,7 @@ $ touch frontend/.env
 ### Frontend Installation
 
 ```bash
-# Go to backend folder
+# Go to frontend folder
 $ cd frontend
 
 # Install dependencies

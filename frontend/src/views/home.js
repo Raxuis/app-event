@@ -23,7 +23,7 @@ export default (isLogged) => (`
           <div class="mb-12 lg:mb-0">
             <div class="embed-responsive embed-responsive-16by9 relative w-full overflow-hidden rounded-lg shadow-lg pt-[56.25%]">
               <iframe class="embed-responsive-item absolute top-0 right-0 bottom-0 left-0 h-full w-full"
-                src="https://www.youtube.com/embed/i3hGMvzeAVI?si=Yo_DS618cZg5FUpo"
+                src="https://www.youtube.com/embed/yS0cqXiBZUo?si=F2MnenFyJDNO9x06"
                 allowfullscreen data-gtm-yt-inspected-2340190_699="true"referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
           </div>

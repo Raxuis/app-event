@@ -72,12 +72,9 @@ class Controller
     $sanitizedData = [];
     foreach ($data as $key => $value) {
       if (is_string($value)) {
-        // Decoding HTML entities in the value
-        $decodedValue = htmlspecialchars_decode($value);
-        // Sanitizing the decoded value
-        $sanitizedValue = htmlspecialchars($decodedValue, ENT_QUOTES, 'UTF-8');
-        // Replacing & with &amp; to prevent XSS attacks and to prevent issues with &amp; duplicates
-        $sanitizedData[$key] = preg_replace('/&(?!#\d+;)/', '&amp;', $sanitizedValue);
+        // Only encoding special HTML characters, not quotes
+        $sanitizedValue = htmlspecialchars($value, ENT_NOQUOTES, 'UTF-8');
+        $sanitizedData[$key] = $sanitizedValue;
       } else {
         $sanitizedData[$key] = $value;
       }
@@ -93,13 +90,14 @@ class Controller
         $data[$key] = $this->sanitizeOutput($value);
       }
     } else if (is_string($data)) {
-      $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+      // Decoding HTML entities, then re-encode only special HTML characters, not quotes
+      $data = htmlspecialchars(html_entity_decode($data, ENT_QUOTES, 'UTF-8'), ENT_NOQUOTES, 'UTF-8');
     }
     return $data;
   }
 
   // A function to respond to the client with a status code and data => Useful for error handling
-  // Could be used for HTTP status codes 200 but did find it useful
+  // Could be used for HTTP status codes 200 but didn't find it useful
   protected function respond(int $statusCode, array $data): void
   {
     header("HTTP/1.0 $statusCode");
